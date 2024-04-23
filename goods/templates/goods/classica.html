@@ -1,28 +1,13 @@
 {% extends "main/base.html" %}
 {% load static %}
 
-{% block css %}
-    <link rel="stylesheet" href="{% static "styles\h.css" %}">
-{% endblock css %}
-
-
 {% block content %}
     <section class="panel">
         <ul class="menu">
-            <a class="menu_link" href="{% url "main:sales" %}"><li class="menu_item">
+            <a class="menu_link" href="sales.html"><li class="menu_item">
                 <b>Акции</b>
             </li></a>
-            <li class="menu_catalog">
-                <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
-                <ul class="sub-menu">
-                    <li><a class="menu_link__item" href="{% url "catalog:classica" %}"><b>Классика</b></a></li>
-                    <li><a class="menu_link__item" href="manga.html"><b>Манга</b></a></li>
-                    <li><a class="menu_link__item" href="detective.html"><b>Детективы</b></a></li>
-                    <li><a class="menu_link__item" href="english.html"><b>Книги на английском языке</b></a></li>
-                    <li><a class="menu_link__item" href="psychology.html"><b>Психология</b></a></li>
-                </ul>
-            </li>
-            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
+            <a class="menu_link" href="else.html"><li class="menu_item">
                 <b>Что еще почитать?</b>
             </li></a>
             <a class="menu_link" href="bestsellers.html"><li class="menu_item">
@@ -31,101 +16,144 @@
             <a class="menu_link" href="new.html"><li class="menu_item">
                 <b>Новинки</b>
             </li></a>
-            <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">
+            <a class="menu_link" href="about_us.html"><li class="menu_item">
                 <b>О нас</b>
             </li></a>
         </ul>
     </section>
 
     <hr>
-    
-    <section class="adverts">
-        <div class="advetrs__slider">    
-            <div class="adverts__pictures">
-                <input type="radio" name="r" id="r1" checked>
-                <input type="radio" name="r" id="r2">
-                <input type="radio" name="r" id="r3">
-                <div class="adverts__pictures-slide s1">
-                    <div class="adverts__pictures-slide-first">
-                        <div class="adverts__pictures-slide-first--pic">
-                            <img src="{% static "images\main\ванпанчмен.png" %}">
-                        </div>
-                        <div class="adverts__pictures-slide-first--txt">
-                            <h1>Манга - Марафон</h1>
-                            <p>Скидки на японские комиксы всю неделю</p>
-                            <h2>До 30%</h2>
-                            <a class='advert__btn' href="manga.html"><div class="advert">
-                                <b>Перейти</b>
-                            </div></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="adverts__pictures-slide">
-                    <div class="adverts__pictures-slide-second">
-                        <div class="adverts__pictures-slide-second--txt">
-                            <h1>Загадочные предложения</h1>
-                            <p>Cлишком хорошо, чтобы быть правдой</p>
-                            <h2>Скидки до 50% на детективные романы <br> с 16:00 до 17:00</h2>
-                            <a class='adverts__pictures-slide-second--txt--a' href="detective.html"><b>Перейти</b></a>
-                        </div>
-                        <div class="adverts__pictures-slide-second--pic">
-                            <img src="{% static "images\main\detective2.png" %}">
-                        </div>
-                    </div>
-                </div>
-                <div class="adverts__pictures-slide">
-                    <div class="adverts__pictures-slide-third">
-                        <div class="adverts__pictures-slide-third--txt">
-                            <h1>Бестселлер</h1>
-                            <p>Жить просто - значит избавиться от всего, что не приносит пользу.<br> От ненужных переживаний о прошлом и будущем, от бесконечных попыток быть всегда продуктивным и угрызений совести, если что-то идет не так.</p>
-                            <div class="adverts__pictures-slide-third--block">
-                                <p1><b>Психология счастья</b></p1>
-                                <a class='adverts__pictures-slide-third--a' href="искусство заботы о душе"><b>Перейти</b></a>
-                            </div>
-                        </div>
-                        <div class="adverts__pictures-slide-third--pic">
-                            <img src="{% static "images\main\искусство заботы о душе.png" %}">
-                        </div>
-                    </div>
-                </div>
+
+    <section class="block">
+        <div class="catalog">
+            <div class="catalog__title">
+                <h1>Каталог</h1>
+            </div>
+            <div class="catalog__items">
+                <ul>
+                    <li><a class="catalog__items_item" href="classica.html" style="color: black">
+                        <b>Классика</b>
+                    </a></li>
+                    <li><a class="catalog__items_item" href="manga.html">
+                        Манга
+                        <img src="icons\Vector 12.png">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="detective.html">
+                        Детективы
+                        <img src="icons\Vector 12.png">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="english.html">
+                        Книги на английском языке
+                        <img src="icons\Vector 12.png">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="psychology.html">
+                        Психология
+                        <img src="icons\Vector 12.png">
+                    </a></li>
+                </ul>
             </div>
         </div>
-        <div class="adverts__navigation">
-            <label for="r1" class="bar"></label>
-            <label for="r2" class="bar"></label>
-            <label for="r3" class="bar"></label>
-        </div>
-    </section>
 
-    <section class="new">
-        <div class="new__title">
-            <h1>Новинки литературы</h1>
-            <a class="new__link" href="new.html">Смотреть все<img src="{% static "icons\Vector 12.png" %}"></a>
-        </div>
-        <div class="new__goods">
-            <ul class="products clearfix">
-                <li class="product-wrapper">
+        <div class="main">
+            <div class="products">
+                <div class="products__item">
                     <div class="product">
-                        <a id="product" href="в темном омуте дицзина.html">
+                        <a id="product" href="">
                             <div class="product-photo">
-                                <img src="{% static "images\main\в темном омуте дицзина.png" %}" alt="">
+                                <img src="images\classica\мастер и маргарита.jpg" alt="">
                             </div>
                             <div class="product-title">
                                 <div class="product-title__head">
-                                    <b>В темном омуте Дицзина</b>
+                                    <b>Мастер и Маргарита: роман</b>
                                 </div>
                                 <div class="product-title__author">
-                                    Тянься Гуйюань
+                                    Михаил Булгаков
                                 </div>
                             </div>
                         </a>
                         <div class="product-info">
                             <div class="product-info__pic">
                                 <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
+                                        <img src="icons\Group 43.png">
                                 </button>
                                 <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
+                                    <img src="icons\Group.png">
+                            </button>
+                            </div>
+                            <div class="product-price">
+                                <div class="product-price__old">
+                                    269 ₽
+                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                    </svg>
+                                </div>
+                                <div class="product-price__new">
+                                    <b>209 ₽</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="products__item">
+                    <div class="product">
+                        <a id="product" href="">
+                            <div class="product-photo">
+                                <img src="images\classica\удольфские тайны.jpg" alt="">
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>Удольфские тайны: роман</b>
+                                </div>
+                                <div class="product-title__author">
+                                    Анна Радклиф
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                <button class="product-info__pic" href="#">
+                                        <img src="icons\Group 43.png">
+                                </button>
+                                <button class="product-info__pic" href="#">
+                                    <img src="icons\Group.png">
+                            </button>
+                            </div>
+                            <div class="product-price">
+                                <div class="product-price__old">
+                                    1&nbsp;099 ₽
+                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                    </svg>
+                                </div>
+                                <div class="product-price__new">
+                                    <b>789 ₽</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="products__item">
+                    <div class="product">
+                        <a id="product" href="">
+                            <div class="product-photo">
+                                <img src="images\classica\Коварный брамин из Ассама.jpg" alt="">
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>Коварный брамин из Ассама. Гивель империи. Реванш Янеса</b>
+                                </div>
+                                <div class="product-title__author">
+                                    Эмилио Сальгари
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                <button class="product-info__pic" href="#">
+                                        <img src="icons\Group 43.png">
+                                </button>
+                                <button class="product-info__pic" href="#">
+                                    <img src="icons\Group.png">
                             </button>
                             </div>
                             <div class="product-price">
@@ -141,477 +169,353 @@
                             </div>
                         </div>
                     </div>
-                </li>
-                <li class="product-wrapper">
+                </div>
+                <div class="products__item">
                     <div class="product">
-                        <a href="" id="product">
+                        <a id="product" href="">
                             <div class="product-photo">
-                                <img src="{% static "images\main\две секунды после.png" %}" alt="">
+                                <img src="images\classica\собор парижской богоматери.jpg" alt="">
                             </div>
                             <div class="product-title">
                                 <div class="product-title__head">
-                                    <b>Две секунды после</b>
+                                    <b>Собор Парижской Богоматери</b>
                                 </div>
                                 <div class="product-title__author">
-                                    Ксения Ладунка
+                                    Виктор Мари Гюго
                                 </div>
                             </div>
                         </a>
                         <div class="product-info">
                             <div class="product-info__pic">
                                 <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
+                                        <img src="icons\Group 43.png">
                                 </button>
                                 <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
+                                    <img src="icons\Group.png">
                             </button>
                             </div>
                             <div class="product-price">
                                 <div class="product-price__old">
-                                    759 ₽
+                                    851 ₽
                                     <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
                                         <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
                                     </svg>
                                 </div>
                                 <div class="product-price__new">
-                                    <b>613 ₽</b>
+                                    <b>729 ₽</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li class="product-wrapper">
+                </div>
+                <div class="products__item">
                     <div class="product">
-                        <a href="" id="product">
+                        <a id="product" href="">
                             <div class="product-photo">
-                                <img src="{% static "images\main\золотые земли.png" %}" alt="">
+                                <img src="images\classica\чучело.jpg" alt="">
                             </div>
                             <div class="product-title">
                                 <div class="product-title__head">
-                                    <b>Золотые земли. Его забрал лес</b>
+                                    <b>Чучело</b>
                                 </div>
                                 <div class="product-title__author">
-                                    Ульяна Черкасова
+                                    Владимир Железников
                                 </div>
                             </div>
                         </a>
                         <div class="product-info">
                             <div class="product-info__pic">
                                 <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
+                                        <img src="icons\Group 43.png">
                                 </button>
                                 <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
+                                    <img src="icons\Group.png">
                             </button>
                             </div>
                             <div class="product-price">
                                 <div class="product-price__old">
-                                    839 ₽
+                                    619 ₽
                                     <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
                                         <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
                                     </svg>
                                 </div>
                                 <div class="product-price__new">
-                                    <b>692 ₽</b>
+                                    <b>456 ₽</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li class="product-wrapper">
+                </div>
+                <div class="products__item">
                     <div class="product">
-                        <a href="" id="product">
+                        <a id="product" href="">
                             <div class="product-photo">
-                                <img src="{% static "images\main\о чем молчит психолог.png" %}" alt="">
+                                <img src="images\classica\Анна Каренина.jpg" alt="">
                             </div>
                             <div class="product-title">
                                 <div class="product-title__head">
-                                    <b>О чем молчит психолог? Книга про целительную силу терапии глазами специалиста и его клиентов</b>
+                                    <b>Анна Каренина: роман</b>
                                 </div>
                                 <div class="product-title__author">
-                                    Ольга Берг
+                                    Лев Толстой
                                 </div>
                             </div>
                         </a>
                         <div class="product-info">
                             <div class="product-info__pic">
                                 <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
+                                        <img src="icons\Group 43.png">
                                 </button>
                                 <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
+                                    <img src="icons\Group.png">
                             </button>
                             </div>
                             <div class="product-price">
                                 <div class="product-price__old">
-                                    939 ₽
+                                    329 ₽
                                     <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
                                         <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
                                     </svg>
                                 </div>
                                 <div class="product-price__new">
-                                    <b>765 ₽</b>
+                                    <b>271 ₽</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li class="product-wrapper">
+                </div>
+                <div class="products__item">
                     <div class="product">
-                        <a href="" id="product">
+                        <a id="product" href="">
                             <div class="product-photo">
-                                <img src="{% static "images\main\песнь пророка.png" %}" alt="">
+                                <img src="images\classica\Дар.jpg" alt="">
                             </div>
                             <div class="product-title">
                                 <div class="product-title__head">
-                                    <b>Песнь пророка</b>
+                                    <b>Дар</b>
                                 </div>
                                 <div class="product-title__author">
-                                    Пол Линч
+                                    Владимир Набоков
                                 </div>
                             </div>
                         </a>
                         <div class="product-info">
                             <div class="product-info__pic">
                                 <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
+                                        <img src="icons\Group 43.png">
                                 </button>
                                 <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
+                                    <img src="icons\Group.png">
                             </button>
                             </div>
                             <div class="product-price">
                                 <div class="product-price__old">
-                                    1&nbsp;020 ₽
+                                    869 ₽
                                     <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
                                         <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
                                     </svg>
                                 </div>
                                 <div class="product-price__new">
-                                    <b>864 ₽</b>
+                                    <b>713 ₽</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li class="product-wrapper">
+                </div>
+                <div class="products__item">
                     <div class="product">
-                        <a href="" id="product">
+                        <a id="product" href="">
                             <div class="product-photo">
-                                <img src="{% static "images\main\происшествие в городе т.png" %}" alt="">
+                                <img src="images\classica\Люди как Боги.jpg" alt="">
                             </div>
                             <div class="product-title">
                                 <div class="product-title__head">
-                                    <b>Происшествие в городе Т.</b>
+                                    <b>Люди как Боги</b>
                                 </div>
                                 <div class="product-title__author">
-                                    Лев Брусилов
+                                    Герберт Уэллс
                                 </div>
                             </div>
                         </a>
                         <div class="product-info">
                             <div class="product-info__pic">
                                 <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
+                                        <img src="icons\Group 43.png">
                                 </button>
                                 <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
+                                    <img src="icons\Group.png">
                             </button>
                             </div>
                             <div class="product-price">
                                 <div class="product-price__old">
-                                    569 ₽
+                                    279 ₽
                                     <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
                                         <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
                                     </svg>
                                 </div>
                                 <div class="product-price__new">
-                                    <b>469 ₽</b>
+                                    <b>229 ₽</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-            </ul>
+                </div>
+                <div class="products__item">
+                    <div class="product">
+                        <a id="product" href="">
+                            <div class="product-photo">
+                                <img src="images\classica\цветы для элджернона.jpg" alt="">
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>Цветы для Элджернона</b>
+                                </div>
+                                <div class="product-title__author">
+                                    Дэниэл Киз
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                <button class="product-info__pic" href="#">
+                                        <img src="icons\Group 43.png">
+                                </button>
+                                <button class="product-info__pic" href="#">
+                                    <img src="icons\Group.png">
+                            </button>
+                            </div>
+                            <div class="product-price">
+                                <div class="product-price__old">
+                                    599 ₽
+                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                    </svg>
+                                </div>
+                                <div class="product-price__new">
+                                    <b>494 ₽</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="products__item">
+                    <div class="product">
+                        <a id="product" href="">
+                            <div class="product-photo">
+                                <img src="images\classica\Грозовой перевал.jpg" alt="">
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>Грозовой перевал</b>
+                                </div>
+                                <div class="product-title__author">
+                                    Эмили Джейн Бронте
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                <button class="product-info__pic" href="#">
+                                        <img src="icons\Group 43.png">
+                                </button>
+                                <button class="product-info__pic" href="#">
+                                    <img src="icons\Group.png">
+                            </button>
+                            </div>
+                            <div class="product-price">
+                                <div class="product-price__old">
+                                    619 ₽
+                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                    </svg>
+                                </div>
+                                <div class="product-price__new">
+                                    <b>472 ₽</b>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="products__item">
+                    <div class="product">
+                        <a id="product" href="">
+                            <div class="product-photo">
+                                <img src="images\classica\человек-амфибия.jpg" alt="">
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>Человек-амфибия</b>
+                                </div>
+                                <div class="product-title__author">
+                                    Александр Беляев
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                <button class="product-info__pic" href="#">
+                                        <img src="icons\Group 43.png">
+                                </button>
+                                <button class="product-info__pic" href="#">
+                                    <img src="icons\Group.png">
+                            </button>
+                            </div>
+                            <div class="product-price">
+                                <div class="product-price__old">
+                                    684 ₽
+                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                    </svg>
+                                </div>
+                                <div class="product-price__new">
+                                    <b>570 ₽</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="products__item">
+                    <div class="product">
+                        <a id="product" href="">
+                            <div class="product-photo">
+                                <img src="images\classica\Возлюбленная.jpg" alt="">
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>Возлюбленная</b>
+                                </div>
+                                <div class="product-title__author">
+                                    Томас Гарди
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                <button class="product-info__pic" href="#">
+                                        <img src="icons\Group 43.png">
+                                </button>
+                                <button class="product-info__pic" href="#">
+                                    <img src="icons\Group.png">
+                            </button>
+                            </div>
+                            <div class="product-price">
+                                <div class="product-price__old">
+                                    269 ₽
+                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                    </svg>
+                                </div>
+                                <div class="product-price__new">
+                                    <b>219 ₽</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="navigation__btn">Показать еще</button>
+            </div>
         </div>
     </section>
-
-    <section class="dop">
-        <div class="dop__title">
-            <h1>Книжные циклы</h1>
-        </div>
-        <div class="dop__items">
-            <ul class="cycles books">
-                <li class="cycle-wrapper">
-                    <a href="" class="cycle">
-                        <div class="cycle-photo">
-                            <img src="{% static "images\main\harry potter.png" %}" alt="">
-                        </div>
-                        <div class="cycle-title">
-                            <div class="cycle-title__head">
-                                <b>Гарри Поттер</b>
-                            </div>
-                            <div class="cycle-title__about">
-                                Алохомора! Открывайте дверь в мир волшебства вместе с Джоан Роулинг! Гарри Поттер – сирота с необычным шрамом на лбу. 11 лет он жил в доме дяди и тёти, пока не узнал, что он – волшебник! Теперь Гарри вместе с новыми друзьями предстоит освоить магию и полёты на метле, найти таинственные крестражи и вступить в борьбу с самим Волан-де-Мортом. Цикл книг состоит из 7 частей. Последняя книга вышла в 2007 году, а поклонники до сих пор помнят и любят историю о мальчике, который выжил. Серия получила множество престижных наград и вошла в список «100 лучших книг всех времён для молодёжи» журнала Time.
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="cycle-wrapper">
-                    <a href="" class="cycle">
-                        <div class="cycle-photo">
-                            <img src="{% static "images\main\hobbit.png" %}" alt="">
-                        </div>
-                        <div class="cycle-title">
-                            <div class="cycle-title__head">
-                                <b>Хоббит</b>
-                            </div>
-                            <div class="cycle-title__about">
-                                Отправьтесь в увлекательное приключение вместе с Бильбо Бэггинсом в фэнтезийном мире, созданном великим Дж. Р. Р. Толкином! Цикл книг 'Хоббит' рассказывает о путешествии маленького хоббита Бильбо, который отправляется в опасное приключение вместе с группой гномов и волшебником Гэндальфом, чтобы вернуть потерянное королевство гномов и победить дракона Смауга. На его пути встречаются неожиданные опасности, загадочные существа и невероятные испытания. В каждой книге этого захватывающего цикла читателей ждут увлекательные приключения, запутанные загадки и захватывающие сражения. Цикл состоит из трех частей. Начиная с момента выхода в 1937 году, книги о Хоббите завоевали сердца миллионов читателей по всему миру и стали классикой фэнтезийной литературы.
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="comics">
-        <div class="comics__title">
-            <h1>Манга</h1>
-            <a class="comics__link" href="manga.html">Смотреть все<img src="{% static "icons\Vector 12.png" %}"></a>
-        </div>
-        <div class="comics__goods">
-            <ul class="products clearfix">
-                <li class="product-wrapper">
-                    <div class="product">
-                        <a href="" id="product">
-                            <div class="product-photo">
-                                <img src="{% static "images\main\link click.png" %}" alt="">
-                            </div>
-                            <div class="product-title">
-                                <div class="product-title__head">
-                                    <b>Link Click. Агент времени. Том 2</b>
-                                </div>
-                                <div class="product-title__author">
-                                    <br>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-info">
-                            <div class="product-info__pic">
-                                <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
-                                </button>
-                                <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            </div>
-                            <div class="product-price">
-                                <div class="product-price__old">
-                                    1&nbsp;039 ₽
-                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                    </svg>
-                                </div>
-                                <div class="product-price__new">
-                                    <b>758 ₽</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="product-wrapper">
-                    <div class="product">
-                        <a href="" id="product">
-                            <div class="product-photo">
-                                <img src="{% static "images\main\единственный конец злодейки.png" %}" alt="">
-                            </div>
-                            <div class="product-title">
-                                <div class="product-title__head">
-                                    <b>Новелла "Единственный конец злодейки - смерть". Том 4</b>
-                                </div>
-                                <div class="product-title__author">
-                                    Квон Гёыль
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-info">
-                            <div class="product-info__pic">
-                                <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
-                                </button>
-                                <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            </div>
-                            <div class="product-price">
-                                <div class="product-price__old">
-                                    1&nbsp;409 ₽
-                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                    </svg>
-                                </div>
-                                <div class="product-price__new">
-                                    <b>969 ₽</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="product-wrapper">
-                    <div class="product">
-                        <a href="" id="product">
-                            <div class="product-photo">
-                                <img src="{% static "images\main\one piece.png" %}" alt="">
-                            </div>
-                            <div class="product-title">
-                                <div class="product-title__head">
-                                    <b>One Piece. Большой куш. 17. Одиннадцать Сверхновых Звезд: Книги 49-51: манга</b>
-                                </div>
-                                <div class="product-title__author">
-                                    Эйитиро Ода
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-info">
-                            <div class="product-info__pic">
-                                <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
-                                </button>
-                                <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            </div>
-                            <div class="product-price">
-                                <div class="product-price__old">
-                                    1&nbsp;333 ₽
-                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                    </svg>
-                                </div>
-                                <div class="product-price__new">
-                                    <b>1&nbsp;049 ₽</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="product-wrapper">
-                    <div class="product">
-                        <a href="" id="product">
-                            <div class="product-photo">
-                                <img src="{% static "images\main\demons slier.png" %}" alt="">
-                            </div>
-                            <div class="product-title">
-                                <div class="product-title__head">
-                                    <b>Истребитель демонов. Том 15. Брезжит рассвет, и солнце восходит</b>
-                                </div>
-                                <div class="product-title__author">
-                                    Коёхару Готогэ
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-info">
-                            <div class="product-info__pic">
-                                <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
-                                </button>
-                                <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            </div>
-                            <div class="product-price">
-                                <div class="product-price__old">
-                                    879 ₽
-                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                    </svg>
-                                </div>
-                                <div class="product-price__new">
-                                    <b>666 ₽</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="product-wrapper">
-                    <div class="product">
-                        <a href="" id="product">
-                            <div class="product-photo">
-                                <img src="{% static "images\main\путь домохозяина.png" %}" alt="">
-                            </div>
-                            <div class="product-title">
-                                <div class="product-title__head">
-                                    <b>Путь домохозяина. Том 9</b>
-                                </div>
-                                <div class="product-title__author">
-                                    Косукэ Оно
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-info">
-                            <div class="product-info__pic">
-                                <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
-                                </button>
-                                <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            </div>
-                            <div class="product-price">
-                                <div class="product-price__old">
-                                    809 ₽
-                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                    </svg>
-                                </div>
-                                <div class="product-price__new">
-                                    <b>666 ₽</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="product-wrapper">
-                    <div class="product">
-                        <a href="" id="product">
-                            <div class="product-photo">
-                                <img src="{% static "images\main\немилая.png" %}" alt="">
-                            </div>
-                            <div class="product-title">
-                                <div class="product-title__head">
-                                    <b>Немилая. Том 3</b>
-                                </div>
-                                <div class="product-title__author">
-                                    <br>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="product-info">
-                            <div class="product-info__pic">
-                                <button class="product-info__pic" href="#">
-                                        <img src="{% static "icons\Group 43.png" %}">
-                                </button>
-                                <button class="product-info__pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            </div>
-                            <div class="product-price">
-                                <div class="product-price__old">
-                                    1&nbsp;309 ₽
-                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                    </svg>
-                                </div>
-                                <div class="product-price__new">
-                                    <b>987 ₽</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
-{% endblock %}
+{% endblock content %}
