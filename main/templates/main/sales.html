@@ -1,0 +1,145 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\sales.css" %}">
+{% endblock css %}
+
+
+{% block content %}
+    <section class="panel">
+        <ul class="menu">
+            <a class="menu_link" href="{% url "main:sales" %}" style="background-color: #fff59d; color: #000; "><li class="menu_item" style="font-size: 15px;">
+                <b>Акции</b>
+            </li></a>
+            <li class="menu_catalog">
+                <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
+                <ul class="sub-menu">
+                    <li><a class="menu_link__item" href="classica.html"><b>Классика</b></a></li>
+                    <li><a class="menu_link__item" href="manga.html"><b>Манга</b></a></li>
+                    <li><a class="menu_link__item" href="detective.html"><b>Детективы</b></a></li>
+                    <li><a class="menu_link__item" href="english.html"><b>Книги на английском языке</b></a></li>
+                    <li><a class="menu_link__item" href="psychology.html"><b>Психология</b></a></li>
+                </ul>
+            </li>
+            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
+                <b>Что еще почитать?</b>
+            </li></a>
+            <a class="menu_link" href="bestsellers.html"><li class="menu_item">
+                <b>Бестселлеры</b>
+            </li></a>
+            <a class="menu_link" href="new.html"><li class="menu_item">
+                <b>Новинки</b>
+            </li></a>
+            <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">
+                <b>О нас</b>
+            </li></a>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section class="block">
+        <div class="sales">
+            <div class="sales__item">
+                <a class="sales__item link" href="manga.html">
+                    <div class="sales__item_block">
+                        <div class="sales__item_block-img">
+                            <img src="{% static "images\main\ванпанчмен.png" %}">
+                        </div>
+                        <div class="sales__item_block-txt">
+                            <h1>Манга - Марафон</h1>
+                        </div>
+                    </div>
+                    <div class="sales__item_info">
+                        <h1>Манга - Марафон</h1>
+                        <p>Скидки на японские комиксы всю неделю <b>До 30%</b></p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sales__item">
+                <a class="sales__item link" href="detective.html">
+                    <div class="sales__item_block" style="background-color: #050505;">
+                        <div class="sales__item_block-img">
+                            <img src="{% static "images\sales\detective2_11zon.png" %}">
+                        </div>
+                        <div class="sales__item_block-txt" style="color: #d5b85a;">
+                            <h1>Загадочные предложения</h1>
+                        </div>
+                    </div>
+                    <div class="sales__item_info">
+                        <h1>Загадочные предложения</h1>
+                        <p>Скидки <b>до 50%</b> на детективные романы <br> с 16:00 до 17:00</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sales__item">
+                <a class="sales__item link" href="#">
+                    <div class="sales__item_block" style="background-color: #b2cfa3;">
+                        <div class="sales__item_block-img">
+                            <img src="{% static "images\sales\11zon_resized.jpg" %}">
+                        </div>
+                        <div class="sales__item_block-txt" style="color: darkolivegreen;">
+                            <h1 style="overflow: hidden;">FLOWERS FLOWERS FLOWERS FLOWERS FLOWERS FLOWERS FLOWERS FLOWERS</h1>
+                        </div>
+                    </div>
+                    <div class="sales__item_info">
+                        <h1>Букет прекрасных предложений</h1>
+                        <p>Купи книгу из подборки "флористика" и получи промокод <b>15%</b> в магазин "Lavender"</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sales__item">
+                <a class="sales__item link" href="#">
+                    <div class="sales__item_block">
+                        <img src="{% static "images\sales\11zon_resized (1).png" %}">
+                    </div>
+                    <div class="sales__item_info">
+                        <h1>Посоветовать книгу?</h1>
+                        <p>Скидка на подборку легендарных произведений <b>10%</b></p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sales__item">
+                <a class="sales__item link" href="english.html">
+                    <div class="sales__item_block">
+                        <img src="{% static "images\sales\english.png" %}">
+                    </div>
+                    <div class="sales__item_info">
+                        <h1>London is the capital of Great Britain</h1>
+                        <p>Новинки в разделе книг на английском языке!</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sales__item">
+                <a class="sales__item link" href="#">
+                    <div class="sales__item_block">
+                        <img src="{% static "images\sales\11zon_resized (2).png" %}">
+                    </div>
+                    <div class="sales__item_info">
+                        <h1>День читательских находок</h1>
+                        <p><b>-15%</b> на всё!</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sales__item">
+                <a class="sales__item link" href="#">
+                    <div class="sales__item_block">
+                        <img src="{% static "images\sales\11zon_resized (3).png" %}">
+                    </div>
+                    <div class="sales__item_info">
+                        <h1>Серия месяца</h1>
+                        <p><b>-20%</b> на книги из серии "эксклюзивная классика"</p>
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\about_us.css" %}">
+{% endblock css %}
+
+
+{% block content %}
+    <section class="panel">
+        <ul class="menu">
+            <a class="menu_link" href="{% url "main:sales" %}"><li class="menu_item">
+                <b>Акции</b>
+            </li></a>
+            <li class="menu_catalog">
+                <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
+                <ul class="sub-menu">
+                    <li><a class="menu_link__item" href="classica.html"><b>Классика</b></a></li>
+                    <li><a class="menu_link__item" href="manga.html"><b>Манга</b></a></li>
+                    <li><a class="menu_link__item" href="detective.html"><b>Детективы</b></a></li>
+                    <li><a class="menu_link__item" href="english.html"><b>Книги на английском языке</b></a></li>
+                    <li><a class="menu_link__item" href="psychology.html"><b>Психология</b></a></li>
+                </ul>
+            </li>
+            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
+                <b>Что еще почитать?</b>
+            </li></a>
+            <a class="menu_link" href="bestsellers.html"><li class="menu_item">
+                <b>Бестселлеры</b>
+            </li></a>
+            <a class="menu_link" href="new.html"><li class="menu_item">
+                <b>Новинки</b>
+            </li></a>
+            <a class="menu_link" href="{% url "main:about" %}" style="background-color: #fff59d; color: #000; "><li class="menu_item" style="font-size: 15px;">
+                <b>О нас</b>
+            </li></a>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section class="picture">
+        <img src="{% static "images\about_us\image.png" %}">
+    </section>
+
+    <section class="brand">
+        <div class="brand__title">
+            <h1>Chapter&Verse</h1>
+        </div>
+        <div class="brand__text">
+            <b>Chapter&Verse</b> - ваш уютный онлайн магазин, где каждая страница превращается в захватывающее приключение. Наши полки полны лучших книг различных жанров - от захватывающих романов до глубоких философских произведений. У нас вы найдете идеальное произведение для каждого вкуса и настроения.
+        </div>
+    </section>
+
+    <section class="brand">
+        <div class="brand__text">
+            <b>Chapter&Verse</b> создает пространство, где каждый читатель может найти источник вдохновения, удовлетворения и познания через мир книг. Мы стремимся предложить широкий выбор книг различных жанров и направлений, отбирая только самые качественные и увлекательные произведения. Наша цель - поддерживать любовь к чтению и способствовать развитию интеллектуального и эмоционального роста каждого читателя.        </div>
+        <div class="brand__title">
+            <h1>Философия</h1>
+        </div>
+    </section>
+
+    <h1 style="color:#616161; font-size: 34px; text-align: center;">Наши ценности</h1>
+    
+    <section class="values">
+        <div class="values__item">
+            <img src="{% static "images\about_us\1.jpg" %}">
+            <div class="values__item_text">
+                <p>Любовь к чтению и культуре</p>
+            </div>
+        </div>
+        <div class="values__item">
+            <img src="{% static "images\about_us\2.jpg" %}">
+            <div class="values__item_text">
+                <p>Образование и развитие</p>
+            </div>
+        </div>
+        <div class="values__item">
+            <img src="{% static "images\about_us\3.jpg" %}">
+            <div class="values__item_text">
+                <p>Доступность</p>
+            </div>
+        </div>
+        <div class="values__item">
+            <img src="{% static "images\about_us\4.jpg" %}">
+            <div class="values__item_text">
+                <p>Качество и разнообразие</p>
+            </div>
+        </div>
+        <div class="values__item">
+            <img src="{% static "images\about_us\5.jpg" %}">
+            <div class="values__item_text">
+                <p>Обслуживание и поддержка</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
