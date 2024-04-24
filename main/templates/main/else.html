@@ -15,11 +15,11 @@
             <li class="menu_catalog">
                 <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
                 <ul class="sub-menu">
-                    <li><a class="menu_link__item" href="classica.html"><b>Классика</b></a></li>
-                    <li><a class="menu_link__item" href="manga.html"><b>Манга</b></a></li>
-                    <li><a class="menu_link__item" href="detective.html"><b>Детективы</b></a></li>
-                    <li><a class="menu_link__item" href="english.html"><b>Книги на английском языке</b></a></li>
-                    <li><a class="menu_link__item" href="psychology.html"><b>Психология</b></a></li>
+                    {% for category in categories%}
+                        {% if category.name != 'Новинки' and category.name != 'Бестселлеры'%}
+                            <li><a class="menu_link__item" href="{% url "catalog:classica" %}"><b>{{category.name}}</b></a></li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
             </li>
             <a class="menu_link" href="{% url "main:else" %}" style="background-color: #fff59d; color: #000; "><li class="menu_item" style="font-size: 15px;">
