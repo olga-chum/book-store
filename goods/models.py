@@ -28,6 +28,8 @@ class Products(models.Model):
     cycle = models.CharField(max_length=150, null =True, blank=True, verbose_name='Цикл')
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE, verbose_name='Категория')
 
+
+
     class Meta:
         db_table = 'product'
         verbose_name = 'Продукт'
