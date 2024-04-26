@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load goods_tags %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static "styles\sales.css" %}">
@@ -15,10 +16,9 @@
             <li class="menu_catalog">
                 <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
                 <ul class="sub-menu">
+                    {% tag_categories as categories %}
                     {% for category in categories%}
-                        {% if category.name != 'Новинки' and category.name != 'Бестселлеры'%}
-                            <li><a class="menu_link__item" href="{% url "catalog:classica" %}"><b>{{category.name}}</b></a></li>
-                        {% endif %}
+                        <li><a class="menu_link__item" href="{% url "catalog:classica" %}"><b>{{category.name}}</b></a></li>
                     {% endfor %}
                 </ul>
             </li>

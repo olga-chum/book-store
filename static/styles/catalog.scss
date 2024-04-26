@@ -396,10 +396,10 @@ html {
 .products {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin-left: 1%;
 
     &__item {
         margin: 5%; 
+        width: 100%;
     }
 }
 
@@ -504,7 +504,7 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0px 20px 10px 15px;
+    margin: 0px 15px 10px 15px;
     cursor:default;
 
     & button{

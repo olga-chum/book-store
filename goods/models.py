@@ -37,3 +37,8 @@ class Products(models.Model):
 
     def __str__(self):
         return f'{self.name} Количество - {self.quantity}'
+    
+    def sell_price(self):
+        if self.discount:
+            return self.price - self.price * self.discount // 100
+        return self.price

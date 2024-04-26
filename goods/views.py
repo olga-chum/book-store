@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.template import context
 
-def catalog(request):
-    return render(request, 'goods/catalog.html')
+from goods.models import Products
 
 def classica(request):
+
+    goods= Products.objects.all()
+
     context = {
-        'title': 'Chepter & Verse: Классика'
+        'title': 'Chepter & Verse: Классика',
+        "goods": goods
     }
     return render(request, 'goods/classica.html', context)
 
