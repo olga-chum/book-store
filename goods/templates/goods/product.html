@@ -1,23 +1,27 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load goods_tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\в темном омуте дицзина.css" %}">
+{% endblock css %}
 
 {% block content %}
     <section class="panel">
         <ul class="menu">
-            <a class="menu_link" href="sales.html"><li class="menu_item">
+            <a class="menu_link" href="{% url "main:sales" %}"><li class="menu_item">
                 <b>Акции</b>
             </li></a>
             <li class="menu_catalog">
                 <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
                 <ul class="sub-menu">
-                    <li><a class="menu_link__item" href="classica.html"><b>Классика</b></a></li>
-                    <li><a class="menu_link__item" href="manga.html"><b>Манга</b></a></li>
-                    <li><a class="menu_link__item" href="detective.html"><b>Детективы</b></a></li>
-                    <li><a class="menu_link__item" href="english.html"><b>Книги на английском языке</b></a></li>
-                    <li><a class="menu_link__item" href="psychology.html"><b>Психология</b></a></li>
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                        <li><a class="menu_link__item" href="{% url "catalog:index" %}"><b>{{category.name}}</b></a></li>
+                    {% endfor %}
                 </ul>
             </li>
-            <a class="menu_link" href="else.html"><li class="menu_item">
+            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
                 <b>Что еще почитать?</b>
             </li></a>
             <a class="menu_link" href="bestsellers.html"><li class="menu_item">
@@ -26,7 +30,7 @@
             <a class="menu_link" href="new.html"><li class="menu_item">
                 <b>Новинки</b>
             </li></a>
-            <a class="menu_link" href="about_us.html"><li class="menu_item">
+            <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">
                 <b>О нас</b>
             </li></a>
         </ul>
@@ -38,42 +42,44 @@
         <div class="header">
             <div class="header__head">
                 <div class="header__head_name">
-                    <b>В темном омуте Дицзина</b>
+                    <b>{{product.name}}</b>
                 </div>
                 <div class="header__head_age">
-                    18+
+                    {{product.age}}+
                 </div>
             </div>
             <div class="header__author">
-                Тянься Гуйюань
+                {% if product.author_name %}
+                    {{product.author_name}}
+                {% endif %}
             </div>
             <div class="header__info">
-                <div class="header__info_discount">
-                    <b>-15%</b>
-                </div>
-                <div class="header__info_category">
-                    Новинки литературы
-                </div>
+                {% if product.discount %}
+                    <div class="header__info_discount">
+                        <b>-{{product.discount}}%</b>
+                    </div>
+                {% endif %}
+                {% if product.year_of_publish == 2024 %}
+                    <div class="header__info_category">
+                        Новинки литературы
+                    </div>
+                {% elif product.quantity < 3%}
+                    <div class="header__info_category">
+                        Бестселлер
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="book">
             <div class="book__about">
                 <div class="book__about_shortly">
                     <div class="book__about_shortly-photo">
-                        <img src="images\main\в темном омуте дицзина.png" alt="">
+                        <img src="{{product.image.url}}" alt="">
                     </div>
                     <div class="book__about_shortly-text">
                         <input type="checkbox" class="read-more-checker" id="read-more-checker" />
                         <div class="description">
-                            Долгожданное продолжение романа Тянься Гуйюань «Восхождение фениксов». В четвертом томе Нин И возвращает Фэн Чживэй в столицу Дицзин. Однако прежде не без помощи секретной техники лекаря Цзуна он запечатывает воспоминания девушки, но не чувства. Теперь героям вновь предстоит окунуться в омут интриг императорского дворца.
-                            Впервые на русском языке!<br>
-                            На страницах романа читателя ждет Древний Китай с завораживающими весенними пейзажами. Вместе с героями вы вновь прогуляетесь по судьбоносному мосту из первого тома серии, прокатитесь на лодке по реке Лошуй, сразитесь со Вторым принцем Нин Шэном и, конечно, погрузитесь в любовные перипетия Нин И и Фэн Чживэй.
-                            В книге вас ожидают цветные вклейки с ключевыми героями истории на мелованной бумаге, запечатанные форзацы и закрашенный обрез!<br>
-                            <br>
-                            Влюбившись в феникса, дракон будет верен ему до конца.<br>
-                            Несколько месяцев Цзинь Сыюй удерживал Фэн Чживэй в плену. Он подвергал ее испытаниям, но Чживэй не сдалась. Она рискнула собственной жизнью во имя долга… и выжила. Но какой ценой? Ее душа оказалась на грани истощения. Горе и ненависть отравили сердце. И все по моей вине.
-                            Меня зовут Нин И.<br>
-                            Больше не в силах смотреть, как страдает мой самый дорогой человек, я вернул Фэн Чживэй в Дицзин. Однако прежде не без помощи секретной техники лекаря Цзуна запечатал ее воспоминания, но не чувства. Я смотрю, как Чживэй вновь готовится сражаться за Империю, оплетая императорский дворец интригами. Мне все равно, что ждет нас в конце, если она останется со мной…
+                            {{product.description}}    
                         <div class="bottom"></div>
                         </div>
                         <label for="read-more-checker" class="read-more-button"></label>
@@ -85,7 +91,7 @@
                                     ID товара
                                 </div>
                                 <div class="characteristic__item_value">
-                                    056123
+                                    {{product.display_id}}
                                 </div>
                             </div>
                             <div class="characteristic__item">
@@ -93,7 +99,7 @@
                                     Жанр
                                 </div>
                                 <div class="characteristic__item_value">
-                                    Фэнтези
+                                    {{product.category}}
                                 </div>
                             </div>
                             <div class="characteristic__item">
@@ -101,7 +107,7 @@
                                     Год издания
                                 </div>
                                 <div class="characteristic__item_value">
-                                    2024
+                                    {{product.year_of_publish}}
                                 </div>
                             </div>
                             <div class="characteristic__item">
@@ -109,17 +115,19 @@
                                     Издательство
                                 </div>
                                 <div class="characteristic__item_value">
-                                    Freedom
+                                    {{product.publisher}}
                                 </div>
                             </div>
-                            <div class="characteristic__item">
-                                <div class="characteristic__item_title">
-                                    Входит в цикл
+                            {% if product.cycle %}
+                                <div class="characteristic__item">
+                                    <div class="characteristic__item_title">
+                                        Входит в цикл
+                                    </div>
+                                    <div class="characteristic__item_value">
+                                            {{product.cycle}}
+                                    </div>
                                 </div>
-                                <div class="characteristic__item_value">
-                                    4 том цикла "Восхождение фениксов"
-                                </div>
-                            </div>
+                            {% endif %}
                             <div class="bottom"></div>
                         </div>
                         <label for="read-more-checker-2" class="read-more-button-2"></label>
@@ -128,22 +136,32 @@
             </div>
             <div class="book__buy">
                 <div class="product-price">
-                    <div class="product-price__old">
-                        1&nbsp;181 ₽
-                        <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                            <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                        </svg>
-                    </div>
-                    <div class="product-price__new">
-                        <b>1&nbsp;001 ₽</b>
-                    </div>
+                    {% if product.discount %}
+                        <div class="product-price__old">
+                            {{product.price}} ₽
+                            <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                            </svg>
+                        </div>
+                        <div class="product-price__new">
+                            <b>{{product.sell_price}} ₽</b>
+                        </div>
+                    {% else %}
+                        <div class="product-price__new" style='color: black;'>
+                            <b>{{product.price}} ₽</b>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="book__buy_btns">
                     <button class="book__buy_btns-item buy">Купить</button>
-                    <button class="book__buy_btns-item like"><img src='icons\Group.png'></button>
+                    <button class="book__buy_btns-item like"><img src= {% static "icons\Group.png" %}></button>
                 </div>
                 <div class="book__buy_status">
-                    В наличии
+                    {% if product.quantity < 6 %}
+                        Осталось мало 
+                    {% else %}
+                        В наличии
+                    {% endif %}
                 </div>
             </div>
         </div>

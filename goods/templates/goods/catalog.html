@@ -38,7 +38,7 @@
                 <ul>
                     {% tag_categories as categories %}
                     {% for category in categories %}
-                        <li><a class="catalog__items_item" href="{% url "catalog:classica" %}">{{category.name}}<img src= {% static "icons\Vector 12.png" %}></a></li>
+                        <li><a class="catalog__items_item" href="{% url "catalog:index" %}">{{category.name}}<img src= {% static "icons\Vector 12.png" %}></a></li>
                     {% endfor %}
                 </ul>
                 {% comment %} <ul>
@@ -70,7 +70,7 @@
                 {% for good in goods %}
                     <div class="products__item">
                         <div class="product">
-                            <a id="product" href="">
+                            <a id="product" href="{% url "catalog:product" good.slug %}">
                                 <div class="product-photo">
                                     {% if good.image %}
                                         <img src={{good.image.url}} alt="{{good.name}}">
@@ -113,7 +113,7 @@
                                         <div class="product-price__old">
                                             <br>
                                         </div>
-                                        <div class="product-price__new">
+                                        <div class="product-price__new" style='color: black;'>
                                             <b>{{good.price}} ₽</b>
                                         </div>
                                     {% endif %}
