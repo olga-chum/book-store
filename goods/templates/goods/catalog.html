@@ -38,7 +38,7 @@
                 <ul>
                     {% tag_categories as categories %}
                     {% for category in categories %}
-                        <li><a class="catalog__items_item" href="{% url "catalog:index" %}">{{category.name}}<img src= {% static "icons\Vector 12.png" %}></a></li>
+                        <li><a class="catalog__items_item" href="{% url "catalog:index" category.slug %}">{{category.name}}<img src= {% static "icons\Vector 12.png" %}></a></li>
                     {% endfor %}
                 </ul>
                 {% comment %} <ul>

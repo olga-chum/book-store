@@ -443,19 +443,25 @@ input[name="r"] {
     &__head {
         display: flex;
         align-items: center;
+        max-width: 50%;
 
         &_name {
             font-size: 24px;
-            margin-right: 1%;
+            margin-right: 2%;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            word-break: break-word;
         }
 
         &_age {
             border-radius: 50%;
             background-color: #616161;
             color: #EEE;
-            padding: 0.5%;
-            font-size: 12px;
-            padding-block: 0.7%;
+            padding: 1.1%;
+            font-size: 13px;
+            padding-block: 1.3%;
         }
     }
 

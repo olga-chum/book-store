@@ -3,12 +3,12 @@ from django.template import context
 
 from goods.models import Products
 
-def catalog(request):
+def catalog(request, category_slug):
 
-    goods= Products.objects.all()
+    goods= Products.objects.filter(category__slug=category_slug)
 
     context = {
-        'title': 'Chepter & Verse: Классика',
+        'title': 'Chepter & Verse: Каталог',
         "goods": goods
     }
     return render(request, 'goods/catalog.html', context)
