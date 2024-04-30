@@ -53,6 +53,13 @@
         </div>
 
         <div class="main">
+            {% if request.GET.q %}
+                {% if goods %}
+                    <h1 class='result' style='color:darkgrey; margin-left:2.5%; margin-bottom: 0; margin-top:2%; font-size:22px;'>Результаты поиска по запросу "{{ request.GET.q }}"</h1>
+                {% else %}
+                    <h1 class='result' style='color:darkgrey; margin-left:2.5%; margin-bottom: 0; margin-top:2%; font-size:22px;'>По запросу "{{ request.GET.q }}" ничего не найдено</h1>
+                {% endif %}
+            {% endif %}
             <div class="products">
                 {% for good in goods %}
                     <div class="card hidden">
@@ -110,7 +117,9 @@
                     </div>
                 {% endfor %}
             </div>
-            <button class="btn" type='button'>Показать еще</button>
+            <div class="navigation">
+                <button class="btn" type='button'>Показать еще</button>
+            </div>
             <script src= {% static "\index.js" %}></script>
             {% comment %} {% if goods.has_next %}
                 <div class="navigation">

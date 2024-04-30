@@ -569,9 +569,11 @@ html {
 
 .main {
     grid-column: 3/11;
-    display: ruby;
 }
-
+.navigation {
+    display: flex;
+    justify-content: center;
+}
 .btn {
     margin-top: 2%;
 
