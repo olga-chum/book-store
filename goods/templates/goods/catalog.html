@@ -38,37 +38,24 @@
                 <ul>
                     {% tag_categories as categories %}
                     {% for category in categories %}
-                        <li><a class="catalog__items_item" href="{% url "catalog:index" category.slug %}">{{category.name}}<img src= {% static "icons\Vector 12.png" %}></a></li>
+                        {% if current_category %}
+                            {% if category == current_category %}
+                                <li><b><a class="catalog__items_item" href="{% url "catalog:index" category.slug %}" style='color: black'>{{category.name}}</a></b></li>
+                            {% else %}
+                                <li><a class="catalog__items_item" href="{% url "catalog:index" category.slug %}">{{category.name}}<img src= {% static "icons\Vector 12.png" %}></a></li>
+                            {% endif %}
+                        {% else %}
+                            <li><a class="catalog__items_item" href="{% url "catalog:index" category.slug %}">{{category.name}}<img src= {% static "icons\Vector 12.png" %}></a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
-                {% comment %} <ul>
-                    <li><a class="catalog__items_item" href="classica.html" style="color: black">
-                        <b>Классика</b>
-                    </a></li>
-                    <li><a class="catalog__items_item" href="manga.html">
-                        Манга
-                        <img src="icons\Vector 12.png">
-                    </a></li>
-                    <li><a class="catalog__items_item" href="detective.html">
-                        Детективы
-                        <img src="icons\Vector 12.png">
-                    </a></li>
-                    <li><a class="catalog__items_item" href="english.html">
-                        Книги на английском языке
-                        <img src="icons\Vector 12.png">
-                    </a></li>
-                    <li><a class="catalog__items_item" href="psychology.html">
-                        Психология
-                        <img src="icons\Vector 12.png">
-                    </a></li>
-                </ul> {% endcomment %}
             </div>
         </div>
 
         <div class="main">
             <div class="products">
                 {% for good in goods %}
-                    <div class="products__item">
+                    <div class="card hidden">
                         <div class="product">
                             <a id="product" href="{% url "catalog:product" good.slug %}">
                                 <div class="product-photo">
@@ -122,13 +109,16 @@
                         </div>
                     </div>
                 {% endfor %}
-                
-
-
             </div>
-            <div class="navigation">
-                <button class="navigation__btn">Показать еще</button>
-            </div>
+            <button class="btn" type='button'>Показать еще</button>
+            <script src= {% static "\index.js" %}></script>
+            {% comment %} {% if goods.has_next %}
+                <div class="navigation">
+                    <a class="navigation__btn" href="{% url 'catalog:index' slug_url goods.next_page_number %}">
+                        Показать еще
+                    </a>
+                </div>
+            {% endif %} {% endcomment %}
         </div>
     </section>
 {% endblock content %}

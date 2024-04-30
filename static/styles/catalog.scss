@@ -397,9 +397,42 @@ html {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    &__item {
+    &__item,
+    .card {
         margin: 5%; 
         width: 100%;
+    }
+}
+
+.card:nth-child(-n+4) {
+    display: block !important;
+}
+.hidden {
+    display: none;
+}
+
+@media (min-width: 660px) and (max-width: 989px) {
+    .products {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    
+        &__item,
+        .card {
+            margin: 5%; 
+            width: 100%;
+        }
+    }
+}
+@media (min-width: 0px) and (max-width: 659px) {
+    .products {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    
+        &__item,
+        .card {
+            margin: 5%; 
+            width: 100%;
+        }
     }
 }
 
@@ -536,28 +569,26 @@ html {
 
 .main {
     grid-column: 3/11;
+    display: ruby;
 }
 
-.navigation {
+.btn {
     margin-top: 2%;
-    display: flex;
-    justify-content: center;
 
-    & button{
-        font-size: 20px;
-        font-family: Century Gothic;
-        background-color: #EEE;
-        border: none;
-        padding-inline: 10%;
-        padding-block: 1%;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.2s linear;
+    font-size: 20px;
+    font-family: Century Gothic;
+    background-color: #EEE;
+    border: none;
+    padding-inline: 10%;
+    padding-block: 1%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s linear;
 
-        &:hover{
-            background-color: #dedede;
-        }
+    &:hover{
+        background-color: #dedede;
     }
+
 }
 
 .footer {

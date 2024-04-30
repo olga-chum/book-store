@@ -1,4 +1,5 @@
 {% load static %}
+{% load goods_tags %}
 
 <!DOCTYPE html>
 <head>
@@ -35,10 +36,10 @@
             </div>
         </div>
         <div class="box">
-            <div class="box__search">
-                <input class="search-txt" type="text" color='white' placeholder="Искать здесь...">
-                <a class="search-btn" href="#"><img src="{% static "icons\Vector.png" %}" width="60%"></a>
-            </div>
+            <form class="box__search" role="search" action="{% url "catalog:search" %}" method="get">
+                <input class="search-txt" type="search" name="q" color='white' placeholder="Искать здесь..." autocomplete="off">
+                <a class="search-btn" href="#" type='submit'><img src="{% static "icons\Vector.png" %}" width="60%"></a>
+            </form>
         </div>
         <div class="title__menu">
             <div class="icons">

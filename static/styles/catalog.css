@@ -370,11 +370,42 @@ html {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-.products__item {
+.products__item,
+.products .card {
   margin: 5%;
   width: 100%;
 }
 
+.card:nth-child(-n+4) {
+  display: block !important;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 660px) and (max-width: 989px) {
+  .products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .products__item,
+  .products .card {
+    margin: 5%;
+    width: 100%;
+  }
+}
+@media (min-width: 0px) and (max-width: 659px) {
+  .products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .products__item,
+  .products .card {
+    margin: 5%;
+    width: 100%;
+  }
+}
 .product {
   display: block;
   border: 1px solid darkgrey;
@@ -498,14 +529,11 @@ html {
 }
 .main {
   grid-column: 3/11;
+  display: ruby;
 }
 
-.navigation {
+.btn {
   margin-top: 2%;
-  display: flex;
-  justify-content: center;
-}
-.navigation button {
   font-size: 20px;
   font-family: Century Gothic;
   background-color: #EEE;
@@ -516,7 +544,7 @@ html {
   cursor: pointer;
   transition: 0.2s linear;
 }
-.navigation button:hover {
+.btn:hover {
   background-color: #dedede;
 }
 

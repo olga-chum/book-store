@@ -85,12 +85,26 @@ html {
   border-radius: 40px;
   padding: 10px;
 }
+.box__search input {
+  border: none;
+  outline: none;
+  letter-spacing: 0.5px;
+  -webkit-box-shadow: 0 0 0px 10em darkgrey inset !important;
+  -webkit-text-fill-color: white;
+}
 .box__search:hover > .search-txt {
   width: 240px;
   padding: 0 6px;
 }
 .box__search:hover > .search-btn {
   background: white;
+}
+
+input[type=search]::-webkit-search-decoration,
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-results-button,
+input[type=search]::-webkit-search-results-decoration {
+  display: none;
 }
 
 .search-txt {
