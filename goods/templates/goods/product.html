@@ -1,4 +1,4 @@
-{% extends "main/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load goods_tags %}
 
@@ -24,10 +24,10 @@
             <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
                 <b>Что еще почитать?</b>
             </li></a>
-            <a class="menu_link" href="bestsellers.html"><li class="menu_item">
+            <a class="menu_link" href="{% url "catalog:bestsellers" %}"><li class="menu_item">
                 <b>Бестселлеры</b>
             </li></a>
-            <a class="menu_link" href="new.html"><li class="menu_item">
+            <a class="menu_link" href="{% url "catalog:new" %}"><li class="menu_item">
                 <b>Новинки</b>
             </li></a>
             <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">

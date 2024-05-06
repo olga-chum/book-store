@@ -3,12 +3,12 @@ document.querySelector('.btn').addEventListener('click', function() {
     var hiddenProducts = document.querySelectorAll('.card.hidden');
     
     // Показываем следующие четыре скрытые карточки товаров
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 12; i++) {
         if (hiddenProducts[i]) {
             hiddenProducts[i].classList.remove('hidden');
         } 
     }
-        if (!hiddenProducts[4]) {
+        if (!hiddenProducts[12]) {
             // Если больше нет скрытых карточек товаров, скрываем кнопку "Показать еще"
             this.style.display = 'none';
         }
@@ -19,7 +19,7 @@ document.querySelector('.btn').addEventListener('click', function() {
 //     var categoryCount = cards.length;
 
 //     // Проверяем количество карточек в категории
-//     if (categoryCount < 5) {
+//     if (categoryCount < 4) {
 //         // Если в категории меньше 5 товаров, скрываем кнопку "Показать еще"
 //         document.querySelector('.btn').style.display = 'none';
 //     }

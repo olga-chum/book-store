@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_list_or_404, render
 from django.shortcuts import get_object_or_404
 from django.template import context
-
+from datetime import datetime
 from goods.models import Products
 from goods.models import Categories
 from goods.utils import q_search
@@ -38,3 +38,23 @@ def product(request, product_slug=False, product_id=False):
     }
 
     return render(request, 'goods/product.html', context=context)
+
+def bestsellers(request):
+    categories = Categories.objects.all()
+    bests = Products.objects.filter(quantity__lt=5).order_by('?')[:6]
+    context: dict = {
+        'title': 'Chapter & Verse - Бестселлеры',
+        'categories': categories,
+        'bests': bests,
+    }
+    return render(request, 'goods/bestsellers.html', context)
+
+def new(request):
+    categories = Categories.objects.all()
+    new = Products.objects.filter(year_of_publish=datetime.now().year)
+    context: dict = {
+        'title': 'Chapter & Verse - Новинки',
+        'categories': categories,
+        'new': new,
+    }
+    return render(request, 'goods/new.html', context)

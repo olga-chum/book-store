@@ -439,11 +439,20 @@ input[name="r"] {
 .products {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    margin-left: 1%;
 
-    &__item {
-        margin: 5%; 
+    &__item,
+    .card {
+        margin-block: 5%; 
+        width: 100%;
     }
+}
+
+.card:nth-child(-n + 12) {
+    display: block !important;
+}
+
+.hidden {
+    display: none;
 }
 
 .product {

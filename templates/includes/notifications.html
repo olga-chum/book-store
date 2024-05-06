@@ -1,0 +1,14 @@
+{% load static %}
+
+{% if form.non_field_errors %}
+    <div class="container">
+        <div class="justify-content-center">
+            <div class="col-md-6">
+                <div class="alert-danger" role='alert'>
+                    Текст ошибок
+                    <button type='button' class='btn-close' data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

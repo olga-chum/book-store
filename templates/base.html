@@ -1,5 +1,8 @@
 {% load static %}
 {% load goods_tags %}
+{% comment %} {% load carts_tags %}
+
+{% user_carts request as carts %} {% endcomment %}
 
 <!DOCTYPE html>
 <head>
@@ -44,88 +47,100 @@
         <div class="title__menu">
             <div class="icons">
                 <div class="icons__box">
-                    <a class="icons__box_link1" href="#person">
-                        <img src="{% static "icons\Group 40.png" %}">
-                    </a>
-                    <div id="person" class='person' animation="show">
-                        <div class="person__title">
-                            <div class="person__title_text">
-                                <h1 style="color: black;">Личный кабинет</h1>
-                            </div>
-                            <a class="person__title_icon" href="#close-block"><b>X</b></a>
-                        </div>
-                        <div class="person__block">
-                            <div class="person__info">
-                                <div class="person__choice">
-                                    <h2 style="color:black"><a href="#person" style="text-decoration: none; color: #000;">Вход</a></h2><b>&nbsp;/&nbsp;</b><a href='#cd-signup' style="text-decoration: none; color:darkgray;"><h2>Регистрация</h2></a>
+                    {% if not user.is_authenticated %}
+                        <a class="icons__box_link1" href="#person">
+                            <img src="{% static "icons\Group 40.png" %}">
+                        </a>
+                        <div id="person" class='person' animation="show">
+                            <form action="{% url "user:login" %}" method='post'>
+                                {% csrf_token %}
+                                <div class="person__title">
+                                    <div class="person__title_text">
+                                        <h1 style="color: black;">Личный кабинет</h1>
+                                    </div>
+                                    <a class="person__title_icon" href="#close-block"><b>X</b></a>
                                 </div>
-                                <div class="person__list">
-                                    <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" inputmode="email" placeholder="email" type="email" value="" name="email">
+                                <div class="person__block">
+                                    <div class="person__info">
+                                        <div class="person__choice">
+                                            <h2 style="color:black"><a href="#person" style="text-decoration: none; color: #000;">Вход</a></h2><b>&nbsp;/&nbsp;</b><a href='#cd-signup' style="text-decoration: none; color:darkgray;"><h2>Регистрация</h2></a>
                                         </div>
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" inputmode="text" placeholder="пароль" type="password" value="" name="password">
+                                        <div class="person__list">
+                                            <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" id='id_email' inputmode="email" placeholder="email" required type="email" value="{% if form.email.value %}{{form.email.value}}{% endif %}" name="email" autocomplete='email'>
+                                                </div>
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" id='id_password' inputmode="text" placeholder="пароль" required type="password" value="" name="password">
+                                                </div>
+                                            </div>
+                                            <div letter-spacing="0.5px" style=" text-decoration: underline; font-size: 13px; text-align: right; margin-top: -1.5rem; margin-bottom: 2rem; cursor: pointer;">забыли свой пароль?</div>
+                                            <div class="person__list_btn">
+                                                <button type='submit' style="align-items: center; color: black;">продолжить</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div letter-spacing="0.5px" style=" text-decoration: underline; font-size: 13px; text-align: right; margin-top: -1.5rem; margin-bottom: 2rem; cursor: pointer;">забыли свой пароль?</div>
-                                    <div class="person__list_btn">
-                                        <button style="align-items: center; color: black;">продолжить</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="cd-signup" class='person' animation="show">
+                            <form action="{% url "user:registration" %}" method='post'>
+                                {% csrf_token %}
+                                <div class="person__title">
+                                    <div class="person__title_text">
+                                        <h1 style="color: black;">Личный кабинет</h1>
+                                    </div>
+                                    <a class="person__title_icon" href="#close-block"><b>X</b></a>
+                                </div>
+                                <div class="person__block">
+                                    <div class="person__info">
+                                        <div class="person__choice">
+                                            <h2><a href="#person" style="text-decoration: none; color:darkgray;">Вход</a></h2 style="color:black"><b>&nbsp;/&nbsp;</b><a href='#person cd-signup' style="text-decoration: none; color: #000;"><h2>Регистрация</h2></a>
+                                        </div>
+                                        <div class="person__list">
+                                            <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" inputmode="kana-name" placeholder="*имя" type="name" value="" name="name">
+                                                </div>
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" inputmode="surname" placeholder="*фамилия" type="surname" value="" name="surname">
+                                                </div>
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" inputmode="email" placeholder="*email" type="email" value="" name="email">
+                                                </div>
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" placeholder="*номер телефона" type="tel" value="" name="phone">
+                                                </div>                                    
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" inputmode="text" placeholder="пароль" type="password" value="" name="password">
+                                                </div>
+                                                <div style="font-size: 11px; text-align: left; margin-top: -1.5rem;  margin-bottom: 1.5rem; margin-left: 0.5rem; color:#000">от 8 символов, прописные a-z, строчные a-z, цифры 0-9</div>
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" inputmode="text" placeholder="повторите пароль" type="password" value="" name="password">
+                                                </div>
+                                            </div>
+                                            <div class="person__list_btn">
+                                                <button style="align-items: center; color: black;">создать аккаунт</button>
+                                            </div>
+                                            <div style="font-size: 11px; text-align: left; text-align: justify; margin-top: 1.5rem; margin-left: rem; color:#000">регистрируясь, вы принимаете  <b>Условия обслуживания</b>, а также подтверждаете, что ознакомлены с <b>Политикой конфиденциальности</b></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </div>
-                    <div id="cd-signup" class='person' animation="show">
-                        <div class="person__title">
-                            <div class="person__title_text">
-                                <h1 style="color: black;">Личный кабинет</h1>
-                            </div>
-                            <a class="person__title_icon" href="#close-block"><b>X</b></a>
-                        </div>
-                        <div class="person__block">
-                            <div class="person__info">
-                                <div class="person__choice">
-                                    <h2><a href="#person" style="text-decoration: none; color:darkgray;">Вход</a></h2 style="color:black"><b>&nbsp;/&nbsp;</b><a href='#person cd-signup' style="text-decoration: none; color: #000;"><h2>Регистрация</h2></a>
-                                </div>
-                                <div class="person__list">
-                                    <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" inputmode="kana-name" placeholder="*имя" type="name" value="" name="name">
-                                        </div>
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" inputmode="surname" placeholder="*фамилия" type="surname" value="" name="surname">
-                                        </div>
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" inputmode="email" placeholder="*email" type="email" value="" name="email">
-                                        </div>
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" placeholder="*номер телефона" type="tel" value="" name="phone">
-                                        </div>                                    
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" inputmode="text" placeholder="пароль" type="password" value="" name="password">
-                                        </div>
-                                        <div style="font-size: 11px; text-align: left; margin-top: -1.5rem;  margin-bottom: 1.5rem; margin-left: 0.5rem; color:#000">от 8 символов, прописные a-z, строчные a-z, цифры 0-9</div>
-                                        <div class="inputContainer">
-                                            <input class="inputContainer__txt" inputmode="text" placeholder="повторите пароль" type="password" value="" name="password">
-                                        </div>
-                                    </div>
-                                    <div class="person__list_btn">
-                                        <button style="align-items: center; color: black;">создать аккаунт</button>
-                                    </div>
-                                    <div style="font-size: 11px; text-align: left; text-align: justify; margin-top: 1.5rem; margin-left: rem; color:#000">регистрируясь, вы принимаете  <b>Условия обслуживания</b>, а также подтверждаете, что ознакомлены с <b>Политикой конфиденциальности</b></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% else %}
+                        <a class="icons__box_link1" href="{% url "user:profile" %}">
+                            <img src="{% static "icons\Group 40.png" %}">
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="icons__box">
-                    <a class="icons__box_link1" href="shopping bag.html">
+                    <a class="icons__box_link1" href="">
                         <img src="{% static "icons\Group 43.png" %}">
                     </a>
                 </div>
                 <div class="icons__box">
-                    <a class="icons__box_link" href="like.html">
+                    <a class="icons__box_link" href="">
                         <img src="{% static "icons\Group.png" %}">
                     </a>
                 </div>
@@ -134,7 +149,7 @@
     </section>
 
     <hr>
-
+    {% include "includes/notifications.html" %}
     {% block content %}{% endblock  %}
 
     <section class="footer" id="contacts">

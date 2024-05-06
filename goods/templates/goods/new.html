@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% load goods_tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\new.css" %}">
+{% endblock css %}
+
+
+{% block content %}
+    <section class="panel">
+        <ul class="menu">
+            <a class="menu_link" href="{% url "main:sales" %}"><li class="menu_item">
+                <b>Акции</b>
+            </li></a>
+            <li class="menu_catalog">
+                <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
+                <ul class="sub-menu">
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                        <li><a class="menu_link__item" href="{% url "catalog:index" category.slug%}"><b>{{category.name}}</b></a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
+                <b>Что еще почитать?</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:bestsellers" %}"><li class="menu_item">
+                <b>Бестселлеры</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:new" %}" style="background-color: #fff59d; color: #000; "><li class="menu_item">
+                <b>Новинки</b>
+            </li></a>
+            <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">
+                <b>О нас</b>
+            </li></a>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section class="block">
+        <div class="products">
+            {% for good in new %}
+                <div class="card hidden">
+                    <div class="product">
+                        <a id="product" href="{% url "catalog:product" good.slug %}">
+                            <div class="product-photo">
+                                {% if good.image %}
+                                    <img src={{good.image.url}} alt="{{good.name}}">
+                                {% endif %}
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>{{good.name}}</b>
+                                </div>
+                                <div class="product-title__author">
+                                    {% if good.author_name %}
+                                        {{good.author_name}}
+                                    {% else %}
+                                        <br>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                <button class="product-info__pic" href="#">
+                                        <img src={% static "icons\Group 43.png" %}>
+                                </button>
+                                <button class="product-info__pic" href="#">
+                                    <img src={% static "icons\Group.png" %}>
+                            </button>
+                            </div>
+                            <div class="product-price">
+                                {% if good.discount %}
+                                    <div class="product-price__old">
+                                        {{good.price}} ₽
+                                        <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                            <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="product-price__new">
+                                        <b>{{good.sell_price}} ₽</b>
+                                    </div>
+                                {% else %}
+                                    <div class="product-price__old">
+                                        <br>
+                                    </div>
+                                    <div class="product-price__new" style='color: black;'>
+                                        <b>{{good.price}} ₽</b>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>      
+            {% endfor %}
+        </div>
+        <div class="navigation">
+            <button class="btn" type='button'>Показать еще</button>
+        </div>
+        <script src= {% static "\new.js" %}></script>
+    </section>
+
+{% endblock %}

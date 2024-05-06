@@ -1,13 +1,21 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from datetime import datetime
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.utils.timezone import now
 
-from goods.models import Categories
+from goods.models import Categories, Products
 
 
 def index(request):
+    categories = Categories.objects.all()
+    manga = Products.objects.filter(category__slug='Manga').order_by('?')[:6]
+    new = Products.objects.filter(year_of_publish=datetime.now().year).order_by('?')[:6]
 
     context: dict = {
-        'title': 'Chapter & Verse - Главная'
+        'title': 'Chapter & Verse - Главная',
+        'categories': categories,
+        'manga': manga,
+        'new': new
     }
 
     return render(request, 'main/index.html', context)

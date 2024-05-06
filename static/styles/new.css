@@ -411,10 +411,19 @@ input[name=r] {
 .products {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  margin-left: 1%;
 }
-.products__item {
-  margin: 5%;
+.products__item,
+.products .card {
+  margin-block: 5%;
+  width: 100%;
+}
+
+.card:nth-child(-n+12) {
+  display: block !important;
+}
+
+.hidden {
+  display: none;
 }
 
 .product {
