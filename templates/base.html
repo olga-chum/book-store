@@ -54,6 +54,9 @@
                         <div id="person" class='person' animation="show">
                             <form action="{% url "user:login" %}" method='post'>
                                 {% csrf_token %}
+                                {% if request.GET.next %}
+                                    <input type="hidden" name="next" value={{request.GET.next}}>
+                                {% endif %}
                                 <div class="person__title">
                                     <div class="person__title_text">
                                         <h1 style="color: black;">Личный кабинет</h1>

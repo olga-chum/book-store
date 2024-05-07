@@ -22,6 +22,9 @@ def login(request):
                 auth.login(request, user)
                 # if session_key:
                 #     Cart.objects.filter(session_key=session_key).update(user=user)
+                if request.POST.get('next', None):
+                    return HttpResponseRedirect(request.POST.get('next'))
+                
                 return HttpResponseRedirect(reverse('user:profile'))
         else:
             # Возвращаем страницу, которая содержит модальное окно, с контекстом, чтобы показать ошибки
