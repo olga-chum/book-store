@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from users.models import User
+import phonenumbers
 
 class UserLoginForm(AuthenticationForm):
 
@@ -24,8 +25,9 @@ class UserRegistrationForm(UserCreationForm):
             "username",
             "password1",
             "password2",
-            "phone"
+            "phone_number"
         )
+
     def clean_confirmation(self):
         if self.cleaned_data["confirmation"] is not True:
             raise forms.ValidationError("You must confirm!")
@@ -35,7 +37,7 @@ class UserRegistrationForm(UserCreationForm):
     username = forms.CharField()
     password1 = forms.CharField()
     password2 = forms.CharField()
-    phone = forms.CharField()
+    phone_number = forms.CharField()
 
 
 class ProfileForm(UserChangeForm):
@@ -44,9 +46,13 @@ class ProfileForm(UserChangeForm):
         fields = (
             "first_name",
             "last_name",
-            "email",
+            "username",
+            "phone_number",
+            'middle_name'
         )
 
     first_name = forms.CharField()
     last_name = forms.CharField()
-    email = forms.CharField()
+    username = forms.CharField()
+    phone_number = forms.CharField()
+    middle_name = forms.CharField(required=False)

@@ -125,7 +125,7 @@
                                                 </div>
                                                 {% endif %}
                                                 <div class="inputContainer">
-                                                    <input class="inputContainer__txt" placeholder="*номер телефона" required type="tel" name="phone" id='id_phone' value="{% if from.phone.value %}{{from.phone.value}}{% endif %}">
+                                                    <input class="inputContainer__txt" placeholder="*номер телефона" required type="tel" name="phone_number" id='id_phone_number' value="{% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}">
                                                 </div>                                    
                                                 {% if form.phone.errors %}
                                                 <div class="alert-danger">

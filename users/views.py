@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Prefetch, Sum, F
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib import auth, messages
@@ -21,7 +20,6 @@ def login(request):
             session_key = request.session.session_key
             if user:
                 auth.login(request, user)
-                messages.success(request, f"Вы вошли в аккаунт")
                 # if session_key:
                 #     Cart.objects.filter(session_key=session_key).update(user=user)
                 return HttpResponseRedirect(reverse('user:profile'))
@@ -44,13 +42,16 @@ def registration(request):
     if request.method == 'POST':
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            session_key = request.session.session_key
+            user = form.save()
+            user.phone_number = form.cleaned_data.get('phone_number')           
+            user.save()
             user = form.instance
+            # # if session_key:
+            # #         Cart.objects.filter(session_key=session_key).update(user=user)
+            
+            session_key = request.session.session_key
+            # Авторизуем пользователя
             auth.login(request, user)
-            # if session_key:
-            #         Cart.objects.filter(session_key=session_key).update(user=user)
-            messages.success(request, f"Вы успешно зарегистрированны и вошли в аккаунт")
             return HttpResponseRedirect(reverse('user:profile'))
         else:
             # Возвращаем страницу, которая содержит модальное окно, с контекстом, чтобы показать ошибки
@@ -70,19 +71,7 @@ def registration(request):
 
 @login_required
 def profile(request):
-    if request.method == 'POST':
-        form = ProfileForm(data=request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f" Профиль успешно обновлен ")
-            return HttpResponseRedirect(reverse('user:profile'))
-        else:
-            # Возвращаем страницу, которая содержит модальное окно, с контекстом, чтобы показать ошибки
-            context = {
-                'form': form
-            }
-    else:
-        form = ProfileForm(instance=request.user)
+    form = ProfileForm(instance=request.user)
 
     context = {
         "title": "Chapter & Verse - Профиль", 
@@ -91,8 +80,27 @@ def profile(request):
     return render(request, 'users/profile.html', context)  # Шаблон, который содержит модальное окно
 
 @login_required
+def personality(request):
+    if request.method == 'POST':
+        form = ProfileForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:personality'))
+        else:
+            context = {
+                'form': form
+            }
+    else:
+        form = ProfileForm(instance=request.user)
+
+    context = {
+        'title': 'Chapter & Verse - Личные данные',
+        'form': form,
+    }
+    return render(request, 'users/personality.html', context)
+
+@login_required
 def logout(request):
-    messages.success(request, f"Вы вышли из аккаунта")
     auth.logout(request)
     return redirect(reverse('main:index'))
 

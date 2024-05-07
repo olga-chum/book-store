@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static "styles\profile.css" %}">
@@ -45,17 +46,17 @@
                     <li><a class="catalog__items_item" href="{% url "user:profile" %}" style="color: black">
                         <b>Профиль</b>
                     </a></li>
-                    <li><a class="catalog__items_item" href="personal data.html">
+                    <li><a class="catalog__items_item" href="{% url "user:personality" %}">
                         Личные данные
-                        <img src="icons\Vector 12.png">
+                        <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
                     <li><a class="catalog__items_item" href="orders.html">
                         Заказы
-                        <img src="icons\Vector 12.png">
+                        <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
                     <li><a class="catalog__items_item" href="like.html">
                         Избранное
-                        <img src="icons\Vector 12.png">
+                        <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
                     <hr>
                     <li><a class="catalog__items_item" href="{% url "user:logout" %}" style="color: #921A22;">
@@ -70,14 +71,14 @@
             </div>
             <div class="main__item">
                 <div class="main__item_title">
-                    <a href="personal data.html" class="main__item_title-link"><b>Личные данные</b></a>
+                    <a href="{% url "users:personality" %}" class="main__item_title-link"><b>Личные данные</b></a>
                 </div>
                 <div class="main__item_data">
                     <div class="main__item_data-name">
-                        <b>Чумакова Ольга</b>
+                        <b>{{form.last_name.value}} {{form.first_name.value}} {% if form.middle_name.value %}{{form.middle_name.value}}{% endif %}</b>
                     </div>
                     <div class="main__item_data-link">
-                        +7 (967) 801-45-01 · olga.chumakova2002@mail.ru
+                        {% if form.phone_number.value %}{{ form.phone_number.value|phone_format }}{% endif %} · {{form.username.value}}
                     </div>
                 </div>
             </div>
