@@ -153,8 +153,11 @@ INTERNAL_IPS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'modules.system.backends.EmailModelBackend',
+    'modules.system.backends.EmailAuthBackend',
     # Другие бэкенды аутентификации, если есть
 ]

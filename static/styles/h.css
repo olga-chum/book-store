@@ -422,6 +422,22 @@ input[name=r] {
   visibility: hidden;
 }
 
+.alert-danger {
+  font-size: 13px;
+  margin-top: -3%;
+  width: 105%;
+  color: black;
+  border-radius: 5px;
+  background-color: #fff59d;
+}
+.alert-danger ul {
+  list-style: none;
+  padding: 2%;
+}
+.alert-danger ul li {
+  margin-bottom: 3%;
+}
+
 .adverts {
   width: 100%;
   height: 300px;

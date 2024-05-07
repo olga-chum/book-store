@@ -42,7 +42,7 @@
         <div class="catalog">
             <div class="catalog__items">
                 <ul>
-                    <li><a class="catalog__items_item" href="profile.html" style="color: black">
+                    <li><a class="catalog__items_item" href="{% url "user:profile" %}" style="color: black">
                         <b>Профиль</b>
                     </a></li>
                     <li><a class="catalog__items_item" href="personal data.html">
@@ -58,7 +58,7 @@
                         <img src="icons\Vector 12.png">
                     </a></li>
                     <hr>
-                    <li><a class="catalog__items_item" href="#" style="color: #921A22;">
+                    <li><a class="catalog__items_item" href="{% url "user:logout" %}" style="color: #921A22;">
                         Выйти
                     </a></li>
                 </ul>

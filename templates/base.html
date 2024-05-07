@@ -68,13 +68,14 @@
                                         <div class="person__list">
                                             <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
                                                 <div class="inputContainer">
-                                                    <input class="inputContainer__txt" id='id_email' inputmode="email" placeholder="email" required type="email" value="{% if form.email.value %}{{form.email.value}}{% endif %}" name="email" autocomplete='email'>
+                                                    <input class="inputContainer__txt" id='id_username' placeholder="email" required type="email" value="{% if form.username.value %}{{form.username.value}}{% endif %}" name="username">
                                                 </div>
                                                 <div class="inputContainer">
                                                     <input class="inputContainer__txt" id='id_password' inputmode="text" placeholder="пароль" required type="password" value="" name="password">
                                                 </div>
                                             </div>
                                             <div letter-spacing="0.5px" style=" text-decoration: underline; font-size: 13px; text-align: right; margin-top: -1.5rem; margin-bottom: 2rem; cursor: pointer;">забыли свой пароль?</div>
+                                            {% include "includes/notifications.html" %}
                                             <div class="person__list_btn">
                                                 <button type='submit' style="align-items: center; color: black;">продолжить</button>
                                             </div>
@@ -98,29 +99,59 @@
                                             <h2><a href="#person" style="text-decoration: none; color:darkgray;">Вход</a></h2 style="color:black"><b>&nbsp;/&nbsp;</b><a href='#person cd-signup' style="text-decoration: none; color: #000;"><h2>Регистрация</h2></a>
                                         </div>
                                         <div class="person__list">
-                                            <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
+                                            <div background="white" helper="[object Object]" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
                                                 <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="kana-name" placeholder="*имя" type="name" value="" name="name">
+                                                    <input class="inputContainer__txt"  inputmode="kana-name" placeholder="*имя" required type="name" name="first_name" id='id_first_name' value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}">
                                                 </div>
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="surname" placeholder="*фамилия" type="surname" value="" name="surname">
+                                                {% if form.first_name.errors %}
+                                                <div class="alert-danger">
+                                                    {{form.first_name.errors}}
                                                 </div>
+                                                {% endif %}
                                                 <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="email" placeholder="*email" type="email" value="" name="email">
+                                                    <input class="inputContainer__txt" inputmode="surname" placeholder="*фамилия" required type="surname" name="last_name" id='id_last_name' value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}">
                                                 </div>
+                                                {% if form.last_name.errors %}
+                                                <div class="alert-danger">
+                                                    {{form.last_name.errors}}
+                                                </div>
+                                                {% endif %}
                                                 <div class="inputContainer">
-                                                    <input class="inputContainer__txt" placeholder="*номер телефона" type="tel" value="" name="phone">
+                                                    <input class="inputContainer__txt" id='id_username' placeholder="email" required type="email" name="username" value="{% if form.username.value %}{{ form.username.value }}{% endif %}">
+                                                </div>
+                                                {% if form.username.errors %}
+                                                <div class="alert-danger">
+                                                    {{form.username.errors}}
+                                                </div>
+                                                {% endif %}
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" placeholder="*номер телефона" required type="tel" name="phone" id='id_phone' value="{% if from.phone.value %}{{from.phone.value}}{% endif %}">
                                                 </div>                                    
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="text" placeholder="пароль" type="password" value="" name="password">
+                                                {% if form.phone.errors %}
+                                                <div class="alert-danger">
+                                                    {{form.phone.errors}}
                                                 </div>
+                                                {% endif %}
+                                                <div class="inputContainer">
+                                                    <input class="inputContainer__txt" inputmode="text" placeholder="пароль" required type="password" name="password1" id='id_password' value="{% if form.password1.value %}{{form.password1.value}}{% endif %}">
+                                                </div>
+                                                {% if form.password1.errors %}
+                                                <div class="alert-danger">
+                                                    {{form.password1.errors}}
+                                                </div>
+                                                {% endif %}
                                                 <div style="font-size: 11px; text-align: left; margin-top: -1.5rem;  margin-bottom: 1.5rem; margin-left: 0.5rem; color:#000">от 8 символов, прописные a-z, строчные a-z, цифры 0-9</div>
                                                 <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="text" placeholder="повторите пароль" type="password" value="" name="password">
+                                                    <input class="inputContainer__txt" inputmode="text" placeholder="повторите пароль" required type="password"name="password2" id='id_password' value="{% if form.password2.value %}{{form.password2.value}}{% endif %}">
                                                 </div>
+                                                {% if form.password2.errors %}
+                                                <div class="alert-danger">
+                                                    {{form.password2.errors}}
+                                                </div>
+                                                {% endif %}
                                             </div>
                                             <div class="person__list_btn">
-                                                <button style="align-items: center; color: black;">создать аккаунт</button>
+                                                <button type="submit" style="align-items: center; color: black;">создать аккаунт</button>
                                             </div>
                                             <div style="font-size: 11px; text-align: left; text-align: justify; margin-top: 1.5rem; margin-left: rem; color:#000">регистрируясь, вы принимаете  <b>Условия обслуживания</b>, а также подтверждаете, что ознакомлены с <b>Политикой конфиденциальности</b></div>
                                         </div>
@@ -149,7 +180,6 @@
     </section>
 
     <hr>
-    {% include "includes/notifications.html" %}
     {% block content %}{% endblock  %}
 
     <section class="footer" id="contacts">
