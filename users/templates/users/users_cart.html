@@ -1,6 +1,9 @@
 {% extends "base.html" %}
-{% load goods_tags %}
 {% load static %}
+
+{% load carts_tags %}
+{% load goods_tags %}
+{% user_carts request as carts %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static "styles\shopping bag.css" %}">
@@ -42,130 +45,8 @@
         <div class="block__title">
             <b>Корзина</b>
         </div>
-        <div class="block__main">
-            <div class="block__main_goods">
-                <div class="good">
-                    <div class="good__pic">
-                        <img src='images\classica\цветы для элджернона.jpg'>
-                    </div>
-                    <div class="good__text">
-                        <div class="good__text_title">
-                            <div class="good__text_title-name">
-                                <div class="book-title">
-                                    <b>Цветы для Элджернона</b>
-                                </div>
-                                <div class="book-author">
-                                    Дэниэл Киз
-                                </div>
-                            </div>
-                            <button class="good__text_title-cancel" href="{% url "cart:cart_remove" %}">
-                                <b>X</b>
-                            </button>
-                        </div>
-                        <div class="good__text_price">
-                            <div class="good__text_price-old">
-                                599 ₽
-                                <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="good__text_price-line">
-                                    <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                </svg>
-                            </div>
-                            <div class="good__text_price-new">
-                                <b>494 ₽/шт</b>
-                            </div>
-                        </div>
-                        <div class="good__text_btn">
-                            <button class="good__text_btn-pic" href="#">
-                                <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control">
-                                <button class="product-quantity__button product-quantity__button--left product-quantity__button--disabled">
-                                    -
-                                </button> 
-                                <input max='300' type="number" class="product-quantity__counter" value="1"> 
-                                <button class="product-quantity__button product-quantity__button--right">
-                                    +
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="good">
-                    <div class="good__pic">
-                        <img src='images\psychology\Тонкое искусство пофигизма.jpg'>
-                    </div>
-                    <div class="good__text">
-                        <div class="good__text_title">
-                            <div class="good__text_title-name">
-                                <div class="book-title">
-                                    <b>Тонкое искусство пофигизма</b>
-                                </div>
-                                <div class="book-author">
-                                    Марк Мэнсон
-                                </div>
-                            </div>
-                            <button class="good__text_title-cancel" href="">
-                                <b>X</b>
-                            </button>
-                        </div>
-                        <div class="good__text_price">
-                            <div class="good__text_price-old">
-                                809 ₽
-                                <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="good__text_price-line">
-                                    <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                </svg>
-                            </div>
-                            <div class="good__text_price-new">
-                                <b>701 ₽/шт</b>
-                            </div>
-                        </div>
-                        <div class="good__text_btn">
-                            <button class="good__text_btn-pic" href="#">
-                                <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control">
-                                <button class="product-quantity__button product-quantity__button--left product-quantity__button--disabled">
-                                    -
-                                </button> 
-                                <input max='300' type="number" class="product-quantity__counter" value="1"> 
-                                <button class="product-quantity__button product-quantity__button--right">
-                                    +
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="block__main_pay">
-                <div class="sum">
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            Сумма заказа
-                        </div>
-                        <div class="sum__item_value">
-                            1&nbsp;408 ₽
-                        </div>
-                    </div>
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            Скидка
-                        </div>
-                        <div class="sum__item_value">
-                            213 ₽
-                        </div>
-                    </div>
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            <b>Итого</b>
-                        </div>
-                        <div class="sum__item_value">
-                            <b>1&nbsp;195 ₽</b>
-                        </div>
-                    </div>
-                </div>
-                <div class="block__main_pay-btn">
-                    <a href="order registration.html" class="block__main_pay-btn">Перейти к оформлению</a>
-                </div>
-            </div>
-        </div>
+        <!-- Разметка корзины -->
+        {% include "carts/includes/included_cart.html" %}
+        <!-- Закончилась разметка корзины -->
     </section>
 {% endblock %}

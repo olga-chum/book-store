@@ -492,6 +492,8 @@ input[name=r] {
   align-items: center;
 }
 .book__buy_btns-item {
+  text-decoration: none;
+  color: black;
   height: 100%;
   font-size: 20px;
   border: none;

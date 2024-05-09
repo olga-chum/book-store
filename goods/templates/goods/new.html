@@ -65,9 +65,11 @@
                         </a>
                         <div class="product-info">
                             <div class="product-info__pic">
-                                <button class="product-info__pic" href="#">
-                                        <img src={% static "icons\Group 43.png" %}>
-                                </button>
+                                <a href="{% url "cart:cart_add" good.slug %}">
+                                    <button class="product-info__pic">
+                                            <img src={% static "icons\Group 43.png" %}>
+                                    </button>
+                                </a>
                                 <button class="product-info__pic" href="#">
                                     <img src={% static "icons\Group.png" %}>
                             </button>
