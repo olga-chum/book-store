@@ -464,6 +464,7 @@ input[name="r"] {
     &__main {
         display: flex;
         margin-top: 3%;
+        justify-content: center;
 
         &_goods {
             width: 60%;
@@ -538,6 +539,7 @@ input[name="r"] {
             border: none;
             background-color: white;
             cursor: pointer;
+            text-decoration: none;
 
             &:hover {
                 color:#000

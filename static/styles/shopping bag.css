@@ -435,6 +435,7 @@ input[name=r] {
 .block__main {
   display: flex;
   margin-top: 3%;
+  justify-content: center;
 }
 .block__main_goods {
   width: 60%;
@@ -499,6 +500,7 @@ input[name=r] {
   border: none;
   background-color: white;
   cursor: pointer;
+  text-decoration: none;
 }
 .good__text_title-cancel:hover {
   color: #000;

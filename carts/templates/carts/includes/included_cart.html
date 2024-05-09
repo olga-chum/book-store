@@ -10,108 +10,112 @@
 
 {% block content %}
     <div class="block__main">
-        <div class="block__main_goods">
-            {% for cart in carts %}
-                <div class="good">
-                    <div class="good__pic">
-                        {% if cart.product.image %}
-                            <img src={{cart.product.image.url}} alt="{{cart.product.name}}">
-                        {% endif %}                        
-                    </div>
-                    <div class="good__text">
-                        <div class="good__text_title">
-                            <div class="good__text_title-name">
-                                <div class="book-title">
-                                    <b>{{cart.product.name}}</b>
+        {% if carts %}
+            <div class="block__main_goods">
+                {% for cart in carts %}
+                    <div class="good">
+                        <div class="good__pic">
+                            {% if cart.product.image %}
+                                <img src={{cart.product.image.url}} alt="{{cart.product.name}}">
+                            {% endif %}                        
+                        </div>
+                        <div class="good__text">
+                            <div class="good__text_title">
+                                <div class="good__text_title-name">
+                                    <div class="book-title">
+                                        <b>{{cart.product.name}}</b>
+                                    </div>
+                                    <div class="book-author">
+                                        {% if cart.product.author_name %}
+                                            {{cart.product.author_name}}
+                                        {% else %}
+                                            <br>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="book-author">
-                                    {% if cart.product.author_name %}
-                                        {{cart.product.author_name}}
-                                    {% else %}
+                                <a class="good__text_title-cancel" href="{% url "cart:cart_remove" cart.id%}">
+                                    <b>X</b>
+                                </a>
+                            </div>
+                            <div class="good__text_price">
+                                {% if cart.product.discount %}
+                                    <div class="good__text_price-old">
+                                        {{cart.full_price}} ₽
+                                        <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                            <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="good__text_price-new">
+                                        {% if cart.quantity > 1 %}
+                                            <b>{{cart.product_price}} ₽ </b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                     
+                                        {% else %}
+                                            <b>{{cart.product_price}} ₽/шт</b>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="good__text_price-old">
                                         <br>
-                                    {% endif %}
-                                </div>
+                                    </div>
+                                    <div class="good__text_price-new" style='color: black;'>
+                                        {% if cart.quantity > 1 %}
+                                            <b>{{cart.product_price}} ₽</b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                        
+                                        {% else %}
+                                            <b>{{cart.product_price}} ₽/шт</b>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
                             </div>
-                            <button class="good__text_title-cancel" href="{% url "cart:cart_remove" 1%}">
-                                <b>X</b>
-                            </button>
-                        </div>
-                        <div class="good__text_price">
-                            {% if cart.product.discount %}
-                                <div class="good__text_price-old">
-                                    {{cart.full_price}} ₽
-                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                    </svg>
-                                </div>
-                                <div class="good__text_price-new">
-                                    {% if cart.quantity > 1 %}
-                                        <b>{{cart.product_price}} ₽ </b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                     
-                                    {% else %}
-                                        <b>{{cart.product_price}} ₽/шт</b>
-                                    {% endif %}
-                                </div>
-                            {% else %}
-                                <div class="good__text_price-old">
-                                    <br>
-                                </div>
-                                <div class="good__text_price-new" style='color: black;'>
-                                    {% if cart.quantity > 1 %}
-                                        <b>{{cart.product_price}} ₽</b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                        
-                                    {% else %}
-                                        <b>{{cart.product_price}} ₽/шт</b>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="good__text_btn">
-                            <button class="good__text_btn-pic" href="#">
-                                <img src="{% static "icons\Group.png" %}">
-                            </button>
-                            <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control">
-                                <button class="product-quantity__button product-quantity__button--left product-quantity__button--disabled">
-                                    -
-                                </button> 
-                                <input max='300' type="number" class="product-quantity__counter" value="{{cart.quantity}}"> 
-                                <button class="product-quantity__button product-quantity__button--right">
-                                    +
+                            <div class="good__text_btn">
+                                <button class="good__text_btn-pic" href="#">
+                                    <img src="{% static "icons\Group.png" %}">
                                 </button>
+                                <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control">
+                                    <button class="product-quantity__button product-quantity__button--left product-quantity__button--disabled">
+                                        -
+                                    </button> 
+                                    <input max='300' type="number" class="product-quantity__counter" value="{{cart.quantity}}"> 
+                                    <button class="product-quantity__button product-quantity__button--right">
+                                        +
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                {% endfor %}
+            </div>
+            <div class="block__main_pay">
+                <div class="sum">
+                    <div class="sum__item">
+                        <div class="sum__item_title">
+                            Сумма заказа
+                        </div>
+                        <div class="sum__item_value">
+                            {{carts.full_price}} ₽
+                        </div>
+                    </div>
+                    <div class="sum__item">
+                        <div class="sum__item_title">
+                            Скидка
+                        </div>
+                        <div class="sum__item_value">
+                            {{carts.full_discount}} ₽
+                        </div>
+                    </div>
+                    <div class="sum__item">
+                        <div class="sum__item_title">
+                            <b>Итого</b>
+                        </div>
+                        <div class="sum__item_value">
+                            <b>{{carts.total_price}} ₽</b>
+                        </div>
+                    </div>
                 </div>
-            {% endfor %}
-        </div>
-        <div class="block__main_pay">
-            <div class="sum">
-                <div class="sum__item">
-                    <div class="sum__item_title">
-                        Сумма заказа
-                    </div>
-                    <div class="sum__item_value">
-                        {{carts.full_price}} ₽
-                    </div>
-                </div>
-                <div class="sum__item">
-                    <div class="sum__item_title">
-                        Скидка
-                    </div>
-                    <div class="sum__item_value">
-                        {{carts.full_discount}} ₽
-                    </div>
-                </div>
-                <div class="sum__item">
-                    <div class="sum__item_title">
-                        <b>Итого</b>
-                    </div>
-                    <div class="sum__item_value">
-                        <b>{{carts.total_price}} ₽</b>
-                    </div>
+                <div class="block__main_pay-btn">
+                    <a href="order registration.html" class="block__main_pay-btn">Перейти к оформлению</a>
                 </div>
             </div>
-            <div class="block__main_pay-btn">
-                <a href="order registration.html" class="block__main_pay-btn">Перейти к оформлению</a>
-            </div>
-        </div>
+        {% else %}
+            <b style='color: darkgrey; font-size: 24px;'>Вы пока ничего не выбрали :( </b>
+        {% endif %}
     </div>
 {% endblock %}
