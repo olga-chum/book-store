@@ -11,5 +11,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('logout/', views.logout, name='logout'),
     # path('my_orders/', views.my_orders, name='my_orders'),
-    # path('users-cart/', views.users_cart, name='users_cart'),
+    path('users-cart/', views.users_cart, name='users_cart'),
 ]

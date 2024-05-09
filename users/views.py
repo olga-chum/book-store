@@ -142,10 +142,10 @@ def logout(request):
 #         }
 #     return render(request, "users/my_orders.html", context)
 
-# def users_cart(request):
-#     context = {
-#         "title": "Chapter & Verse - Корзина", 
-#         }
-#     return render(request, "users/users_cart.html", context)
+def users_cart(request):
+    context = {
+        "title": "Chapter & Verse - Корзина", 
+        }
+    return render(request, "users/users_cart.html", context)
 
 
