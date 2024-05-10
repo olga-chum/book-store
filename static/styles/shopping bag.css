@@ -494,6 +494,10 @@ input[name=r] {
   justify-content: space-between;
   align-items: baseline;
 }
+.good__text_title-name a {
+  text-decoration: none;
+  color: #474747;
+}
 .good__text_title-cancel {
   font-size: 20px;
   color: #707783;
@@ -556,11 +560,20 @@ input[name=r] {
 .good__text_btn-pic:hover {
   opacity: 1;
 }
+.good__text_title-name:hover .good__pic img, .good__pic img:hover {
+  opacity: 0.3;
+}
 
 .book-title {
   font-size: 18px;
   font-weight: 400;
   line-height: 18px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .book-author {

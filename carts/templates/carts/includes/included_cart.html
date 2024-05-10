@@ -15,25 +15,30 @@
                 {% for cart in carts %}
                     <div class="good">
                         <div class="good__pic">
-                            {% if cart.product.image %}
-                                <img src={{cart.product.image.url}} alt="{{cart.product.name}}">
-                            {% endif %}                        
+                            <a href="{% url "catalog:product" cart.product.slug %}">
+                                {% if cart.product.image %}
+                                    <img src={{cart.product.image.url}} alt="{{cart.product.name}}">
+                                {% endif %}                        
+                            </a>
                         </div>
                         <div class="good__text">
                             <div class="good__text_title">
                                 <div class="good__text_title-name">
-                                    <div class="book-title">
-                                        <b>{{cart.product.name}}</b>
-                                    </div>
-                                    <div class="book-author">
-                                        {% if cart.product.author_name %}
-                                            {{cart.product.author_name}}
-                                        {% else %}
-                                            <br>
-                                        {% endif %}
-                                    </div>
+                                    <a href="{% url "catalog:product" cart.product.slug %}">
+                                        <div class="book-title">
+                                            <b>{{cart.product.name}}</b>
+                                        </div>
+                                        <div class="book-author">
+                                            {% if cart.product.author_name %}
+                                                {{cart.product.author_name}}
+                                            {% else %}
+                                                <br>
+                                            {% endif %}
+                                        </div>
+                                    </a>
                                 </div>
-                                <a class="good__text_title-cancel" href="{% url "cart:cart_remove"%}">
+                                <a class="good__text_title-cancel remove-from-cart" href="{% url "cart:cart_remove"%}" data-cart-id="{{cart.id}}">
+                                    {% csrf_token %}
                                     <b>X</b>
                                 </a>
                             </div>

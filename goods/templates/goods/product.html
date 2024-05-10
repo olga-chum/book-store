@@ -153,10 +153,17 @@
                     {% endif %}
                 </div>
                 <div class="book__buy_btns">
-                    <a href="{% url "cart:cart_add"%}" class="book__buy_btns-item buy add-to-cart" data-product-id="{{product.id}}">
-                        {% csrf_token %}
-                        Купить
-                    </a>
+                    {% if product.id in basket %}
+                        <a class="book__buy_btns-item buy add-to-cart" style='padding-inline: 12%; opacity: 0.4; background-color: #dedede; cursor: default;'>
+                            {% csrf_token %}
+                            Добавлено в корзину
+                        </a>
+                    {% else %}
+                        <a href="{% url "cart:cart_add"%}" id="myDiv" class="book__buy_btns-item buy add-to-cart" data-product-id="{{product.id}}">
+                            {% csrf_token %}
+                            Купить
+                        </a>
+                    {% endif %}
                     <button class="book__buy_btns-item like"><img src= {% static "icons\Group.png" %}></button>
                 </div>
                 <div class="book__buy_status">

@@ -2,6 +2,7 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
+from carts.models import Cart
 
 from goods.models import Categories, Products
 
@@ -10,12 +11,14 @@ def index(request):
     categories = Categories.objects.all()
     manga = Products.objects.filter(category__slug='Manga').order_by('?')[:6]
     new = Products.objects.filter(year_of_publish=datetime.now().year).order_by('?')[:6]
+    basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
 
     context: dict = {
         'title': 'Chapter & Verse - Главная',
         'categories': categories,
         'manga': manga,
-        'new': new
+        'new': new,
+        'basket': basket,
     }
 
     return render(request, 'main/index.html', context)

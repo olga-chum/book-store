@@ -1,13 +1,3 @@
-// Когда html документ готов (прорисован)
-// function myFunction() {
-//     var element = document.getElementById("icon");
-//     element.classList.add("added-to-cart");
-//  }
-
-// function myFunc(x) {
-//     x.style.opacity = 1;
-// }
-
 $(document).ready(function () {
 
     var successMessage = $("#jq-notification");
@@ -50,6 +40,13 @@ $(document).ready(function () {
                 }
 
                 $(".add-to-cart[data-product-id='" + product_id + "']").addClass("added-to-cart");
+                $(".add-to-cart[data-product-id='" + product_id + "'][id='myDiv']").text("Добавлено в корзину").css({
+                    "padding-inline": "12%",
+                    "opacity": 0.4,
+                    "background-color": "#dedede",
+                    "cursor": "default",
+                    "transition": "0s",
+                });
 
             },
             
@@ -87,13 +84,6 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
             },
             success: function (data) {
-                // Сообщение
-                successMessage.html(data.message);
-                successMessage.fadeIn(400);
-                // Через 7сек убираем сообщение
-                setTimeout(function () {
-                    successMessage.fadeOut(400);
-                }, 3000);
 
                 // Уменьшаем количество товаров в корзине (отрисовка)
                 cartCount -= data.quantity_deleted;
@@ -109,7 +99,7 @@ $(document).ready(function () {
             },
 
             error: function (data) {
-                console.log("Ошибка при добавлении товара в корзину");
+                console.log("Ошибка при удалении товара из корзины");
             },
         });
     });

@@ -85,12 +85,21 @@
                             </a>
                             <div class="product-info">
                                 <div class="product-info__pic">
-                                    <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{good.id}}">
-                                        {% csrf_token %}
-                                        <button class="product-info__pic">
-                                            <img src={% static "icons\Group 43.png" %}>
-                                        </button>
-                                    </a>
+                                    {% if good.id in basket %}
+                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{good.id}}">
+                                            {% csrf_token %}
+                                            <button class="product-info__pic">
+                                                <img src={% static "icons\Group 43.png" %}>
+                                            </button>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{good.id}}">
+                                            {% csrf_token %}
+                                            <button class="product-info__pic">
+                                                <img src={% static "icons\Group 43.png" %}>
+                                            </button>
+                                        </a>
+                                    {% endif %}
                                     <button class="product-info__pic" href="#">
                                         <img src={% static "icons\Group.png" %}>
                                 </button>

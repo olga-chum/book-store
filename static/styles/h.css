@@ -803,10 +803,6 @@ input[name=r] {
   cursor: pointer;
   transition: 0.2s linear;
   border-radius: 15px;
-  opacity: 0.4;
-}
-.product-info button:hover {
-  opacity: 1;
 }
 .product-info__pic {
   display: flex;
@@ -816,6 +812,18 @@ input[name=r] {
 .product-info__pic img {
   width: 70%;
 }
+.add-to-cart {
+  opacity: 0.4;
+  transition: 0.2s linear;
+}
+.add-to-cart:hover {
+  opacity: 1;
+}
+
+.added-to-cart {
+  opacity: 1;
+}
+
 .dop {
   margin-top: 1%;
 }

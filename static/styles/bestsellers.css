@@ -607,10 +607,6 @@ input[name=r] {
   cursor: pointer;
   transition: 0.2s linear;
   border-radius: 15px;
-  opacity: 0.4;
-}
-.product-info button:hover {
-  opacity: 1;
 }
 .product-info__pic {
   display: flex;
