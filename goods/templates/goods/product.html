@@ -153,7 +153,10 @@
                     {% endif %}
                 </div>
                 <div class="book__buy_btns">
-                    <a href="{% url "cart:cart_add" product.slug%}" class="book__buy_btns-item buy">Купить</a>
+                    <a href="{% url "cart:cart_add"%}" class="book__buy_btns-item buy add-to-cart" data-product-id="{{product.id}}">
+                        {% csrf_token %}
+                        Купить
+                    </a>
                     <button class="book__buy_btns-item like"><img src= {% static "icons\Group.png" %}></button>
                 </div>
                 <div class="book__buy_status">

@@ -45,8 +45,10 @@
         <div class="block__title">
             <b>Корзина</b>
         </div>
-        <!-- Разметка корзины -->
-        {% include "carts/includes/included_cart.html" %}
-        <!-- Закончилась разметка корзины -->
+        <div class="container" id='cart-items-container'>
+            <!-- Разметка корзины -->
+            {% include "carts/includes/included_cart.html" %}
+            <!-- Закончилась разметка корзины -->
+        </div>
     </section>
 {% endblock %}

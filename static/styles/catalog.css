@@ -527,6 +527,10 @@ html {
 .product-info__pic img {
   width: 80%;
 }
+.added-to-cart {
+  opacity: 1 !important;
+}
+
 .main {
   grid-column: 3/11;
 }
