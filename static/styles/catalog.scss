@@ -544,13 +544,7 @@ html {
         background-color: white;
         border: none;
         cursor: pointer;
-        transition: 0.2s linear;
         border-radius: 15px;
-        opacity: 0.4;
-
-        &:hover {
-            opacity: 1;
-        }
     }
 
     &__pic {
@@ -565,6 +559,14 @@ html {
     }
 
     &__pic-link {}
+}
+.add-to-cart {
+    opacity: 0.4;
+    transition: 0.2s linear;
+
+    &:hover {
+        opacity: 1;
+    }
 }
 
 .added-to-cart {

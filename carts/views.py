@@ -31,14 +31,10 @@ def cart_add(request):
     )
 
     response_data = {
-        "cart_items_html": cart_items_html,
+        "cart_items_html": cart_items_html
     }
 
     return JsonResponse(response_data)    
-
-def is_item_in_cart(user, product_slug):
-    # Проверяем наличие товара с указанным product_id в корзине пользователя
-    return Cart.objects.filter(user=user, slug=product_slug).exists()
 
 def cart_change(request, product_slug):
     ...
