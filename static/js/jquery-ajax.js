@@ -156,13 +156,6 @@ $(document).ready(function () {
             },
 
             success: function (data) {
-                // Сообщение
-                successMessage.html(data.message);
-                successMessage.fadeIn(400);
-                // Через 7сек убираем сообщение
-                setTimeout(function () {
-                    successMessage.fadeOut(400);
-                }, 3000);
 
                 // Изменяем количество товаров в корзине
                 var goodsInCartCount = $("#goods-in-cart-count");
@@ -176,7 +169,7 @@ $(document).ready(function () {
 
             },
             error: function (data) {
-                console.log("Ошибка при добавлении товара в корзину");
+                console.log("Ошибка при изменении количества товара в корзине");
             },
         });
     }

@@ -74,14 +74,20 @@
                                 <button class="good__text_btn-pic" href="#">
                                     <img src="{% static "icons\Group.png" %}">
                                 </button>
-                                <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control">
-                                    <button class="product-quantity__button product-quantity__button--left product-quantity__button--disabled">
-                                        -
-                                    </button> 
-                                    <input max='300' type="number" class="product-quantity__counter" value="{{cart.quantity}}"> 
-                                    <button class="product-quantity__button product-quantity__button--right">
-                                        +
-                                    </button>
+                                <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control input-group">
+                                    <span class="input-group-btn">
+                                        <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="decrement product-quantity__button product-quantity__button--left product-quantity__button--disabled">
+                                            {% csrf_token %}
+                                            -
+                                        </button> 
+                                    </span>
+                                    <input max='300' type="text" class="product-quantity__counter number" value="{{cart.quantity}}"> 
+                                    <span class="input-group-btn">
+                                        <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="increment product-quantity__button product-quantity__button--right">
+                                            {% csrf_token %}
+                                            +
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
