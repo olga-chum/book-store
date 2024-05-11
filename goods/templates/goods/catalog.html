@@ -127,12 +127,15 @@
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="navigation">
-                <button class="btn" type='button'>Показать еще</button>
-            </div>
-            <script src= {% static "\index.js" %}></script>
+                    {% endfor %}
+                </div>
+                {% if goods %}
+                    <div class="navigation">
+                        <button class="btn" type='button'>Показать еще</button>
+                    </div>
+                    <script src= {% static "\index.js" %}></script>
+                {% endif %}
+                
             {% comment %} {% if goods.has_next %}
                 <div class="navigation">
                     <a class="navigation__btn" href="{% url 'catalog:index' slug_url goods.next_page_number %}">

@@ -1,3 +1,4 @@
+from calendar import c
 from django.core.paginator import Paginator
 from django.shortcuts import get_list_or_404, render
 from django.shortcuts import get_object_or_404
@@ -11,6 +12,11 @@ from carts.models import Cart
 def catalog(request, category_slug=None):
 
     query = request.GET.get('q', None)
+    if request.user.is_authenticated:
+        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+    else:
+        basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+
 
     if query:
         goods = q_search(query)
@@ -18,8 +24,7 @@ def catalog(request, category_slug=None):
     else:
         goods= get_list_or_404(Products.objects.filter(category__slug=category_slug))
         category = get_object_or_404(Categories, slug=category_slug)
-        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
-
+            
     context = {
         'title': 'Chepter & Verse: Каталог',
         "goods": goods,
@@ -31,8 +36,11 @@ def catalog(request, category_slug=None):
 
 def product(request, product_slug=False, product_id=False):
     
-    basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
-
+    if request.user.is_authenticated:
+        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+    else:
+        basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+    
     if product_id:
         product = Products.objects.get(id=product_id)
     else:
@@ -48,7 +56,11 @@ def product(request, product_slug=False, product_id=False):
 def bestsellers(request):
     categories = Categories.objects.all()
     bests = Products.objects.filter(quantity__lt=5).order_by('?')[:6]
-    basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+    if request.user.is_authenticated:
+        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+    else:
+        basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+    
     context: dict = {
         'title': 'Chapter & Verse - Бестселлеры',
         'categories': categories,
@@ -60,7 +72,11 @@ def bestsellers(request):
 def new(request):
     categories = Categories.objects.all()
     new = Products.objects.filter(year_of_publish=datetime.now().year)
-    basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+    if request.user.is_authenticated:
+        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+    else:
+        basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+    
     context: dict = {
         'title': 'Chapter & Verse - Новинки',
         'categories': categories,

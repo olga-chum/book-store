@@ -11,8 +11,11 @@ def index(request):
     categories = Categories.objects.all()
     manga = Products.objects.filter(category__slug='Manga').order_by('?')[:6]
     new = Products.objects.filter(year_of_publish=datetime.now().year).order_by('?')[:6]
-    basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
-
+    if request.user.is_authenticated:
+        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+    else:
+        basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+    
     context: dict = {
         'title': 'Chapter & Verse - Главная',
         'categories': categories,

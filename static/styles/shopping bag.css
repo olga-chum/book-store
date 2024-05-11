@@ -494,6 +494,9 @@ input[name=r] {
   justify-content: space-between;
   align-items: baseline;
 }
+.good__text_title-name {
+  width: 90%;
+}
 .good__text_title-name a {
   text-decoration: none;
   color: #474747;
@@ -581,7 +584,7 @@ input[name=r] {
   font-size: 16px;
   font-weight: 400;
   line-height: 18px;
-  margin-top: 3%;
+  margin-top: 7px;
 }
 
 .product-quantity {

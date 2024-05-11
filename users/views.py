@@ -5,6 +5,7 @@ from django.contrib import auth, messages
 from django.urls import reverse
 from goods.models import Categories, Products
 from datetime import datetime
+from carts.models import Cart
 
 # from carts.models import Cart
 # from orders.models import Order, OrderItem
@@ -20,8 +21,8 @@ def login(request):
             session_key = request.session.session_key
             if user:
                 auth.login(request, user)
-                # if session_key:
-                #     Cart.objects.filter(session_key=session_key).update(user=user)
+                if session_key:
+                    Cart.objects.filter(session_key=session_key).update(user=user)
                 redirect_page = request.POST.get('next', None)
                 if redirect_page and redirect_page != reverse('user:logout'):
                     return HttpResponseRedirect(request.POST.get('next'))
@@ -50,12 +51,15 @@ def registration(request):
             user.phone_number = form.cleaned_data.get('phone_number')           
             user.save()
             user = form.instance
-            # # if session_key:
-            # #         Cart.objects.filter(session_key=session_key).update(user=user)
             
             session_key = request.session.session_key
+            
             # Авторизуем пользователя
             auth.login(request, user)
+            
+            if session_key:
+                    Cart.objects.filter(session_key=session_key).update(user=user)
+            
             return HttpResponseRedirect(reverse('user:profile'))
         else:
             # Возвращаем страницу, которая содержит модальное окно, с контекстом, чтобы показать ошибки

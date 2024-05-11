@@ -174,14 +174,16 @@ $(document).ready(function () {
         });
     }
 
-    // Берем из разметки элемент по id - оповещения от django
-    var notification = $('#notification');
-    // И через 3 сек. убираем
-    if (notification.length > 0) {
-        setTimeout(function () {
-            notification.alert('close');
-        }, 3000);
-    }
+    $(document).on("keypress", ".number", function (e) {
+        if (e.which === 13) { // Проверяем, была ли нажата клавиша Enter
+            var url = $(this).closest('.input-group').find('.increment').data("cart-change-url");
+            var cartID = $(this).closest('.input-group').find('.increment').data("cart-id");
+            var newValue = parseInt($(this).val());
+            if (!isNaN(newValue) && newValue > 0) {
+                updateCart(cartID, newValue, newValue, url);
+            }
+        }
+    });
 
 
     $('#staticBackdrop').on('hidden.bs.modal', function() {
