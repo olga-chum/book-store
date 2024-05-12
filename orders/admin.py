@@ -1,9 +1,61 @@
-from django.urls import path
-from orders import views
+from django.contrib import admin
 
-app_name = 'orders'
+from orders.models import Order, OrderItem
 
-urlpatterns = [
-    path('create_order/', views.create_order, name='create_order'),
-    # path('qr_code/<int:order_id>/', views.qr_code, name='qr_code'),
-]
+class OrderItemTabulareAdmin(admin.TabularInline):
+    model = OrderItem
+    fields = "product", "name", "author_name", "price", "quantity"
+    search_fields = (
+        "product",
+        "name",
+        "author_name"
+    )
+    extra = 0
+
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = "order", "product", "name", 'author_name', "price", "quantity"
+    search_fields = (
+        "order",
+        "product",
+        "name",
+        'author_name'
+    )
+
+
+class OrderTabulareAdmin(admin.TabularInline):
+    model = Order
+    fields = (
+        "status",
+        "is_paid",
+        "created_timestamp",
+    )
+
+    search_fields = (
+        "is_paid",
+        "created_timestamp",
+    )
+    readonly_fields = ("created_timestamp",)
+    extra = 0
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "status",
+        "is_paid",
+        "created_timestamp",
+    )
+
+    search_fields = (
+        "id",
+    )
+    readonly_fields = ("created_timestamp",)
+    list_filter = (
+        "status",
+        "is_paid",
+    )
+    inlines = (OrderItemTabulareAdmin,)

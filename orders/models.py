@@ -22,7 +22,7 @@ class Order(models.Model):
     delivery_address = models.TextField(null=True, blank=True, verbose_name="Адрес доставки")
     flat = models.CharField(null=True, blank=True, verbose_name='Квартира или офис')
     comment = models.TextField(null=True, blank=True, verbose_name='Комментарий к заказу')
-    payment_on_get = models.BooleanField(default=False, verbose_name="Оплата при получении")
+    # payment_on_get = models.BooleanField(default=False, verbose_name="Оплата при получении")
     is_paid = models.BooleanField(default=False, verbose_name="Оплачено")
     status = models.CharField(max_length=50, default='В обработке', verbose_name="Статус заказа")
     qr_image = models.ImageField(upload_to='qr_codes/', null=True, blank=True, verbose_name="QR-код")  # Новое поле для QR-кода
@@ -33,7 +33,7 @@ class Order(models.Model):
         verbose_name_plural = "Заказы"
 
     def __str__(self):
-        return f"Заказ № {self.pk} | Покупатель {self.user.first_name} {self.user.last_name}"
+        return f"Заказ № {self.pk} | Получатель {self.user.first_name} {self.user.last_name}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE, verbose_name="Заказ")

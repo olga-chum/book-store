@@ -45,10 +45,10 @@
         <div class="block__title">
             <b>Оформление заказа</b>
         </div>
-        <div class="block__main">
-            <div class="block__main_item">
-                <form action="{% url "orders:create_order" %}" method='post'>
-                    {% csrf_token %}
+        <form action="{% url "orders:create_order" %}" method='post'>
+            {% csrf_token %}
+            <div class="block__main">
+                <div class="block__main_item">
                     <div class="step">
                         <div class="step__title">
                             <b>Получатель</b>
@@ -62,12 +62,12 @@
                                 value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}" 
                                 name="first_name" 
                                 id='id_first_name'>
-                                {% if form.first_name.errors %}
-                                <div class="alert-danger">
-                                    {{form.first_name.errors}}
-                                </div>
-                                {% endif %}
                             </div>
+                            {% if form.first_name.errors %}
+                            <div class="alert-danger">
+                                {{form.first_name.errors}}
+                            </div>
+                            {% endif %}
                             <div class="main__item_inputContainer">
                                 <input class="main__item_inputContainer-txt" 
                                 inputmode="surname" 
@@ -76,37 +76,37 @@
                                 value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}" 
                                 name="last_name" 
                                 id='id_last_name'>
-                                {% if form.last_name.errors %}
-                                <div class="alert-danger">
-                                    {{form.last_name.errors}}
-                                </div>
-                                {% endif %}
                             </div>
+                            {% if form.last_name.errors %}
+                            <div class="alert-danger">
+                                {{form.last_name.errors}}
+                            </div>
+                            {% endif %}
                             <div class="main__item_inputContainer">
                                 <input class="main__item_inputContainer-txt"
-                                 placeholder="*Телефон" required 
-                                 type="tel" 
-                                 value="{% if form.phone_number.value %}{{form.phone_number.value|phone_format}}{% endif %}" 
-                                 name="phone_number" id='id_phone_number'>
-                                {% if form.phone_number.errors %}
-                                <div class="alert-danger">
-                                {{form.phone_number.errors}}
-                                </div>
-                                {% endif %}
+                                placeholder="*Телефон" required 
+                                type="tel" 
+                                value="{% if form.phone_number.value %}{{form.phone_number.value|phone_format}}{% endif %}" 
+                                name="phone_number" id='id_phone_number'>
                             </div>
+                            {% if form.phone_number.errors %}
+                            <div class="alert-danger">
+                            {{form.phone_number.errors}}
+                            </div>
+                            {% endif %}
                             <div class="main__item_inputContainer">
                                 <input class="main__item_inputContainer-txt" 
-                                placeholder="email" 
+                                placeholder="email"
                                 type="email" 
                                 value="{{form.username.value}}" 
                                 name="username" 
                                 id='id_username'>
-                                {% if form.username.errors %}
-                                <div class="alert-danger">
-                                    {{form.username.errors}}
-                                </div>
-                                {% endif %}
                             </div>
+                            {% if form.username.errors %}
+                            <div class="alert-danger">
+                                {{form.username.errors}}
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="step">
@@ -128,10 +128,10 @@
                                 id='id_delivery_address' required="required" 
                                 autocomplete="street-address address-line1"
                                 value="{% if form.delivery_address.value %}{{ form.delivery_address.value }}{% endif %}">
-                                {% if form.delivery_address.errors %}
-                                    <div class="alert-danger">{{form.delivery_address.errors}}</div>
-                                {% endif %}
                             </div>
+                            {% if form.delivery_address.errors %}
+                                <div class="alert-danger">{{form.delivery_address.errors}}</div>
+                            {% endif %}
                             <div class="step__block main__item" style="grid-template-columns: 1fr 3fr;">
                                 <div class="main__item_block">
                                     <div class="main__item_title">
@@ -145,10 +145,10 @@
                                         id='id_flat' 
                                         autocomplete="street-address address-line3"
                                         value="{% if form.flat.value %}{{ form.flat.value }}{% endif %}">
-                                        {% if form.flat.errors %}
-                                            <div class="alert-danger">{{form.flat.errors}}</div>
-                                        {% endif %}
                                     </div>
+                                    {% if form.flat.errors %}
+                                        <div class="alert-danger">{{form.flat.errors}}</div>
+                                    {% endif %}
                                 </div>
                                 <div class="main__item_block">
                                     <div class="main__item_title">
@@ -162,15 +162,53 @@
                                         maxlength="250" 
                                         name="comment" 
                                         id='id_comment' wfd-id="id4">
-                                        {% if form.comment.errors %}
-                                            <div class="alert-danger">{{form.comment.errors}}</div>
-                                        {% endif %}
                                     </div>
+                                    {% if form.comment.errors %}
+                                        <div class="alert-danger">{{form.comment.errors}}</div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="step">
+                </div>
+                <div class="block__main_pay">
+                    <div class="sum">
+                        <div class="sum__item">
+                            <div class="sum__item_title">
+                                Сумма заказа
+                            </div>
+                            <div class="sum__item_value">
+                                {{total_price}} ₽
+                            </div>
+                        </div>
+                        <div class="sum__item">
+                            <div class="sum__item_title">
+                                Скидка
+                            </div>
+                            <div class="sum__item_value">
+                                {{total_discount}} ₽
+                            </div>
+                        </div>
+                        <div class="sum__item">
+                            <div class="sum__item_title">
+                                <b>Итого</b>
+                            </div>
+                            <div class="sum__item_value">
+                                <b>{{total_price_with_discount }} ₽</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block__main_pay-btn">
+                        <button href="" type="submit" class="block__main_pay-btn">Оформить заказ</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+{% endblock %}
+
+{% comment %} <div class="step">
                         <div class="step__title">
                             <b>Способ оплаты</b>
                         </div>
@@ -230,41 +268,4 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="block__main_pay">
-                <div class="sum">
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            Сумма заказа
-                        </div>
-                        <div class="sum__item_value">
-                            {{total_price}} ₽
-                        </div>
-                    </div>
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            Скидка
-                        </div>
-                        <div class="sum__item_value">
-                            {{total_discount}} ₽
-                        </div>
-                    </div>
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            <b>Итого</b>
-                        </div>
-                        <div class="sum__item_value">
-                            <b>{{total_price_with_discount }} ₽</b>
-                        </div>
-                    </div>
-                </div>
-                <div class="block__main_pay-btn">
-                    <button href="" class="block__main_pay-btn">Оформить заказ</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-{% endblock %}
+                    </div> {% endcomment %}
