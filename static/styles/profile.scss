@@ -722,11 +722,6 @@ input[name="r"] {
         cursor: pointer;
         transition: 0.2s linear;
         border-radius: 15px;
-        opacity: 0.4;
-
-        &:hover {
-            opacity: 1;
-        }
     }
 
     &__pic {

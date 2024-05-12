@@ -465,7 +465,11 @@ input[name=r] {
   grid-template-columns: repeat(4, 1fr);
 }
 .main__item_good {
-  margin: 5%;
+  margin-bottom: 12%;
+}
+
+.container {
+  margin-top: 2%;
 }
 
 .product {
@@ -575,10 +579,6 @@ input[name=r] {
   cursor: pointer;
   transition: 0.2s linear;
   border-radius: 15px;
-  opacity: 0.4;
-}
-.product-info button:hover {
-  opacity: 1;
 }
 .product-info__pic {
   display: flex;
@@ -589,6 +589,21 @@ input[name=r] {
 .product-info__pic img {
   width: 80%;
 }
+.add-to-cart,
+.add-to-like {
+  opacity: 0.4;
+  transition: 0.2s linear;
+}
+.add-to-cart:hover,
+.add-to-like:hover {
+  opacity: 1;
+}
+
+.added-to-cart,
+.added-to-like {
+  opacity: 1 !important;
+}
+
 .footer {
   background-color: #EEE;
   margin: 5% -50px 0 -50px;

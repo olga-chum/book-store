@@ -2,7 +2,7 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
-from carts.models import Cart
+from carts.models import Cart, Like
 
 from goods.models import Categories, Products
 
@@ -13,15 +13,18 @@ def index(request):
     new = Products.objects.filter(year_of_publish=datetime.now().year).order_by('?')[:6]
     if request.user.is_authenticated:
         basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
     else:
         basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
-    
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
+
     context: dict = {
         'title': 'Chapter & Verse - Главная',
         'categories': categories,
         'manga': manga,
         'new': new,
         'basket': basket,
+        'favourites': favourites
     }
 
     return render(request, 'main/index.html', context)

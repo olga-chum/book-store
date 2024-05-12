@@ -54,7 +54,7 @@
                         Заказы
                         <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
-                    <li><a class="catalog__items_item" href="like.html">
+                    <li><a class="catalog__items_item" href="{% url "user:like" %}">
                         Избранное
                         <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
@@ -76,12 +76,12 @@
                     <div class="main__item_inputContainer">
                         <input class="main__item_inputContainer-txt" inputmode="kana-name" placeholder="*Имя" required 
                         type="name" value="{{form.first_name.value}}" name="first_name" id='id_first_name'>
+                        {% if form.first_name.errors %}
+                        <div class="alert-danger">
+                            {{form.first_name.errors}}
+                        </div>
+                        {% endif %}
                     </div>
-                    {% if form.first_name.errors %}
-                    <div class="alert-danger">
-                        {{form.first_name.errors}}
-                    </div>
-                    {% endif %}
                     <div class="main__item_inputContainer">
                         <input class="main__item_inputContainer-txt" inputmode="surname" placeholder="*Фамилия" required type="surname" value="{{form.last_name.value}}" name="last_name" id='id_last_name'>
                         {% if form.last_name.errors %}

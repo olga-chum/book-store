@@ -518,14 +518,21 @@ input[name=r] {
   background-color: #d3d3d3;
 }
 
-.like {
+.add-to-like {
   opacity: 0.4;
-  padding: 1%;
-  padding-inline: 5%;
-}
-.like:hover {
-  opacity: 1;
   transition: 0.2s linear;
+  padding-inline: 3% !important;
+}
+.add-to-like:hover {
+  opacity: 1;
+}
+
+.added-to-like {
+  opacity: 1 !important;
+}
+
+.product-info__pic img {
+  width: 100%;
 }
 
 .product-price {

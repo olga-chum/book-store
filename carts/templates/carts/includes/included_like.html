@@ -1,0 +1,88 @@
+{% load static %}
+
+{% load carts_tags %}
+{% load goods_tags %}
+{% user_likes request as likes %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\like.css" %}">
+{% endblock css %}
+
+{% block content %}
+    {% if likes %}
+        <div class="main__item">
+            {% for like in likes %}
+                <div class="main__item_good">
+                    <div class="product">
+                        <a id="product" href="{% url "catalog:product" like.product.slug %}">
+                            <div class="product-photo">
+                                {% if like.product.image %}
+                                    <img src={{like.product.image.url}} alt="{{like.product.name}}">
+                                {% endif %} 
+                            </div>
+                            <div class="product-title">
+                                <div class="product-title__head">
+                                    <b>{{like.product.name}}</b>
+                                </div>
+                                <div class="product-title__author">
+                                    {% if like.product.author_name %}
+                                        {{like.product.author_name}}
+                                    {% else %}
+                                        <br>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        <div class="product-info">
+                            <div class="product-info__pic">
+                                {% if like.product.id in basket %}
+                                    <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{like.product.id}}">
+                                        {% csrf_token %}
+                                        <button class="product-info__pic">
+                                            <img src={% static "icons\Group 43.png" %}>
+                                        </button>
+                                    </a>
+                                {% else %}
+                                    <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{like.product.id}}">
+                                        {% csrf_token %}
+                                        <button class="product-info__pic">
+                                            <img src={% static "icons\Group 43.png" %}>
+                                        </button>
+                                    </a>
+                                {% endif %}
+                                <a href="{% url "cart:like_remove" %}" class="remove-from-like added-to-like" data-like-id="{{like.id}}">
+                                    {% csrf_token %}
+                                    <button class="product-info__pic">
+                                        <img src={% static "icons\Group.png" %}>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="product-price">
+                                {% if like.product.discount %}
+                                    <div class="product-price__old">
+                                        {{like.product.price}} ₽
+                                        <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                            <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="product-price__new">
+                                        <b>{{like.product.sell_price}} ₽</b>
+                                    </div>
+                                {% else %}
+                                    <div class="product-price__old">
+                                        <br>
+                                    </div>
+                                    <div class="product-price__new" style='color: black;'>
+                                        <b>{{like.product.price}} ₽</b>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <b style='color: darkgrey; font-size: 24px;'>Вы пока ничего не выбрали :( </b>
+    {% endif %}
+{% endblock %}

@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'main', 
     'goods',
     'users',
-    'carts'
+    'carts',
+    'orders'
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "carts.middleware.DisableBrowserCashingMiddleware",
 ]
 
 ROOT_URLCONF = 'app.urls'

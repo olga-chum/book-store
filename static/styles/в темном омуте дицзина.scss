@@ -565,13 +565,25 @@ input[name="r"] {
 }
 
 .like{
+}
+
+.add-to-like {
     opacity: 0.4;
-    padding: 1%;
-    padding-inline: 5%;
+    transition: 0.2s linear;
+    padding-inline: 3% !important;
 
     &:hover {
         opacity: 1;
-        transition: 0.2s linear;
+    }
+}
+
+.added-to-like {
+    opacity: 1 !important;
+}
+
+.product-info__pic {
+    & img{
+        width: 100%;
     }
 }
 

@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 {% load custom_filters %}
+{% load goods_tags %}
+{% load carts_tags %}
+
+{% user_likes request as likes %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static "styles\profile.css" %}">
@@ -54,7 +58,7 @@
                         Заказы
                         <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
-                    <li><a class="catalog__items_item" href="like.html">
+                    <li><a class="catalog__items_item" href="{% url "user:like" %}">
                         Избранное
                         <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
@@ -107,125 +111,94 @@
             <div class="main__item">
                 <div class="main__item_title">
                     <b>Избранное</b>
-                    <a href="like.html" class="main__item_title-link-2">Смотреть все<img src="icons\Vector 12.png"></a>
+                    <a href="{% url "user:like" %}" class="main__item_title-link-2">Смотреть все<img src="{% static "icons\Vector 12.png" %}"></a>
                 </div>
                 <div class="main__item_data">
-                    <ul class="products clearfix">
-                        <li class="product-wrapper">
-                            <div class="product">
-                                <a id="product" href="в темном омуте дицзина.html">
-                                    <div class="product-photo">
-                                        <img src="images\main\в темном омуте дицзина.png" alt="">
-                                    </div>
-                                    <div class="product-title">
-                                        <div class="product-title__head">
-                                            <b>В темном омуте Дицзина</b>
-                                        </div>
-                                        <div class="product-title__author">
-                                            Тянься Гуйюань
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-info__pic">
-                                        <button class="product-info__pic" href="#">
-                                                <img src="icons\Group 43.png">
-                                        </button>
-                                        <button class="product-info__pic" href="#" style="opacity: 1;">
-                                            <img src="icons\Group.png">
-                                    </button>
-                                    </div>
-                                    <div class="product-price">
-                                        <div class="product-price__old">
-                                            1&nbsp;181 ₽
-                                            <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                                <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="product-price__new">
-                                            <b>1&nbsp;001 ₽</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-wrapper">
-                            <div class="product">
-                                <a id="product" href="в темном омуте дицзина.html">
-                                    <div class="product-photo">
-                                        <img src="images\manga\атака титанов.jpg" alt="">
-                                    </div>
-                                    <div class="product-title">
-                                        <div class="product-title__head">
-                                            <b>Атака на титанов. Книга 1</b>
-                                        </div>
-                                        <div class="product-title__author">
-                                            Хадзимэ Исаяма
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-info__pic">
-                                        <button class="product-info__pic" href="#">
-                                                <img src="icons\Group 43.png">
-                                        </button>
-                                        <button class="product-info__pic" href="#" style="opacity: 1;">
-                                            <img src="icons\Group.png">
-                                    </button>
-                                    </div>
-                                    <div class="product-price">
-                                        <div class="product-price__old">
-                                            999 ₽
-                                            <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                                <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="product-price__new">
-                                            <b>713 ₽</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-wrapper">
-                            <div class="product">
-                                <a id="product" href="в темном омуте дицзина.html">
-                                    <div class="product-photo">
-                                        <img src="images\psychology\Кафе на краю земли.jpg" alt="">
-                                    </div>
-                                    <div class="product-title">
-                                        <div class="product-title__head">
-                                            <b>Кафе на краю земли</b>
-                                        </div>
-                                        <div class="product-title__author">
-                                            Джон Стрелеки
+                    {% if select %}
+                        <ul class="products clearfix">
+                            {% for like in select %}
+                                <li class="product-wrapper">
+                                    <div class="product">
+                                        <a href="{% url "catalog:product" like.product.slug %}" id="product">
+                                            <div class="product-photo">
+                                                {% if like.product.image %}
+                                                <img src={{like.product.image.url}} alt="{{like.product.name}}">
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-title">
+                                                <div class="product-title__head">
+                                                    <b>{{like.product.name}}</b>
+                                                </div>
+                                                <div class="product-title__author">
+                                                    {% if like.product.author_name %}
+                                                        {{like.product.author_name}}
+                                                    {% else %}
+                                                        <br>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="product-info">
+                                            <div class="product-info__pic">
+                                                {% if like.product.id in basket %}
+                                                    <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{like.product.id}}">
+                                                        {% csrf_token %}
+                                                        <button class="product-info__pic">
+                                                            <img src={% static "icons\Group 43.png" %}>
+                                                        </button>
+                                                    </a>
+                                                {% else %}
+                                                    <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{like.product.id}}">
+                                                        {% csrf_token %}
+                                                        <button class="product-info__pic">
+                                                            <img src={% static "icons\Group 43.png" %}>
+                                                        </button>
+                                                    </a>
+                                                {% endif %}
+                                                {% if like.product.id in favourites %}
+                                                    <a href="{% url "cart:like_add" %}" class="add-to-like added-to-like" data-product-id="{{like.product.id}}">
+                                                        {% csrf_token %}
+                                                        <button class="product-info__pic">
+                                                            <img src={% static "icons\Group.png" %}>
+                                                        </button>
+                                                    </a>
+                                                {% else %}
+                                                    <a href="{% url "cart:like_add" %}" class="add-to-like" data-product-id="{{like.product.id}}">
+                                                        {% csrf_token %}
+                                                        <button class="product-info__pic">
+                                                            <img src={% static "icons\Group.png" %}>
+                                                        </button>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-price">
+                                                {% if like.product.discount %}
+                                                    <div class="product-price__old">
+                                                        {{like.product.price}} ₽
+                                                        <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                                            <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="product-price__new">
+                                                        <b>{{like.product.sell_price}} ₽</b>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="product-price__old">
+                                                        <br>
+                                                    </div>
+                                                    <div class="product-price__new" style='color: black;'>
+                                                        <b>{{like.product.price}} ₽</b>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
-                                </a>
-                                <div class="product-info">
-                                    <div class="product-info__pic">
-                                        <button class="product-info__pic" href="#">
-                                                <img src="icons\Group 43.png">
-                                        </button>
-                                        <button class="product-info__pic" href="#" style="opacity: 1;">
-                                            <img src="icons\Group.png">
-                                    </button>
-                                    </div>
-                                    <div class="product-price">
-                                        <div class="product-price__old">
-                                            343 ₽
-                                            <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                                <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="product-price__new">
-                                            <b>255 ₽</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <b style='color: darkgrey; font-size: 20px;'>Вы пока ничего не выбрали :( </b>
+                    {% endif %}
                 </div>
             </div>
         </div>

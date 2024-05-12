@@ -8,125 +8,135 @@
     <link rel="stylesheet" href="{% static "styles\shopping bag.css" %}">
 {% endblock css %}
 
-{% block content %}
-    <div class="block__main">
-        {% if carts %}
-            <div class="block__main_goods">
-                {% for cart in carts %}
-                    <div class="good">
-                        <div class="good__pic">
-                            <a href="{% url "catalog:product" cart.product.slug %}">
-                                {% if cart.product.image %}
-                                    <img src={{cart.product.image.url}} alt="{{cart.product.name}}">
-                                {% endif %}                        
-                            </a>
-                        </div>
-                        <div class="good__text">
-                            <div class="good__text_title">
-                                <div class="good__text_title-name">
-                                    <a href="{% url "catalog:product" cart.product.slug %}">
-                                        <div class="book-title">
-                                            <b>{{cart.product.name}}</b>
-                                        </div>
-                                        <div class="book-author">
-                                            {% if cart.product.author_name %}
-                                                {{cart.product.author_name}}
-                                            {% else %}
-                                                <br>
-                                            {% endif %}
-                                        </div>
-                                    </a>
-                                </div>
-                                <a class="good__text_title-cancel remove-from-cart" href="{% url "cart:cart_remove"%}" data-cart-id="{{cart.id}}">
-                                    {% csrf_token %}
-                                    <b>X</b>
+<div class="block__main">
+    {% if carts %}
+        <div class="block__main_goods">
+            {% for cart in carts %}
+                <div class="good" id="cart-item-{{ cart.id }}">
+                    <div class="good__pic">
+                        <a href="{% url "catalog:product" cart.product.slug %}">
+                            {% if cart.product.image %}
+                                <img src={{cart.product.image.url}} alt="{{cart.product.name}}">
+                            {% endif %}                        
+                        </a>
+                    </div>
+                    <div class="good__text">
+                        <div class="good__text_title">
+                            <div class="good__text_title-name">
+                                <a href="{% url "catalog:product" cart.product.slug %}">
+                                    <div class="book-title">
+                                        <b>{{cart.product.name}}</b>
+                                    </div>
+                                    <div class="book-author">
+                                        {% if cart.product.author_name %}
+                                            {{cart.product.author_name}}
+                                        {% else %}
+                                            <br>
+                                        {% endif %}
+                                    </div>
                                 </a>
                             </div>
-                            <div class="good__text_price">
-                                {% if cart.product.discount %}
-                                    <div class="good__text_price-old">
-                                        {{cart.full_price}} ₽
-                                        <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
-                                            <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="good__text_price-new">
-                                        {% if cart.quantity > 1 %}
-                                            <b>{{cart.product_price}} ₽ </b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                     
-                                        {% else %}
-                                            <b>{{cart.product_price}} ₽/шт</b>
-                                        {% endif %}
-                                    </div>
-                                {% else %}
-                                    <div class="good__text_price-old">
-                                        <br>
-                                    </div>
-                                    <div class="good__text_price-new" style='color: black;'>
-                                        {% if cart.quantity > 1 %}
-                                            <b>{{cart.product_price}} ₽</b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                        
-                                        {% else %}
-                                            <b>{{cart.product_price}} ₽/шт</b>
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                            <div class="good__text_btn">
-                                <button class="good__text_btn-pic" href="#">
-                                    <img src="{% static "icons\Group.png" %}">
-                                </button>
-                                <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control input-group">
-                                    <span class="input-group-btn">
-                                        <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="decrement product-quantity__button product-quantity__button--left product-quantity__button--disabled">
-                                            {% csrf_token %}
-                                            -
-                                        </button> 
-                                    </span>
-                                    <input max='300' type="text" class="product-quantity__counter number" value="{{cart.quantity}}"> 
-                                    <span class="input-group-btn">
-                                        <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="increment product-quantity__button product-quantity__button--right">
-                                            {% csrf_token %}
-                                            +
-                                        </button>
-                                    </span>
+                            <a class="good__text_title-cancel remove-from-cart" href="{% url "cart:cart_remove"%}" data-cart-id="{{cart.id}}">
+                                {% csrf_token %}
+                                <b>X</b>
+                            </a>
+                        </div>
+                        <div class="good__text_price">
+                            {% if cart.product.discount %}
+                                <div class="good__text_price-old">
+                                    {{cart.full_price}} ₽
+                                    <svg viewBox="0 0 52 5" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-price__line">
+                                        <path d="M.88 3.938c16.403-3.917 33.836-3.917 50.238 0" stroke="#F34A57" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path>
+                                    </svg>
                                 </div>
+                                <div class="good__text_price-new">
+                                    {% if cart.quantity > 1 %}
+                                        <b>{{cart.product_price}} ₽ </b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                     
+                                    {% else %}
+                                        <b>{{cart.product_price}} ₽/шт</b>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="good__text_price-old">
+                                    <br>
+                                </div>
+                                <div class="good__text_price-new" style='color: black;'>
+                                    {% if cart.quantity > 1 %}
+                                        <b>{{cart.product_price}} ₽</b>&nbsp &nbsp <span style='color: darkgrey;'>{{cart.product.sell_price}} ₽/шт </span>                                        
+                                    {% else %}
+                                        <b>{{cart.product_price}} ₽/шт</b>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="good__text_btn">
+                            {% if cart.product.id in favourites %}
+                                <a href="{% url "cart:like_add" %}" class="add-to-like added-to-like" data-product-id="{{cart.product.id}}">
+                                    {% csrf_token %}
+                                    <button class="good__text_btn-pic">
+                                        <img src={% static "icons\Group.png" %}>
+                                    </button>
+                                </a>
+                            {% else %}
+                                <a href="{% url "cart:like_add" %}" class="add-to-like" data-product-id="{{cart.product.id}}">
+                                    {% csrf_token %}
+                                    <button class="good__text_btn-pic">
+                                        <img src={% static "icons\Group.png" %}>
+                                    </button>
+                                </a>
+                            {% endif %}
+                            <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control input-group">
+                                <span class="input-group-btn">
+                                    <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="decrement product-quantity__button product-quantity__button--left product-quantity__button--disabled">
+                                        {% csrf_token %}
+                                        -
+                                    </button> 
+                                </span>
+                                <input max='300' type="text" class="product-quantity__counter number" value="{{cart.quantity}}"> 
+                                <span class="input-group-btn">
+                                    <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="increment product-quantity__button product-quantity__button--right">
+                                        {% csrf_token %}
+                                        +
+                                    </button>
+                                </span>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="block__main_pay">
-                <div class="sum">
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            Сумма заказа
-                        </div>
-                        <div class="sum__item_value">
-                            {{carts.full_price}} ₽
-                        </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="block__main_pay">
+            <div class="sum">
+                <div class="sum__item">
+                    <div class="sum__item_title">
+                        Сумма заказа
                     </div>
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            Скидка
-                        </div>
-                        <div class="sum__item_value">
-                            {{carts.full_discount}} ₽
-                        </div>
-                    </div>
-                    <div class="sum__item">
-                        <div class="sum__item_title">
-                            <b>Итого</b>
-                        </div>
-                        <div class="sum__item_value">
-                            <b>{{carts.total_price}} ₽</b>
-                        </div>
+                    <div class="sum__item_value">
+                        {{carts.full_price}} ₽
                     </div>
                 </div>
-                <div class="block__main_pay-btn">
-                    <a href="order registration.html" class="block__main_pay-btn">Перейти к оформлению</a>
+                <div class="sum__item">
+                    <div class="sum__item_title">
+                        Скидка
+                    </div>
+                    <div class="sum__item_value">
+                        {{carts.full_discount}} ₽
+                    </div>
+                </div>
+                <div class="sum__item">
+                    <div class="sum__item_title">
+                        <b>Итого</b>
+                    </div>
+                    <div class="sum__item_value">
+                        <b>{{carts.total_price}} ₽</b>
+                    </div>
                 </div>
             </div>
-        {% else %}
-            <b style='color: darkgrey; font-size: 24px;'>Вы пока ничего не выбрали :( </b>
-        {% endif %}
-    </div>
-{% endblock %}
+            <div class="block__main_pay-btn">
+                <a href="{% url "orders:create_order" %}" class="block__main_pay-btn">Перейти к оформлению</a>
+            </div>
+        </div>
+    {% else %}
+        <b style='color: darkgrey; font-size: 24px;'>Вы пока ничего не выбрали :( </b>
+    {% endif %}
+</div>

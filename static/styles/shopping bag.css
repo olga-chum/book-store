@@ -554,14 +554,10 @@ input[name=r] {
   cursor: pointer;
   transition: 0.2s linear;
   border-radius: 15px;
-  opacity: 0.4;
-  height: 100%;
+  width: 85%;
 }
 .good__text_btn-pic img {
-  height: 100%;
-}
-.good__text_btn-pic:hover {
-  opacity: 1;
+  width: 100% !important;
 }
 .good__text_title-name:hover .good__pic img, .good__pic img:hover {
   opacity: 0.3;

@@ -5,7 +5,7 @@ from django.contrib import auth, messages
 from django.urls import reverse
 from goods.models import Categories, Products
 from datetime import datetime
-from carts.models import Cart
+from carts.models import Cart, Like
 
 # from carts.models import Cart
 # from orders.models import Order, OrderItem
@@ -23,6 +23,7 @@ def login(request):
                 auth.login(request, user)
                 if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
+                    Like.objects.filter(session_key=session_key).update(user=user)
                 redirect_page = request.POST.get('next', None)
                 if redirect_page and redirect_page != reverse('user:logout'):
                     return HttpResponseRedirect(request.POST.get('next'))
@@ -59,6 +60,7 @@ def registration(request):
             
             if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
+                    Like.objects.filter(session_key=session_key).update(user=user)
             
             return HttpResponseRedirect(reverse('user:profile'))
         else:
@@ -80,10 +82,22 @@ def registration(request):
 @login_required
 def profile(request):
     form = ProfileForm(instance=request.user)
+    if request.user.is_authenticated:
+        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+        select = Like.objects.filter(user=request.user)[:5]
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
+    else:
+        basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+        select = Like.objects.filter(session_key = request.session.session_key)[:5]
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
+
 
     context = {
         "title": "Chapter & Verse - Профиль", 
         'form': form,
+        'select': select,
+        'favourites': favourites,
+        'basket': basket
     }
     return render(request, 'users/profile.html', context)  # Шаблон, который содержит модальное окно
 
@@ -148,9 +162,28 @@ def logout(request):
 #     return render(request, "users/my_orders.html", context)
 
 def users_cart(request):
+    if request.user.is_authenticated:
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
+    else:
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
+    
     context = {
         "title": "Chapter & Verse - Корзина", 
+        'favourites': favourites
         }
     return render(request, "users/users_cart.html", context)
 
-
+def like(request):
+    if request.user.is_authenticated:
+        basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
+    else:
+        basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
+    
+    context = {
+        "title": "Chapter & Verse - Избранное",
+        'basket': basket, 
+        'favourites': favourites,
+        }
+    return render(request, "users/like.html", context)

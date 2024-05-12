@@ -7,15 +7,17 @@ from datetime import datetime
 from goods.models import Products
 from goods.models import Categories
 from goods.utils import q_search
-from carts.models import Cart
+from carts.models import Cart, Like
 
 def catalog(request, category_slug=None):
 
     query = request.GET.get('q', None)
     if request.user.is_authenticated:
         basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
     else:
         basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
 
 
     if query:
@@ -31,6 +33,7 @@ def catalog(request, category_slug=None):
         "slug_url": category_slug,
         "current_category": category,
         'basket': basket,
+        'favourites': favourites
     }
     return render(request, 'goods/catalog.html', context)
 
@@ -38,9 +41,11 @@ def product(request, product_slug=False, product_id=False):
     
     if request.user.is_authenticated:
         basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
     else:
         basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
-    
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
+
     if product_id:
         product = Products.objects.get(id=product_id)
     else:
@@ -49,6 +54,7 @@ def product(request, product_slug=False, product_id=False):
     context = {
         'product': product,
         'basket': basket,
+        'favourites': favourites
     }
 
     return render(request, 'goods/product.html', context=context)
@@ -58,14 +64,17 @@ def bestsellers(request):
     bests = Products.objects.filter(quantity__lt=5).order_by('?')[:6]
     if request.user.is_authenticated:
         basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
     else:
         basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
-    
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
+
     context: dict = {
         'title': 'Chapter & Verse - Бестселлеры',
         'categories': categories,
         'bests': bests,
         'basket': basket,
+        'favourites': favourites
     }
     return render(request, 'goods/bestsellers.html', context)
 
@@ -74,13 +83,16 @@ def new(request):
     new = Products.objects.filter(year_of_publish=datetime.now().year)
     if request.user.is_authenticated:
         basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
+        favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
     else:
         basket = [item.product_id for item in Cart.objects.filter(session_key = request.session.session_key)]
-    
+        favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
+
     context: dict = {
         'title': 'Chapter & Verse - Новинки',
         'categories': categories,
         'new': new,
         'basket': basket,
+        'favourites': favourites
     }
     return render(request, 'goods/new.html', context)

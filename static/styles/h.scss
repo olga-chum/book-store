@@ -873,7 +873,8 @@ input[name="r"] {
     &__pic-link {}
 }
 
-.add-to-cart {
+.add-to-cart,
+.add-to-like {
     opacity: 0.4;
     transition: 0.2s linear;
 
@@ -882,7 +883,8 @@ input[name="r"] {
     }
 }
 
-.added-to-cart {
+.added-to-cart,
+.added-to-like {
     opacity: 1;
 }
 

@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    var successMessage = $("#jq-notification");
-
     // Ловим собыитие клика по кнопке добавить в корзину
     $(document).on("click", ".add-to-cart", function (e) {
         // Блокируем его базовое действие
@@ -58,6 +56,89 @@ $(document).ready(function () {
     });
 
 
+    // Ловим собыитие клика по кнопке добавить в избранное
+    $(document).on("click", ".add-to-like", function (e) {
+        // Блокируем его базовое действие
+        e.preventDefault();
+
+        // Получаем id товара из атрибута data-product-id
+        var product_id = $(this).data("product-id");
+
+        // Из атрибута href берем ссылку на контроллер django
+        var add_to_like_url = $(this).attr("href");
+
+        var remove_like_url = "{% url 'cart:like_remove' %}";
+
+        // делаем post запрос через ajax не перезагружая страницу
+        $.ajax({
+            type: "POST",
+            url: add_to_like_url,
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            },
+            success: function (data) {
+
+                // Меняем содержимое избранного на ответ от django (новый отрисованный фрагмент разметки корзины)
+                var likeItemsContainer = $("#like-items-container");
+                likeItemsContainer.html(data.like_items_html);
+
+                var addButton = $(".add-to-like[data-product-id='" + product_id + "']");
+                addButton.removeClass("add-to-like").addClass("remove-from-like");
+                addButton.addClass("added-to-like");
+                addButton.attr("href", remove_like_url);
+            },
+        
+            error: function (data) {
+                console.log("Ошибка при добавлении товара в избранное");
+            },
+        });
+    });
+
+
+    $(document).on("click", ".remove-from-like", function (e) {
+        // Блокируем его базовое действие
+        e.preventDefault();
+
+        // Получаем id товара из атрибута data-like-id
+        var product_id = $(this).data("product-id");
+        // Извлекаем ссылку на контроллер Django из атрибута href
+        var remove_from_like_url = $(this).attr("href");
+
+        var add_to_like_url = "{% url 'cart:like_add' %}";
+
+        // Получаем id корзины из атрибута data-cart-id
+        var like_id = $(this).data("like-id");
+        // Из атрибута href берем ссылку на контроллер django
+        var remove_from_like = $(this).attr("href");
+
+        // делаем post запрос через ajax не перезагружая страницу
+        $.ajax({
+
+            type: "POST",
+            url: remove_from_like_url,
+            data: {
+                like_id: like_id,
+                product_id: product_id,
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            },
+            success: function (data) {
+
+                // Меняем содержимое избранного на ответ от django (новый отрисованный фрагмент разметки корзины)
+                var likeItemsContainer = $("#like-items-container");
+                likeItemsContainer.html(data.like_items_html);
+
+                var addButton = $(".remove-from-like.added-to-like[data-product-id='" + product_id + "']");
+                addButton.removeClass("remove-from-like").addClass("add-to-like");
+                addButton.attr("href", add_to_like_url);
+            },
+
+            error: function (data) {
+                console.log("Ошибка при удалении товара из избранного");
+            },
+        });
+    });
+    
 
 
     // Ловим собыитие клика по кнопке удалить товар из корзины
@@ -114,7 +195,7 @@ $(document).ready(function () {
         var url = $(this).data("cart-change-url");
         // Берем id корзины из атрибута data-cart-id
         var cartID = $(this).data("cart-id");
-        // Ищем ближайшеий input с количеством 
+        // Ищем ближайший input с количеством 
         var $input = $(this).closest('.input-group').find('.number');
         // Берем значение количества товара
         var currentValue = parseInt($input.val());

@@ -100,9 +100,21 @@
                                             </button>
                                         </a>
                                     {% endif %}
-                                    <button class="product-info__pic" href="#">
-                                        <img src={% static "icons\Group.png" %}>
-                                </button>
+                                    {% if good.id in favourites %}
+                                        <a href="{% url "cart:like_add" %}" class="add-to-like added-to-like" data-product-id="{{good.id}}">
+                                            {% csrf_token %}
+                                            <button class="product-info__pic">
+                                                <img src={% static "icons\Group.png" %}>
+                                            </button>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url "cart:like_add" %}" class="add-to-like" data-product-id="{{good.id}}">
+                                            {% csrf_token %}
+                                            <button class="product-info__pic">
+                                                <img src={% static "icons\Group.png" %}>
+                                            </button>
+                                        </a>
+                                    {% endif %}
                                 </div>
                                 <div class="product-price">
                                     {% if good.discount %}

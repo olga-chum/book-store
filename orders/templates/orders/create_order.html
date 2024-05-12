@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% load static %}
+{% load goods_tags %}
+
+{% load custom_filters %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\order registration.css" %}">
+{% endblock css %}
+
+
+{% block content %}
+    <section class="panel">
+        <ul class="menu">
+            <a class="menu_link" href="{% url "main:sales" %}"><li class="menu_item">
+                <b>Акции</b>
+            </li></a>
+            <li class="menu_catalog">
+                <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
+                <ul class="sub-menu">
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                        <li><a class="menu_link__item" href="{% url "catalog:index" category.slug%}"><b>{{category.name}}</b></a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
+                <b>Что еще почитать?</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:bestsellers" %}"><li class="menu_item">
+                <b>Бестселлеры</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:new" %}"><li class="menu_item">
+                <b>Новинки</b>
+            </li></a>
+            <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">
+                <b>О нас</b>
+            </li></a>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section class="block">
+        <div class="block__title">
+            <b>Оформление заказа</b>
+        </div>
+        <div class="block__main">
+            <div class="block__main_item">
+                <form action="{% url "orders:create_order" %}" method='post'>
+                    {% csrf_token %}
+                    <div class="step">
+                        <div class="step__title">
+                            <b>Получатель</b>
+                        </div>
+                        <div class="step__block main__item">
+                            <div class="main__item_inputContainer">
+                                <input class="main__item_inputContainer-txt" 
+                                inputmode="kana-name" 
+                                placeholder="*Имя" required 
+                                type="name" 
+                                value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}" 
+                                name="first_name" 
+                                id='id_first_name'>
+                                {% if form.first_name.errors %}
+                                <div class="alert-danger">
+                                    {{form.first_name.errors}}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="main__item_inputContainer">
+                                <input class="main__item_inputContainer-txt" 
+                                inputmode="surname" 
+                                placeholder="*Фамилия" required 
+                                type="surname" 
+                                value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}" 
+                                name="last_name" 
+                                id='id_last_name'>
+                                {% if form.last_name.errors %}
+                                <div class="alert-danger">
+                                    {{form.last_name.errors}}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="main__item_inputContainer">
+                                <input class="main__item_inputContainer-txt"
+                                 placeholder="*Телефон" required 
+                                 type="tel" 
+                                 value="{% if form.phone_number.value %}{{form.phone_number.value|phone_format}}{% endif %}" 
+                                 name="phone_number" id='id_phone_number'>
+                                {% if form.phone_number.errors %}
+                                <div class="alert-danger">
+                                {{form.phone_number.errors}}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="main__item_inputContainer">
+                                <input class="main__item_inputContainer-txt" 
+                                placeholder="email" 
+                                type="email" 
+                                value="{{form.username.value}}" 
+                                name="username" 
+                                id='id_username'>
+                                {% if form.username.errors %}
+                                <div class="alert-danger">
+                                    {{form.username.errors}}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step__title">
+                            <b>Доставка</b>
+                        </div>
+                        <div class="step__block">
+                            <p style="font-size: 18px; text-decoration: underline 0.5px;">Область доставки - <b>г. Саратов</b></p>
+                            <p style="font-size: 18px; text-decoration: underline 0.5px;">Тип доставки - <b>Курьер</b></p>
+                            <p style="font-size: 20px; margin-top: 3%; margin-bottom: 1%;"><b>Куда доставить?</b></p>
+                            <div class="main__item_title">
+                                Улица и номер дома
+                            </div>
+                            <div class="main__item_inputContainer" style="width: 45%;">
+                                <input class="main__item_inputContainer-txt" 
+                                placeholder="Невский проспект, 51/53, к. 3, стр. 2, лит. А" 
+                                type="text" tabindex="0" 
+                                name="delivery_address" 
+                                id='id_delivery_address' required="required" 
+                                autocomplete="street-address address-line1"
+                                value="{% if form.delivery_address.value %}{{ form.delivery_address.value }}{% endif %}">
+                                {% if form.delivery_address.errors %}
+                                    <div class="alert-danger">{{form.delivery_address.errors}}</div>
+                                {% endif %}
+                            </div>
+                            <div class="step__block main__item" style="grid-template-columns: 1fr 3fr;">
+                                <div class="main__item_block">
+                                    <div class="main__item_title">
+                                        Квартира или офис
+                                    </div>
+                                    <div class="main__item_inputContainer" style="width: 55%;">
+                                        <input class="main__item_inputContainer-txt" 
+                                        type="text" 
+                                        placeholder="570" tabindex="0" 
+                                        name="flat" 
+                                        id='id_flat' 
+                                        autocomplete="street-address address-line3"
+                                        value="{% if form.flat.value %}{{ form.flat.value }}{% endif %}">
+                                        {% if form.flat.errors %}
+                                            <div class="alert-danger">{{form.flat.errors}}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="main__item_block">
+                                    <div class="main__item_title">
+                                        Комментарий курьеру
+                                    </div>
+                                    <div class="main__item_inputContainer" style="width: 86%;">
+                                        <input class="main__item_inputContainer-txt" 
+                                        type="text" 
+                                        placeholder="Как пройти, откуда вход — всё, что поможет доставить заказ" 
+                                        tabindex="0" 
+                                        maxlength="250" 
+                                        name="comment" 
+                                        id='id_comment' wfd-id="id4">
+                                        {% if form.comment.errors %}
+                                            <div class="alert-danger">{{form.comment.errors}}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step__title">
+                            <b>Способ оплаты</b>
+                        </div>
+                        <div class="step__block main__item" style="margin-bottom: 3%;">
+                            <div class="step__block_item">
+                                <button class="payments-item payments__item" value='1' checked type='radio' name='payment_on_get' id='id_payment_on_get'>
+                                    <div>
+                                        <div class="payments-item__title">
+                                            <b>Картой на сайте</b> <!---->
+                                        </div> 
+                                        <p class="payments-item__description">Оплатить на сайте сейчас</p>
+                                    </div> 
+                                    <div>
+                                        <div class="payments-item__online">
+                                            <svg width="30" height="14" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="payments-item__paysystem">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.162 3v.004c-.01 0-1.329-.001-1.681 1.261-.324 1.16-1.236 4.362-1.261 4.45h-.252s-.933-3.273-1.261-4.454C4.354 2.996 3.026 3 3.026 3H0v9.624h3.026V6.91h.252l1.765 5.715h2.102L8.91 6.913h.252v5.711h3.026V3H9.162zm11.053 0s-.887.08-1.303 1.009l-2.144 4.707h-.252V3H13.49v9.624h2.858s.929-.084 1.345-1.008l2.101-4.707h.253v5.715h3.025V3h-2.857zm4.203 9.624V7.371h9.393a3.274 3.274 0 01-3.089 2.185h-3.278v3.068h-3.026z" fill="#2DA994"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M30.723 3h-6.729a4.834 4.834 0 004.753 3.95h5.187c.046-.218.067-.44.067-.672A3.277 3.277 0 0030.723 3z" fill="#26A9E0"></path>
+                                            </svg> 
+                                            <svg width="30" height="14" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="payments-item__paysystem">
+                                                <g clip-path="url(#clip0_7144_63742)">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.87 6.51c-.02 1.53 1.362 2.383 2.403 2.89 1.07.521 1.43.855 1.426 1.32-.008.713-.854 1.028-1.645 1.04-1.38.021-2.183-.373-2.82-.67l-.498 2.326c.64.295 1.825.552 3.055.563 2.885 0 4.773-1.424 4.783-3.632.011-2.803-3.877-2.958-3.85-4.21.009-.38.371-.786 1.166-.889.393-.052 1.478-.092 2.708.475l.483-2.251A7.363 7.363 0 0022.511 3c-2.716 0-4.627 1.444-4.642 3.51zM29.72 3.194c-.526 0-.97.307-1.169.779l-4.121 9.841h2.883l.574-1.585h3.523l.333 1.585h2.541l-2.217-10.62h-2.346zm.404 2.869l.832 3.988h-2.279l1.447-3.988zM14.373 3.194l-2.272 10.62h2.747l2.272-10.62h-2.747zm-4.064 0l-2.86 7.228-1.157-6.146c-.135-.686-.671-1.082-1.267-1.082H.351l-.066.308c.96.209 2.05.545 2.71.904.405.22.52.411.653.933l2.191 8.475h2.904l4.451-10.62H10.31z" fill="#2660AB">
+    
+                                                    </path>
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_7144_63742">
+                                                            <path fill="#fff" transform="translate(.285)" d="M0 0h34.286v16H0z">
+    
+                                                            </path>
+                                                    </clipPath>
+                                                </defs>
+                                            </svg> 
+                                            <svg width="20" height="14" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="payments-item__paysystem">
+                                                <g clip-path="url(#clip0_7144_63744)">
+                                                    <path d="M15.086 2.082h-6.18V13.19h6.18V2.082z" fill="#F02B0E"></path>
+                                                    <path d="M9.302 7.637A7.05 7.05 0 0112 2.082a7.063 7.063 0 100 11.107 7.051 7.051 0 01-2.698-5.552z" fill="#F34A57"></path>
+                                                    <path d="M23.429 7.636A7.063 7.063 0 0112 13.19a7.064 7.064 0 000-11.107 7.063 7.063 0 0111.429 5.552v.002z" fill="#FC9429"></path>
+                                                    <path d="M22.75 12.011v-.227h.093v-.047h-.234v.047h.1v.227h.042zm.454 0v-.274h-.07l-.083.196-.083-.196h-.062v.274h.05v-.205l.077.178h.053l.077-.178v.208l.04-.002z" fill="#707783"></path>
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_7144_63744">
+                                                        <path fill="#fff" transform="translate(.572)" d="M0 0h22.857v16H0z"></path>
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </div> <!----></div>
+                                </button>
+                            </div>
+                            <div class="step__block_item">
+                                <button class="payments-item payments__item" value='0' type='radio' name='payment_on_get' id='id_payment_on_get'>
+                                    <div>
+                                        <div class="payments-item__title">
+                                            <b>При получении</b> <!---->
+                                        </div> 
+                                        <p class="payments-item__description">Оплатить картой или наличными при получении заказа</p>
+                                    </div> 
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="block__main_pay">
+                <div class="sum">
+                    <div class="sum__item">
+                        <div class="sum__item_title">
+                            Сумма заказа
+                        </div>
+                        <div class="sum__item_value">
+                            {{total_price}} ₽
+                        </div>
+                    </div>
+                    <div class="sum__item">
+                        <div class="sum__item_title">
+                            Скидка
+                        </div>
+                        <div class="sum__item_value">
+                            {{total_discount}} ₽
+                        </div>
+                    </div>
+                    <div class="sum__item">
+                        <div class="sum__item_title">
+                            <b>Итого</b>
+                        </div>
+                        <div class="sum__item_value">
+                            <b>{{total_price_with_discount }} ₽</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="block__main_pay-btn">
+                    <button href="" class="block__main_pay-btn">Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

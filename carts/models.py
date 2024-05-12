@@ -25,6 +25,7 @@ class Cart(models.Model):
         db_table = 'cart'
         verbose_name = "Корзина"
         verbose_name_plural = "Корзина"
+        ordering = ("id",)
 
     objects = CartQueryset().as_manager()
 
@@ -42,3 +43,22 @@ class Cart(models.Model):
             return f'Корзина {self.user.username} | Товар {self.product.name} | Количество {self.quantity}'
         
         return f'Анонимная корзина | Товар {self.product.name} | Количество {self.quantity}'
+    
+
+class Like(models.Model):
+
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Пользователь')
+    product = models.ForeignKey(to=Products, on_delete=models.CASCADE, verbose_name='Товар')
+    session_key = models.CharField(max_length=32, null=True, blank=True)
+    created_timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')
+
+    class Meta:
+        db_table = 'like'
+        verbose_name = "Избранное"
+        verbose_name_plural = "Избранное"
+
+    def __str__(self):
+        if self.user:
+            return f'Избранное {self.user.username} | Товар {self.product.name}'
+        
+        return f'Анонимное избранное | Товар {self.product.name}'

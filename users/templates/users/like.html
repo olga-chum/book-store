@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load carts_tags %}
+{% load goods_tags %}
+{% user_likes request as likes %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\like.css" %}">
+{% endblock css %}
+
+{% block content %}
+    <section class="panel">
+        <ul class="menu">
+            <a class="menu_link" href="{% url "main:sales" %}"><li class="menu_item">
+                <b>Акции</b>
+            </li></a>
+            <li class="menu_catalog">
+                <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
+                <ul class="sub-menu">
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                        <li><a class="menu_link__item" href="{% url "catalog:index" category.slug%}"><b>{{category.name}}</b></a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
+                <b>Что еще почитать?</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:bestsellers" %}"><li class="menu_item">
+                <b>Бестселлеры</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:new" %}"><li class="menu_item">
+                <b>Новинки</b>
+            </li></a>
+            <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">
+                <b>О нас</b>
+            </li></a>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section class="block">
+        <div class="catalog">
+            <div class="catalog__items">
+                <ul>
+                    <li><a class="catalog__items_item" href="{% url "user:profile" %}">
+                        Профиль
+                        <img src="{% static "icons\Vector 12.png" %}">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="{% url "user:personality" %}">
+                        Личные данные
+                        <img src="{% static "icons\Vector 12.png" %}">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="orders.html">
+                        Заказы
+                        <img src="{% static "icons\Vector 12.png" %}">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="{% url "user:like" %}" style="color: black">
+                        <b>Избранное</b>
+                    </a></li>
+                    <hr>
+                    <li><a class="catalog__items_item" href="{% url "user:logout" %}" style="color: #921A22;">
+                        Выйти
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="main">
+            <div class="main__title">
+                <b>Избранное</b>
+            </div>
+            <div class="container" id='like-items-container'>
+                {% include "carts/includes/included_like.html" %}   
+            </div>
+        </div> 
+    </section>
+
+{% endblock content %}

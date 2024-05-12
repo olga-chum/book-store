@@ -154,7 +154,7 @@
                 </div>
                 <div class="book__buy_btns">
                     {% if product.id in basket %}
-                        <a class="book__buy_btns-item buy add-to-cart" style='padding-inline: 12%; opacity: 0.4; background-color: #dedede; cursor: default;'>
+                        <a class="book__buy_btns-item buy add-to-cart" style='padding-inline: 10.5%; opacity: 0.4; background-color: #dedede; cursor: default;'>
                             {% csrf_token %}
                             Добавлено в корзину
                         </a>
@@ -164,7 +164,21 @@
                             Купить
                         </a>
                     {% endif %}
-                    <button class="book__buy_btns-item like"><img src= {% static "icons\Group.png" %}></button>
+                    {% if product.id in favourites %}
+                        <a href="{% url "cart:like_add" %}" class="add-to-like added-to-like" data-product-id="{{product.id}}">
+                            {% csrf_token %}
+                            <button class="product-info__pic book__buy_btns-item like">
+                                <img src={% static "icons\Group.png" %}>
+                            </button>
+                        </a>
+                    {% else %}
+                        <a href="{% url "cart:like_add" %}" class="add-to-like" data-product-id="{{product.id}}">
+                            {% csrf_token %}
+                            <button class="product-info__pic book__buy_btns-item like">
+                                <img src={% static "icons\Group.png" %}>
+                            </button>
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="book__buy_status">
                     {% if product.quantity < 6 %}
