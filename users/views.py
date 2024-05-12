@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib import auth, messages
@@ -6,9 +7,7 @@ from django.urls import reverse
 from goods.models import Categories, Products
 from datetime import datetime
 from carts.models import Cart, Like
-
-# from carts.models import Cart
-# from orders.models import Order, OrderItem
+from orders.models import Order, OrderItem
 from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
 
 def login(request):
@@ -91,13 +90,24 @@ def profile(request):
         select = Like.objects.filter(session_key = request.session.session_key)[:5]
         favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
 
+    orders = (
+        Order.objects.filter(user=request.user)
+            .prefetch_related(
+                Prefetch(
+                    "orderitem_set",
+                    queryset=OrderItem.objects.select_related("product")
+                )
+            )
+            .order_by("-id")[:1]
+    )
 
     context = {
         "title": "Chapter & Verse - Профиль", 
         'form': form,
         'select': select,
         'favourites': favourites,
-        'basket': basket
+        'basket': basket,
+        "orders": orders
     }
     return render(request, 'users/profile.html', context)  # Шаблон, который содержит модальное окно
 
