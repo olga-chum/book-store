@@ -34,8 +34,8 @@ def create_order(request):
                     # Создание заказа
                     order = Order.objects.create(
                         user=user,
-                        # first_name = form.cleaned_data['first_name'],
-                        # last_name = form.cleaned_data['last_name'],
+                        first_name = form.cleaned_data['first_name'],
+                        last_name = form.cleaned_data['last_name'],
                         phone_number=form.cleaned_data['phone_number'],
                         delivery_address=form.cleaned_data['delivery_address'],
                         flat=form.cleaned_data.get('flat', None),

@@ -16,6 +16,8 @@ class OrderitemQueryset(models.QuerySet):
 
 
 class Order(models.Model):
+    first_name = models.CharField(max_length=150, verbose_name='Имя получателя', blank=True, null=True, default=None)
+    last_name = models.CharField(max_length=150, verbose_name='Фамилия получателя', blank=True, null=True, default=None)
     user = models.ForeignKey(to=User, on_delete=models.SET_DEFAULT, blank=True, null=True, verbose_name="Пользователь", default=None)
     created_timestamp = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания заказа")
     phone_number = models.CharField(max_length=20, verbose_name="Номер телефона")
@@ -33,7 +35,10 @@ class Order(models.Model):
         verbose_name_plural = "Заказы"
 
     def __str__(self):
-        return f"Заказ № {self.pk} | Получатель {self.user.first_name} {self.user.last_name}"
+        if self.first_name and self.last_name:
+            return f"Заказ № {self.pk} | Получатель {self.first_name} {self.last_name}"
+        else:
+            return f"Заказ № {self.pk} | Получатель {self.user.first_name} {self.user.last_name}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE, verbose_name="Заказ")

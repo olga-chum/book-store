@@ -2,6 +2,8 @@ import re
 from django import forms
 from django.template.defaulttags import comment
 
+# from distutils.command.clean import clean
+
 
 class CreateOrderForm(forms.Form):
 
@@ -15,14 +17,12 @@ class CreateOrderForm(forms.Form):
     # payment_on_get = forms.ChoiceField(choices=[('0', 'False'),
                                                 # ('1', 'True'),],)
 
-    # def clean_phone_number(self):
-    #     data = self.cleaned_data['phone_number']
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data['phone_number']
+        # Удалите все символы, кроме цифр, из номера телефона
+        cleaned_phone_number = re.sub(r'\D', '', phone_number)
+        pattern = re.compile(r'^\d{11}$')
+        if not pattern.match(cleaned_phone_number):
+            raise forms.ValidationError("Неверный формат номера телефона")
 
-    #     if not data.isdigit():
-    #         raise forms.ValidationError("Номер телефона должен содержать только цифры")
-        
-    #     pattern = re.compile(r'^\d{10}$')
-    #     if not pattern.match(data):
-    #         raise forms.ValidationError("Неверный формат номера")
-
-    #     return data
+        return cleaned_phone_number
