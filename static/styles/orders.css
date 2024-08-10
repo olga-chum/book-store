@@ -474,6 +474,8 @@ input[name=r] {
 }
 .main__item_title-order {
   font-size: 20px;
+  display: flex;
+  align-items: baseline;
 }
 .main__item_title-status {
   background-color: #dedede;
@@ -492,6 +494,7 @@ input[name=r] {
 .main__item_products-good {
   display: flex;
   height: 100%;
+  width: 90%;
 }
 .main__item_products-sum {
   font-size: 20px;
@@ -502,10 +505,21 @@ input[name=r] {
   height: 100%;
   display: flex;
   align-items: center;
+  border: none !important;
 }
 .product img {
   border-radius: 5px;
-  height: 80%;
+  height: 100%;
+}
+
+.clearfix {
+  width: 100%;
+}
+
+.orders__item {
+  width: 10%;
+  position: relative;
+  margin-right: 0.5%;
 }
 
 .footer {

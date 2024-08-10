@@ -12,7 +12,6 @@ class OrderItemTabulareAdmin(admin.TabularInline):
     )
     extra = 0
 
-
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = "order", "product", "name", 'author_name', "price", "quantity"
@@ -22,7 +21,6 @@ class OrderItemAdmin(admin.ModelAdmin):
         "name",
         'author_name'
     )
-
 
 class OrderTabulareAdmin(admin.TabularInline):
     model = Order

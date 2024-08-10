@@ -54,7 +54,7 @@
                         Личные данные
                         <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
-                    <li><a class="catalog__items_item" href="orders.html">
+                    <li><a class="catalog__items_item" href="{% url "user:my_orders" %}">
                         Заказы
                         <img src="{% static "icons\Vector 12.png" %}">
                     </a></li>
@@ -89,34 +89,37 @@
             <div class="main__item">
                 <div class="main__item_title">
                     <b>Активные заказы</b>
+                    <a href="{% url "user:my_orders" %}" class="main__item_title-link-2">Смотреть все<img src="{% static "icons\Vector 12.png" %}"></a>
                 </div>
-                <div class="main__item_orders">
-                    <div class="main__item_orders-block">
-                        {% for order in orders %}
-                            <div class="main__item_orders-block-title">
-                                <b>Заказ №{{order.id}} от {{order.created_timestamp}}</b>
-                            </div>
-                            <div class="main__item_orders-block-products">
-                                <div class="main__item_orders-block-products-good">
-                                    <ul class="products clearfix">
-                                        {% for item in order.orderitem_set.all %}
-                                            <li class="product-wrapper">
-                                                <div class="good">
-                                                    {% if item.product.image %}
-                                                        <img src={{item.product.image.url}} alt="{{item.product.name}}">
-                                                    {% endif %}
-                                                </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                {% if orders %}
+                    <div class="main__item_orders">
+                        <div class="main__item_orders-block">
+                            {% for order in orders %}
+                                <div class="main__item_orders-block-title">
+                                    <b>Заказ №{{order.id}} от {{order.created_timestamp}}</b>
                                 </div>
-                                <div class="main__item_orders-block-products-sum">
-                                    <b>{{order.orderitem_set.total_price}} ₽</b>
+                                <div class="main__item_orders-block-products">
+                                    <div class="main__item_orders-block-products-good">
+                                        <ul class="products clearfix orders">
+                                            {% for item in order.orderitem_set.all %}
+                                                <li class="product-wrapper orders__item">
+                                                    <div class="good">
+                                                        {% if item.product.image %}
+                                                            <img src={{item.product.image.url}} alt="{{item.product.name}}">
+                                                        {% endif %}
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div class="main__item_orders-block-products-sum">
+                                        <b>{{order.orderitem_set.total_price}} ₽</b>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
             <div class="main__item">
                 <div class="main__item_title">
@@ -150,20 +153,38 @@
                                         </a>
                                         <div class="product-info">
                                             <div class="product-info__pic">
-                                                {% if like.product.id in basket %}
-                                                    <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{like.product.id}}">
-                                                        {% csrf_token %}
-                                                        <button class="product-info__pic">
-                                                            <img src={% static "icons\Group 43.png" %}>
-                                                        </button>
-                                                    </a>
+                                                {% if like.product.quantity == 0 %}
+                                                    {% if like.product.id in basket %}
+                                                        <a class="add-to-cart added-to-cart">
+                                                            {% csrf_token %}
+                                                            <button class="product-info__pic">
+                                                                <img src={% static "icons\Group 43.png" %}>
+                                                            </button>
+                                                        </a>
+                                                    {% else %}
+                                                        <a class="add-to-cart">
+                                                            {% csrf_token %}
+                                                            <button class="product-info__pic">
+                                                                <img src={% static "icons\Group 43.png" %}>
+                                                            </button>
+                                                        </a>
+                                                    {% endif %}
                                                 {% else %}
-                                                    <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{like.product.id}}">
-                                                        {% csrf_token %}
-                                                        <button class="product-info__pic">
-                                                            <img src={% static "icons\Group 43.png" %}>
-                                                        </button>
-                                                    </a>
+                                                    {% if like.product.id in basket %}
+                                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{like.product.id}}">
+                                                            {% csrf_token %}
+                                                            <button class="product-info__pic">
+                                                                <img src={% static "icons\Group 43.png" %}>
+                                                            </button>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{like.product.id}}">
+                                                            {% csrf_token %}
+                                                            <button class="product-info__pic">
+                                                                <img src={% static "icons\Group 43.png" %}>
+                                                            </button>
+                                                        </a>
+                                                    {% endif %}
                                                 {% endif %}
                                                 {% if like.product.id in favourites %}
                                                     <a href="{% url "cart:like_add" %}" class="add-to-like added-to-like" data-product-id="{{like.product.id}}">

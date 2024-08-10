@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+{% load goods_tags %}
+{% load carts_tags %}
+
+{% user_likes request as likes %}
+{% user_carts request as carts %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "styles\orders.css" %}">
+{% endblock css %}
+
+{% block content %}
+    <section class="panel">
+        <ul class="menu">
+            <a class="menu_link" href="{% url "main:sales" %}"><li class="menu_item">
+                <b>Акции</b>
+            </li></a>
+            <li class="menu_catalog">
+                <a class="main-item" href="javascript:void(0);"><b>Каталог</b></a>
+                <ul class="sub-menu">
+                    {% tag_categories as categories %}
+                    {% for category in categories %}
+                        <li><a class="menu_link__item" href="{% url "catalog:index" category.slug%}"><b>{{category.name}}</b></a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <a class="menu_link" href="{% url "main:else" %}"><li class="menu_item">
+                <b>Что еще почитать?</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:bestsellers" %}"><li class="menu_item">
+                <b>Бестселлеры</b>
+            </li></a>
+            <a class="menu_link" href="{% url "catalog:new" %}"><li class="menu_item">
+                <b>Новинки</b>
+            </li></a>
+            <a class="menu_link" href="{% url "main:about" %}"><li class="menu_item">
+                <b>О нас</b>
+            </li></a>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section class="block">
+        <div class="catalog">
+            <div class="catalog__items">
+                <ul>
+                    <li><a class="catalog__items_item" href="{% url "user:profile" %}">
+                        Профиль
+                        <img src="{% static "icons\Vector 12.png" %}">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="{% url "user:personality" %}">
+                        Личные данные
+                        <img src="{% static "icons\Vector 12.png" %}">
+                    </a></li>
+                    <li><a class="catalog__items_item" href="{% url "user:my_orders" %}" style="color: black">
+                       <b>Заказы</b>
+                    </a></li>
+                    <li><a class="catalog__items_item" href="{% url "user:like" %}">
+                        Избранное
+                        <img src="{% static "icons\Vector 12.png" %}">
+                    </a></li>
+                    <hr>
+                    <li><a class="catalog__items_item" href="{% url "user:logout" %}" style="color: #921A22;">
+                        Выйти
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="main">
+            <div class="main__title">
+                <b>Заказы</b>
+            </div>
+            {% for order in orders %}
+                <div class="main__item">
+                    <div class="main__item_title">
+                        <div class="main__item_title-order">
+                            <b>Заказ №{{order.id}} от {{order.created_timestamp}}</b>
+                            {% if order.status == 'Отправлен' %}
+                                <p style='font-size: 14px; margin-left: 15px; color: #7e7e7e'>Ваш номер для отслеживания: {{order.tracking_number}}</p>
+                            {% endif %}
+                        </div>
+                        <div class="main__item_title-status" style="{% if order.status == 'В обработке' or order.status == 'Отправлен' or order.status == 'В сборке' %}
+                                                                        background-color: #fff59d;
+                                                                    {% elif order.status == 'Выполнен' %}
+                                                                        background-color: #dedede;
+                                                                    {% elif order.status == 'Отменен' %}
+                                                                        background-color: #ffcc80;
+                                                                    {% endif %}">
+                            {{order.status}}
+                        </div>
+                    </div>
+                    <div class="main__item_products">
+                        <div class="main__item_products-good">
+                            <ul class="products clearfix orders">
+                                {% for item in order.orderitem_set.all %}
+                                    <li class="product-wrapper orders__item">
+                                        <div class="product">
+                                            {% if item.image %}
+                                                <img src={{item.image.url}} alt="{{item.name}}">
+                                            {% endif %}                                        
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="main__item_products-sum">
+                            <b>{{order.orderitem_set.total_price}} ₽</b>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

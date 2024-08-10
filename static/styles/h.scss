@@ -1,6 +1,7 @@
 body {
     font-family: Century Gothic;
     margin: 0 50px 0 50px;
+    height: 100%;
     // width: 100%;
 }
 
@@ -450,7 +451,7 @@ input[name="r"] {
     visibility: hidden;
 }
 
-.alert-danger {
+.alert-danger{
     font-size: 13px;
     margin-top: -3%;
     width: 105%;
@@ -465,6 +466,13 @@ input[name="r"] {
             margin-bottom: 3%;
         }
     }
+}
+.alert{
+    margin-top: 2%;
+    color: black;
+    border-radius: 5px;
+    background-color: #fff59d;
+    padding-block: 1%;
 }
 
 .adverts {
@@ -1008,7 +1016,7 @@ input[name="r"] {
 
 .footer {
     background-color: #EEE;
-    margin: 5% -50px 0 -50px;
+    margin: 5.6% -50px 0 -50px;
     padding-bottom: 2%;
 
     &__block {

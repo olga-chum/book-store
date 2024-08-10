@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import AUTH_USER_MODEL, LOGIN_URL
+from django.conf.global_settings import AUTH_USER_MODEL, DEFAULT_FROM_EMAIL, EMAIL_BACKEND, LOGIN_URL, SERVER_EMAIL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,8 +61,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     # "carts.middleware.DisableBrowserCashingMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -159,3 +159,14 @@ LOGIN_URL = '/#person'
 
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465  # Порт для SSL
+EMAIL_USE_SSL = True  # Использовать SSL
+EMAIL_HOST_USER = 'olechka.chumakovachumakova@yandex.ru'
+EMAIL_HOST_PASSWORD = 'ylraadqspeerokqw'  # Пароль приложения
+
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# SERVER_EMAIL = EMAIL_HOST_USER
+# EMAIL_ADMIN = EMAIL_HOST_USER

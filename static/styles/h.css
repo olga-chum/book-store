@@ -2,6 +2,7 @@
 body {
   font-family: Century Gothic;
   margin: 0 50px 0 50px;
+  height: 100%;
 }
 
 html {
@@ -436,6 +437,14 @@ input[name=r] {
 }
 .alert-danger ul li {
   margin-bottom: 3%;
+}
+
+.alert {
+  margin-top: 2%;
+  color: black;
+  border-radius: 5px;
+  background-color: #fff59d;
+  padding-block: 1%;
 }
 
 .adverts {
@@ -945,7 +954,7 @@ input[name=r] {
 
 .footer {
   background-color: #EEE;
-  margin: 5% -50px 0 -50px;
+  margin: 5.6% -50px 0 -50px;
   padding-bottom: 2%;
 }
 .footer__block {

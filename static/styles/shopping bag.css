@@ -2,6 +2,7 @@
 body {
   font-family: Century Gothic;
   margin: 0 50px 0 50px;
+  height: 100%;
 }
 
 html {
@@ -639,81 +640,4 @@ input[name=r] {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
-}
-.footer {
-  background-color: #EEE;
-  margin: 5% -50px 0 -50px;
-  padding-bottom: 2%;
-}
-.footer__block {
-  padding-top: 1%;
-  margin: 0 50px 0 50px;
-}
-.footer__block_title {
-  text-align: center;
-}
-
-.about {
-  display: flex;
-  justify-content: space-between;
-}
-.about__us {
-  max-width: 50%;
-  color: #616161;
-  text-align: justify;
-  line-height: 1.5rem;
-}
-.about__question {
-  padding-top: 1%;
-  width: 40%;
-  text-align: center;
-  color: #616161;
-}
-.about__question_form {
-  display: block;
-  margin-block: 5%;
-}
-.about__question_txt {
-  width: 100%;
-  padding: 2%;
-}
-.about__question button {
-  font-size: 16px;
-  font-family: Century Gothic;
-  background-color: #dedede;
-  border: none;
-  padding-inline: 10%;
-  padding-block: 1%;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.2s linear;
-}
-.about__question button:hover {
-  background-color: #d3d3d3;
-}
-.about__question input, .about__question textarea {
-  border-radius: 15px;
-  resize: none;
-  text-align: left;
-  display: block;
-  outline: none;
-  background-color: white;
-  width: 93%;
-  font-size: 1rem;
-  line-height: 1.2rem;
-  letter-spacing: 0.5px;
-  -webkit-box-shadow: 0 0 0px 10em white inset !important;
-  -webkit-text-fill-color: #7e7e7e;
-  font-family: Century Gothic;
-  border: 0.5px solid #7e7e7e;
-  padding: 0px 1rem;
-  height: 2rem;
-  margin-bottom: 1.2rem;
-  align-items: center;
-}
-
-.social {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 120px;
 }/*# sourceMappingURL=shopping bag.css.map */

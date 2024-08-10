@@ -85,21 +85,40 @@
                                     </button>
                                 </a>
                             {% endif %}
-                            <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control input-group">
-                                <span class="input-group-btn">
-                                    <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="decrement product-quantity__button product-quantity__button--left product-quantity__button--disabled">
-                                        {% csrf_token %}
-                                        -
-                                    </button> 
-                                </span>
-                                <input max='300' type="text" class="product-quantity__counter number" value="{{cart.quantity}}"> 
-                                <span class="input-group-btn">
-                                    <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="increment product-quantity__button product-quantity__button--right">
-                                        {% csrf_token %}
-                                        +
-                                    </button>
-                                </span>
-                            </div>
+                            {% if cart.quantity >= cart.product.quantity %}
+                                <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control input-group">
+                                    <span class="input-group-btn">
+                                        <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="decrement product-quantity__button product-quantity__button--left product-quantity__button--disabled">
+                                            {% csrf_token %}
+                                            -
+                                        </button> 
+                                    </span>
+                                    <input max='300' type="text" class="product-quantity__counter number" value="{{cart.quantity}}"> 
+                                    <span class="input-group-btn">
+                                        <button class=" product-quantity__button product-quantity__button--right" style='opacity: 0.4'>
+                                            {% csrf_token %}
+                                            +
+                                        </button>
+                                    </span>
+                                </div>
+                                <b style='color: #fdd835; margin-left: 2%;'>Осталось всего {{cart.product.quantity}}!!!</b>
+                            {% else %}
+                                <div data-v-7889c1e6="" class="product-quantity cart-item__quantity-control input-group">
+                                    <span class="input-group-btn">
+                                        <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="decrement product-quantity__button product-quantity__button--left product-quantity__button--disabled">
+                                            {% csrf_token %}
+                                            -
+                                        </button> 
+                                    </span>
+                                    <input max='300' type="text" class="product-quantity__counter number" value="{{cart.quantity}}"> 
+                                    <span class="input-group-btn">
+                                        <button type='button' data-cart-id="{{cart.id}}" data-cart-change-url="{% url "cart:cart_change" %}" class="increment product-quantity__button product-quantity__button--right">
+                                            {% csrf_token %}
+                                            +
+                                        </button>
+                                    </span>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

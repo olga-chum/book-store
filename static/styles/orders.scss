@@ -508,6 +508,8 @@ input[name="r"] {
 
         &_title-order {
             font-size: 20px;
+            display: flex;
+            align-items:baseline;
         }
 
         &_title-status {
@@ -529,6 +531,7 @@ input[name="r"] {
         &_products-good {    
             display: flex;
             height: 100%;
+            width: 90%;
         }
 
         &_products-sum {
@@ -541,10 +544,24 @@ input[name="r"] {
     height: 100%;
     display: flex;
     align-items: center;
+    border: none !important;
 
     & img{
         border-radius: 5px;
-        height: 80%;
+        height: 100%;
+    }
+}
+
+.clearfix {
+    width: 100%;
+}
+
+.orders {
+
+    &__item {
+        width: 10%;
+        position: relative;
+        margin-right: 0.5%
     }
 }
 

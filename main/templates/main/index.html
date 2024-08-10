@@ -80,7 +80,7 @@
                             <p>Жить просто - значит избавиться от всего, что не приносит пользу.<br> От ненужных переживаний о прошлом и будущем, от бесконечных попыток быть всегда продуктивным и угрызений совести, если что-то идет не так.</p>
                             <div class="adverts__pictures-slide-third--block">
                                 <p1><b>Психология счастья</b></p1>
-                                <a class='adverts__pictures-slide-third--a' href="#"><b>Перейти</b></a>
+                                <a class='adverts__pictures-slide-third--a' href="{% url "catalog:product" product_slug='iskusstvo-zaboty-o-dushe-100-insajtov-dzen-buddijskogo-monaha-o-zhizni-bez-stressa' %}"><b>Перейти</b></a>
                             </div>
                         </div>
                         <div class="adverts__pictures-slide-third--pic">
@@ -128,20 +128,38 @@
                             </a>
                             <div class="product-info">
                                 <div class="product-info__pic">
-                                    {% if good.id in basket %}
-                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{good.id}}">
-                                            {% csrf_token %}
-                                            <button class="product-info__pic">
-                                                <img src={% static "icons\Group 43.png" %}>
-                                            </button>
-                                        </a>
+                                    {% if good.quantity == 0 %}
+                                        {% if good.id in basket %}
+                                            <a class="add-to-cart added-to-cart">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% else %}
+                                            <a class="add-to-cart">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% endif %}
                                     {% else %}
-                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{good.id}}">
-                                            {% csrf_token %}
-                                            <button class="product-info__pic">
-                                                <img src={% static "icons\Group 43.png" %}>
-                                            </button>
-                                        </a>
+                                        {% if good.id in basket %}
+                                            <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{good.id}}">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{good.id}}">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                     {% if good.id in favourites %}
                                         <a href="{% url "cart:like_remove" %}" class="remove-from-like added-to-like" data-product-id="{{good.id}}">
@@ -258,23 +276,41 @@
                             </a>
                             <div class="product-info">
                                 <div class="product-info__pic">
-                                    {% if good.id in basket %}
-                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{good.id}}">
-                                            {% csrf_token %}
-                                            <button class="product-info__pic">
-                                                <img src={% static "icons\Group 43.png" %}>
-                                            </button>
-                                        </a>
+                                    {% if good.quantity == 0 %}
+                                        {% if good.id in basket %}
+                                            <a class="add-to-cart added-to-cart">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% else %}
+                                            <a class="add-to-cart">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% endif %}
                                     {% else %}
-                                        <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{good.id}}">
-                                            {% csrf_token %}
-                                            <button class="product-info__pic">
-                                                <img src={% static "icons\Group 43.png" %}>
-                                            </button>
-                                        </a>
+                                        {% if good.id in basket %}
+                                            <a href="{% url "cart:cart_add" %}" class="add-to-cart added-to-cart" data-product-id="{{good.id}}">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{good.id}}">
+                                                {% csrf_token %}
+                                                <button class="product-info__pic">
+                                                    <img src={% static "icons\Group 43.png" %}>
+                                                </button>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
-                                    {% comment %} {% if good.id in favourites %}
-                                        <a href="{% url "cart:like_add" %}" class="add-to-like added-to-like" data-product-id="{{good.id}}">
+                                    {% if good.id in favourites %}
+                                        <a href="{% url "cart:like_remove" %}" class="remove-from-like added-to-like" data-product-id="{{good.id}}">
                                             {% csrf_token %}
                                             <button class="product-info__pic">
                                                 <img src={% static "icons\Group.png" %}>
@@ -287,7 +323,7 @@
                                                 <img src={% static "icons\Group.png" %}>
                                             </button>
                                         </a>
-                                    {% endif %} {% endcomment %}
+                                    {% endif %}
                                 </div>
                                 <div class="product-price">
                                     {% if good.discount %}

@@ -5,7 +5,6 @@ from django.urls import reverse
 from carts.utils import get_user_carts, get_user_likes
 
 from carts.models import Cart, Like
-# from carts.utils import get_user_carts
 from goods.models import Products
 
 def cart_add(request):

@@ -25,4 +25,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('sales/', views.sales, name='sales'),
     path('else/', views.else_, name='else'),
+    # path('contact/', views.handle_contact_form, name='contact'),  # Обработчик формы обратной связи
+
 ]

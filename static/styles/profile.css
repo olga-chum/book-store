@@ -503,7 +503,7 @@ input[name=r] {
   margin-top: 2%;
   border: 1px solid #dedede;
   border-radius: 5px;
-  height: 150px;
+  height: 180px;
   margin-inline: 2%;
 }
 .main__item_orders-block {
@@ -527,7 +527,7 @@ input[name=r] {
 }
 .main__item_orders-block-products-good {
   display: flex;
-  height: 100%;
+  width: 90%;
 }
 .main__item_orders-block-products-sum {
   font-size: 18px;
@@ -541,7 +541,8 @@ input[name=r] {
 }
 .good img {
   border-radius: 5px;
-  height: 80%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .products {
@@ -553,6 +554,7 @@ input[name=r] {
 .clearfix {
   height: 100%;
   padding: 0;
+  width: 100%;
 }
 
 .product-wrapper {
@@ -679,6 +681,11 @@ input[name=r] {
 .product-info__pic img {
   width: 60%;
 }
+.orders__item {
+  width: 10%;
+  position: relative;
+}
+
 .footer {
   background-color: #EEE;
   margin: 5% -50px 0 -50px;

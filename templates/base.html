@@ -18,230 +18,259 @@
     {% endblock  %}
     <title>{{ title }}</title>
 </head>
+
 <body>
-    <section class="title">
-        <div class="title__brand">
-            <a class="title__name" href="{% url "main:index" %}"><b>Chapter & Verse</b></a>
-        </div>
-        <div class="title__dop">
-            <div class="info">
-                <div class="info__pic">
-                    <a class="info__pic_link" href="orders.html">
-                        <img src="{% static "icons\Vector (1).png" %}">
-                        <p>Заказы</p>
-                    </a>
-                </div>
-                <div class="info__pic">
-                    <a class="info__pic_link" href="#contacts">
-                        <img src="{% static "icons\Vector (2).png" %}">
-                        <p>Поддержка</p>
-                    </a>
+    <div class="wrapper">
+        <section class="title">
+            <div class="title__brand">
+                <a class="title__name" href="{% url "main:index" %}"><b>Chapter & Verse</b></a>
+            </div>
+            <div class="title__dop">
+                <div class="info">
+                    <div class="info__pic">
+                        <a class="info__pic_link" href="{% url "user:my_orders" %}">
+                            <img src="{% static "icons\Vector (1).png" %}">
+                            <p>Заказы</p>
+                        </a>
+                    </div>
+                    <div class="info__pic">
+                        <a class="info__pic_link" href="#contacts">
+                            <img src="{% static "icons\Vector (2).png" %}">
+                            <p>Поддержка</p>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="box">
-            <form class="box__search" role="search" action="{% url "catalog:search" %}" method="get">
-                <input class="search-txt" type="search" name="q" color='white' placeholder="Искать здесь..." autocomplete="off">
-                <a class="search-btn" href="#" type='submit'><img src="{% static "icons\Vector.png" %}" width="60%"></a>
-            </form>
-        </div>
-        <div class="title__menu">
-            <div class="icons">
-                <div class="icons__box">
-                    {% if not user.is_authenticated %}
-                        <a class="icons__box_link1" href="#person">
-                            <img src="{% static "icons\Group 40.png" %}">
+            <div class="box">
+                <form class="box__search" role="search" action="{% url "catalog:search" %}" method="get">
+                    <input class="search-txt" type="search" name="q" color='white' placeholder="Искать здесь..." autocomplete="off">
+                    <a class="search-btn" href="#" type='submit'><img src="{% static "icons\Vector.png" %}" width="60%"></a>
+                </form>
+            </div>
+            <div class="title__menu">
+                <div class="icons">
+                    <div class="icons__box">
+                        {% if not user.is_authenticated %}
+                            <a class="icons__box_link1" href="#person">
+                                <img src="{% static "icons\Group 40.png" %}">
+                            </a>
+                            <div id="person" class='person' animation="show">
+                                <form action="{% url "user:login" %}" method='post'>
+                                    {% csrf_token %}
+                                    {% if request.GET.next %}
+                                        <input type="hidden" name="next" value={{request.GET.next}}>
+                                    {% endif %}
+                                    <div class="person__title">
+                                        <div class="person__title_text">
+                                            <h1 style="color: black;">Личный кабинет</h1>
+                                        </div>
+                                        <a class="person__title_icon" href="#close-block"><b>X</b></a>
+                                    </div>
+                                    <div class="person__block">
+                                        <div class="person__info">
+                                            <div class="person__choice">
+                                                <h2 style="color:black"><a href="#person" style="text-decoration: none; color: #000;">Вход</a></h2><b>&nbsp;/&nbsp;</b><a href='#cd-signup' style="text-decoration: none; color:darkgray;"><h2>Регистрация</h2></a>
+                                            </div>
+                                            <div class="person__list">
+                                                <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt" id='id_username' placeholder="email" required type="email" value="{% if form.username.value %}{{form.username.value}}{% endif %}" name="username">
+                                                    </div>
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt" id='id_password' inputmode="text" placeholder="пароль" required type="password" value="" name="password">
+                                                    </div>
+                                                </div>
+                                                <div letter-spacing="0.5px" style=" text-decoration: underline; font-size: 13px; text-align: right; margin-top: -1.5rem; margin-bottom: 2rem; cursor: pointer;">забыли свой пароль?</div>
+                                                {% include "includes/notifications.html" %}
+                                                <div class="person__list_btn">
+                                                    <button type='submit' style="align-items: center; color: black;">продолжить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="cd-signup" class='person' animation="show">
+                                <form action="{% url "user:registration" %}" method='post'>
+                                    {% csrf_token %}
+                                    <div class="person__title">
+                                        <div class="person__title_text">
+                                            <h1 style="color: black;">Личный кабинет</h1>
+                                        </div>
+                                        <a class="person__title_icon" href="#close-block"><b>X</b></a>
+                                    </div>
+                                    <div class="person__block">
+                                        <div class="person__info">
+                                            <div class="person__choice">
+                                                <h2><a href="#person" style="text-decoration: none; color:darkgray;">Вход</a></h2 style="color:black"><b>&nbsp;/&nbsp;</b><a href='#person cd-signup' style="text-decoration: none; color: #000;"><h2>Регистрация</h2></a>
+                                            </div>
+                                            <div class="person__list">
+                                                <div background="white" helper="[object Object]" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt"  inputmode="kana-name" placeholder="*имя" required type="name" name="first_name" id='id_first_name' value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}">
+                                                    </div>
+                                                    {% if form.first_name.errors %}
+                                                    <div class="alert-danger">
+                                                        {{form.first_name.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt" inputmode="surname" placeholder="*фамилия" required type="surname" name="last_name" id='id_last_name' value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}">
+                                                    </div>
+                                                    {% if form.last_name.errors %}
+                                                    <div class="alert-danger">
+                                                        {{form.last_name.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt" id='id_username' placeholder="email" required type="email" name="username" value="{% if form.username.value %}{{ form.username.value }}{% endif %}">
+                                                    </div>
+                                                    {% if form.username.errors %}
+                                                    <div class="alert-danger">
+                                                        {{form.username.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt" placeholder="*номер телефона" required type="tel" name="phone_number" id='id_phone_number' value="{% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}">
+                                                    </div>                                    
+                                                    {% if form.phone.errors %}
+                                                    <div class="alert-danger">
+                                                        {{form.phone.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt" inputmode="text" placeholder="пароль" required type="password" name="password1" id='id_password' value="{% if form.password1.value %}{{form.password1.value}}{% endif %}">
+                                                    </div>
+                                                    {% if form.password1.errors %}
+                                                    <div class="alert-danger">
+                                                        {{form.password1.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                    <div style="font-size: 11px; text-align: left; margin-top: -1.5rem;  margin-bottom: 1.5rem; margin-left: 0.5rem; color:#000">от 8 символов, прописные a-z, строчные a-z, цифры 0-9</div>
+                                                    <div class="inputContainer">
+                                                        <input class="inputContainer__txt" inputmode="text" placeholder="повторите пароль" required type="password"name="password2" id='id_password' value="{% if form.password2.value %}{{form.password2.value}}{% endif %}">
+                                                    </div>
+                                                    {% if form.password2.errors %}
+                                                    <div class="alert-danger">
+                                                        {{form.password2.errors}}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="person__list_btn">
+                                                    <button type="submit" style="align-items: center; color: black;">создать аккаунт</button>
+                                                </div>
+                                                <div style="font-size: 11px; text-align: left; text-align: justify; margin-top: 1.5rem; margin-left: rem; color:#000">регистрируясь, вы принимаете  <b>Условия обслуживания</b>, а также подтверждаете, что ознакомлены с <b>Политикой конфиденциальности</b></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        {% else %}
+                            <a class="icons__box_link1" href="{% url "user:profile" %}">
+                                <img src="{% static "icons\Group 40.png" %}">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="icons__box">
+                        <a class="icons__box_link1" href="{% url "user:users_cart" %}">
+                            <img src="{% static "icons\Group 43.png" %}">
                         </a>
-                        <div id="person" class='person' animation="show">
-                            <form action="{% url "user:login" %}" method='post'>
+                    </div>
+                    <div class="icons__box">
+                        <a class="icons__box_link" href="{% url "user:like" %}">
+                            <img src="{% static "icons\Group.png" %}">
+                        </a>
+                    </div>
+                </div> 
+              </div>
+        </section>
+    
+        <hr>
+        {% block content %}{% endblock  %}
+    
+        <section class="footer" id="contacts">
+            <div class="footer__block">
+                <div class="about">
+                    <div class="about__us">
+                        <div class="footer__block_title">
+                            <p><b>Книжный интернет - магазин Chapter & Verse</b></p>
+                        </div>
+                        <p>Chapter & Verse - это новый развивающийся интернет-магазин, предлагающий широкий ассортимент книг на любой вкус и возможность заказа в любое время, чтобы обеспечить доступ к книгам в любое удобное для вас время.</p>
+                        <p>Акции, специальные предложения, новинки и обсуждения в соцсетях - присоединяйтесь:</p>
+                        <div class="social social--">
+                            <a href="" target="_blank" class="social__link">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M20.576 7.738c.134-.416 0-.72-.59-.72h-1.964c-.496 0-.724.266-.858.55 0 0-1.01 2.422-2.421 3.993-.457.454-.667.606-.915.606-.133 0-.305-.152-.305-.568v-3.88c0-.492-.152-.719-.572-.719H9.863c-.305 0-.496.227-.496.454 0 .473.705.587.782 1.912v2.877c0 .624-.115.738-.362.738-.668 0-2.288-2.442-3.26-5.224C6.337 7.208 6.145 7 5.65 7H3.667C3.095 7 3 7.265 3 7.549c0 .51.667 3.085 3.107 6.491 1.62 2.328 3.927 3.577 6.005 3.577 1.258 0 1.411-.283 1.411-.757V15.1c0-.567.114-.662.515-.662.286 0 .8.151 1.963 1.268 1.335 1.325 1.563 1.93 2.307 1.93h1.963c.572 0 .84-.284.687-.832-.172-.55-.82-1.344-1.659-2.29-.457-.53-1.144-1.117-1.353-1.4-.286-.38-.21-.53 0-.872-.02 0 2.383-3.368 2.63-4.504z">
+                                    </path>
+                                </svg>
+                            </a> 
+                            <a href="" target="_blank" class="social__link">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.508 12.658c.65-.401 1.507-.21 1.915.428a1.345 1.345 0 01-.436 1.876 8.964 8.964 0 01-2.752 1.118l2.65 2.597a1.34 1.34 0 010 1.924 1.407 1.407 0 01-1.963 0l-2.604-2.552-2.603 2.552a1.4 1.4 0 01-.982.399 1.4 1.4 0 01-.981-.399 1.342 1.342 0 010-1.924L10.4 16.08a8.98 8.98 0 01-2.751-1.118 1.345 1.345 0 01-.435-1.876 1.403 1.403 0 011.914-.428 6.12 6.12 0 006.38 0zM12.318 3c2.614 0 4.74 2.084 4.74 4.646 0 2.561-2.126 4.644-4.74 4.644-2.613 0-4.739-2.083-4.739-4.644C7.579 5.084 9.705 3 12.319 3zm0 2.723c-1.081 0-1.962.862-1.962 1.923 0 1.06.881 1.923 1.962 1.923 1.082 0 1.963-.863 1.963-1.923s-.88-1.923-1.963-1.923z">
+                                    </path>
+                                </svg>
+                            </a> 
+                            <a href="" target="_blank" class="social__link">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
+                                    <path d="M19.043 6.386a2.255 2.255 0 011.586 1.586c.386 1.409.37 4.344.37 4.344s0 2.921-.37 4.33a2.255 2.255 0 01-1.586 1.586c-1.409.37-7.043.37-7.043.37s-5.62 0-7.043-.385a2.255 2.255 0 01-1.586-1.586C3 15.237 3 12.3 3 12.3s0-2.92.37-4.329a2.302 2.302 0 011.587-1.601C6.366 6 12 6 12 6s5.634 0 7.043.386zm-8.837 3.218V15l4.685-2.699-4.685-2.698z">
+                                    </path>
+                                </svg>
+                            </a> 
+                            <a href="" target="_blank" class="social__link">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
+                                    <path d="M19.002 8.136a4.401 4.401 0 01-2.6-.84 4.164 4.164 0 01-1.636-2.514A4.01 4.01 0 0114.682 4h-2.79v7.37l-.003 4.037c0 1.079-.729 1.993-1.734 2.316a2.597 2.597 0 01-2.092-.223 2.423 2.423 0 01-1.233-2.058c-.02-1.364 1.12-2.478 2.53-2.478.277 0 .544.045.795.122V10.353a5.519 5.519 0 00-.806-.058c-1.543 0-2.987.62-4.02 1.738a4.988 4.988 0 00-1.319 3.054c-.093 1.483.468 2.895 1.557 3.935.16.152.328.294.505.427a5.465 5.465 0 003.277 1.073c.271 0 .542-.02.806-.059a5.407 5.407 0 002.977-1.44 4.968 4.968 0 001.567-3.594l-.014-6.03a7.236 7.236 0 004.324 1.419V8.133c.003.003-.007.003-.007.003z">
+                                    </path>
+                                </svg>
+                            </a> 
+                            <a href="" target="_blank" class="social__link">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.237 11.422c4.832-2.105 8.054-3.493 9.666-4.164 4.603-1.914 5.56-2.247 6.183-2.258.137-.002.444.032.642.193.168.136.214.32.236.449.022.129.05.423.028.652-.25 2.621-1.329 8.981-1.878 11.916-.232 1.242-.69 1.659-1.133 1.7-.962.088-1.693-.636-2.625-1.247-1.459-.957-2.283-1.552-3.7-2.485-1.636-1.079-.575-1.671.358-2.64.244-.253 4.485-4.11 4.567-4.46.01-.044.02-.208-.077-.294s-.24-.056-.343-.033c-.147.033-2.477 1.574-6.992 4.621-.661.454-1.26.675-1.797.664-.592-.013-1.73-.335-2.577-.61-1.038-.337-1.862-.515-1.79-1.089.037-.298.448-.603 1.232-.915z">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="about__question">
+                        <b>Если у вас возникли вопросы, заполните форму</b>
+                        <div class="about__question_form">
+                            <form id="ContactForm" action="" method="post" name='form_type' value="contact_form">
                                 {% csrf_token %}
-                                {% if request.GET.next %}
-                                    <input type="hidden" name="next" value={{request.GET.next}}>
+                                <input type="hidden" name="form_type" value="contact_form">
+                                <div class="form__input-box">
+                                    {{ modal_form.first_name }}
+                                </div>
+                                <div class="form__input-box">
+                                    {{ modal_form.username }}
+                                </div>
+                                <div class="form__input-box">
+                                   {{ modal_form.message }}
+                                </div>
+                                <button type="submit" class="about__question_btn">Отправить</button>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                    {% endfor %}
                                 {% endif %}
-                                <div class="person__title">
-                                    <div class="person__title_text">
-                                        <h1 style="color: black;">Личный кабинет</h1>
-                                    </div>
-                                    <a class="person__title_icon" href="#close-block"><b>X</b></a>
-                                </div>
-                                <div class="person__block">
-                                    <div class="person__info">
-                                        <div class="person__choice">
-                                            <h2 style="color:black"><a href="#person" style="text-decoration: none; color: #000;">Вход</a></h2><b>&nbsp;/&nbsp;</b><a href='#cd-signup' style="text-decoration: none; color:darkgray;"><h2>Регистрация</h2></a>
-                                        </div>
-                                        <div class="person__list">
-                                            <div background="white" helper="[object Object]" value="" inputvalue="" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" id='id_username' placeholder="email" required type="email" value="{% if form.username.value %}{{form.username.value}}{% endif %}" name="username">
-                                                </div>
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" id='id_password' inputmode="text" placeholder="пароль" required type="password" value="" name="password">
-                                                </div>
-                                            </div>
-                                            <div letter-spacing="0.5px" style=" text-decoration: underline; font-size: 13px; text-align: right; margin-top: -1.5rem; margin-bottom: 2rem; cursor: pointer;">забыли свой пароль?</div>
-                                            {% include "includes/notifications.html" %}
-                                            <div class="person__list_btn">
-                                                <button type='submit' style="align-items: center; color: black;">продолжить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            </form>     
                         </div>
-                        <div id="cd-signup" class='person' animation="show">
-                            <form action="{% url "user:registration" %}" method='post'>
-                                {% csrf_token %}
-                                <div class="person__title">
-                                    <div class="person__title_text">
-                                        <h1 style="color: black;">Личный кабинет</h1>
-                                    </div>
-                                    <a class="person__title_icon" href="#close-block"><b>X</b></a>
-                                </div>
-                                <div class="person__block">
-                                    <div class="person__info">
-                                        <div class="person__choice">
-                                            <h2><a href="#person" style="text-decoration: none; color:darkgray;">Вход</a></h2 style="color:black"><b>&nbsp;/&nbsp;</b><a href='#person cd-signup' style="text-decoration: none; color: #000;"><h2>Регистрация</h2></a>
-                                        </div>
-                                        <div class="person__list">
-                                            <div background="white" helper="[object Object]" class="person__list_item" name="email" type="email" data-testid="signin-form-input-email" inputmode="email">
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt"  inputmode="kana-name" placeholder="*имя" required type="name" name="first_name" id='id_first_name' value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}">
-                                                </div>
-                                                {% if form.first_name.errors %}
-                                                <div class="alert-danger">
-                                                    {{form.first_name.errors}}
-                                                </div>
-                                                {% endif %}
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="surname" placeholder="*фамилия" required type="surname" name="last_name" id='id_last_name' value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}">
-                                                </div>
-                                                {% if form.last_name.errors %}
-                                                <div class="alert-danger">
-                                                    {{form.last_name.errors}}
-                                                </div>
-                                                {% endif %}
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" id='id_username' placeholder="email" required type="email" name="username" value="{% if form.username.value %}{{ form.username.value }}{% endif %}">
-                                                </div>
-                                                {% if form.username.errors %}
-                                                <div class="alert-danger">
-                                                    {{form.username.errors}}
-                                                </div>
-                                                {% endif %}
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" placeholder="*номер телефона" required type="tel" name="phone_number" id='id_phone_number' value="{% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}">
-                                                </div>                                    
-                                                {% if form.phone.errors %}
-                                                <div class="alert-danger">
-                                                    {{form.phone.errors}}
-                                                </div>
-                                                {% endif %}
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="text" placeholder="пароль" required type="password" name="password1" id='id_password' value="{% if form.password1.value %}{{form.password1.value}}{% endif %}">
-                                                </div>
-                                                {% if form.password1.errors %}
-                                                <div class="alert-danger">
-                                                    {{form.password1.errors}}
-                                                </div>
-                                                {% endif %}
-                                                <div style="font-size: 11px; text-align: left; margin-top: -1.5rem;  margin-bottom: 1.5rem; margin-left: 0.5rem; color:#000">от 8 символов, прописные a-z, строчные a-z, цифры 0-9</div>
-                                                <div class="inputContainer">
-                                                    <input class="inputContainer__txt" inputmode="text" placeholder="повторите пароль" required type="password"name="password2" id='id_password' value="{% if form.password2.value %}{{form.password2.value}}{% endif %}">
-                                                </div>
-                                                {% if form.password2.errors %}
-                                                <div class="alert-danger">
-                                                    {{form.password2.errors}}
-                                                </div>
-                                                {% endif %}
-                                            </div>
-                                            <div class="person__list_btn">
-                                                <button type="submit" style="align-items: center; color: black;">создать аккаунт</button>
-                                            </div>
-                                            <div style="font-size: 11px; text-align: left; text-align: justify; margin-top: 1.5rem; margin-left: rem; color:#000">регистрируясь, вы принимаете  <b>Условия обслуживания</b>, а также подтверждаете, что ознакомлены с <b>Политикой конфиденциальности</b></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    {% else %}
-                        <a class="icons__box_link1" href="{% url "user:profile" %}">
-                            <img src="{% static "icons\Group 40.png" %}">
-                        </a>
-                    {% endif %}
-                </div>
-                <div class="icons__box">
-                    <a class="icons__box_link1" href="{% url "user:users_cart" %}">
-                        <img src="{% static "icons\Group 43.png" %}">
-                    </a>
-                </div>
-                <div class="icons__box">
-                    <a class="icons__box_link" href="{% url "user:like" %}">
-                        <img src="{% static "icons\Group.png" %}">
-                    </a>
-                </div>
-            </div> 
-          </div>
-    </section>
-
-    <hr>
-    {% block content %}{% endblock  %}
-
-    <section class="footer" id="contacts">
-        <div class="footer__block">
-            <div class="about">
-                <div class="about__us">
-                    <div class="footer__block_title">
-                        <p><b>Книжный интернет - магазин Chapter & Verse</b></p>
+                        <b>или позвоните по телефону: +7-967-801-45-01</b>
                     </div>
-                    <p>Chapter & Verse - это новый развивающийся интернет-магазин, предлагающий широкий ассортимент книг на любой вкус и возможность заказа в любое время, чтобы обеспечить доступ к книгам в любое удобное для вас время.</p>
-                    <p>Акции, специальные предложения, новинки и обсуждения в соцсетях - присоединяйтесь:</p>
-                    <div class="social social--">
-                        <a href="" target="_blank" class="social__link">
-                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M20.576 7.738c.134-.416 0-.72-.59-.72h-1.964c-.496 0-.724.266-.858.55 0 0-1.01 2.422-2.421 3.993-.457.454-.667.606-.915.606-.133 0-.305-.152-.305-.568v-3.88c0-.492-.152-.719-.572-.719H9.863c-.305 0-.496.227-.496.454 0 .473.705.587.782 1.912v2.877c0 .624-.115.738-.362.738-.668 0-2.288-2.442-3.26-5.224C6.337 7.208 6.145 7 5.65 7H3.667C3.095 7 3 7.265 3 7.549c0 .51.667 3.085 3.107 6.491 1.62 2.328 3.927 3.577 6.005 3.577 1.258 0 1.411-.283 1.411-.757V15.1c0-.567.114-.662.515-.662.286 0 .8.151 1.963 1.268 1.335 1.325 1.563 1.93 2.307 1.93h1.963c.572 0 .84-.284.687-.832-.172-.55-.82-1.344-1.659-2.29-.457-.53-1.144-1.117-1.353-1.4-.286-.38-.21-.53 0-.872-.02 0 2.383-3.368 2.63-4.504z">
-                                </path>
-                            </svg>
-                        </a> 
-                        <a href="" target="_blank" class="social__link">
-                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.508 12.658c.65-.401 1.507-.21 1.915.428a1.345 1.345 0 01-.436 1.876 8.964 8.964 0 01-2.752 1.118l2.65 2.597a1.34 1.34 0 010 1.924 1.407 1.407 0 01-1.963 0l-2.604-2.552-2.603 2.552a1.4 1.4 0 01-.982.399 1.4 1.4 0 01-.981-.399 1.342 1.342 0 010-1.924L10.4 16.08a8.98 8.98 0 01-2.751-1.118 1.345 1.345 0 01-.435-1.876 1.403 1.403 0 011.914-.428 6.12 6.12 0 006.38 0zM12.318 3c2.614 0 4.74 2.084 4.74 4.646 0 2.561-2.126 4.644-4.74 4.644-2.613 0-4.739-2.083-4.739-4.644C7.579 5.084 9.705 3 12.319 3zm0 2.723c-1.081 0-1.962.862-1.962 1.923 0 1.06.881 1.923 1.962 1.923 1.082 0 1.963-.863 1.963-1.923s-.88-1.923-1.963-1.923z">
-                                </path>
-                            </svg>
-                        </a> 
-                        <a href="" target="_blank" class="social__link">
-                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
-                                <path d="M19.043 6.386a2.255 2.255 0 011.586 1.586c.386 1.409.37 4.344.37 4.344s0 2.921-.37 4.33a2.255 2.255 0 01-1.586 1.586c-1.409.37-7.043.37-7.043.37s-5.62 0-7.043-.385a2.255 2.255 0 01-1.586-1.586C3 15.237 3 12.3 3 12.3s0-2.92.37-4.329a2.302 2.302 0 011.587-1.601C6.366 6 12 6 12 6s5.634 0 7.043.386zm-8.837 3.218V15l4.685-2.699-4.685-2.698z">
-                                </path>
-                            </svg>
-                        </a> 
-                        <a href="" target="_blank" class="social__link">
-                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
-                                <path d="M19.002 8.136a4.401 4.401 0 01-2.6-.84 4.164 4.164 0 01-1.636-2.514A4.01 4.01 0 0114.682 4h-2.79v7.37l-.003 4.037c0 1.079-.729 1.993-1.734 2.316a2.597 2.597 0 01-2.092-.223 2.423 2.423 0 01-1.233-2.058c-.02-1.364 1.12-2.478 2.53-2.478.277 0 .544.045.795.122V10.353a5.519 5.519 0 00-.806-.058c-1.543 0-2.987.62-4.02 1.738a4.988 4.988 0 00-1.319 3.054c-.093 1.483.468 2.895 1.557 3.935.16.152.328.294.505.427a5.465 5.465 0 003.277 1.073c.271 0 .542-.02.806-.059a5.407 5.407 0 002.977-1.44 4.968 4.968 0 001.567-3.594l-.014-6.03a7.236 7.236 0 004.324 1.419V8.133c.003.003-.007.003-.007.003z">
-                                </path>
-                            </svg>
-                        </a> 
-                        <a href="" target="_blank" class="social__link">
-                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="social__icon">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.237 11.422c4.832-2.105 8.054-3.493 9.666-4.164 4.603-1.914 5.56-2.247 6.183-2.258.137-.002.444.032.642.193.168.136.214.32.236.449.022.129.05.423.028.652-.25 2.621-1.329 8.981-1.878 11.916-.232 1.242-.69 1.659-1.133 1.7-.962.088-1.693-.636-2.625-1.247-1.459-.957-2.283-1.552-3.7-2.485-1.636-1.079-.575-1.671.358-2.64.244-.253 4.485-4.11 4.567-4.46.01-.044.02-.208-.077-.294s-.24-.056-.343-.033c-.147.033-2.477 1.574-6.992 4.621-.661.454-1.26.675-1.797.664-.592-.013-1.73-.335-2.577-.61-1.038-.337-1.862-.515-1.79-1.089.037-.298.448-.603 1.232-.915z">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="about__question">
-                    <b>Если у вас возникли вопросы, заполните форму</b>
-                    <div class="about__question_form">
-                        <input class="about__question_txt" inputmode="kana-name" placeholder="Введите ваше имя" type="name" value="" name="name">
-                        <input class="about__question_txt" inputmode="email" placeholder="Введите вашу почту" type="email" value="" name="email">
-                        <textarea class="about__question_txt" placeholder="Чем мы можем вам помочь?" style="height: 3rem; padding-top: 0.4rem;"></textarea>
-                        <button class="about__question_btn">Отправить</button>
-                    </div>
-                    <b>или позвоните по телефону: +7-967-801-45-01</b>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <script src="{% static "js/jquery/jquery-3.7.0.min.js" %}"></script>
     <script src="{% static "js/jquery-ajax.js" %}"></script>
+    <script>
+        window.onload = function() {
+            var redirectAnchor = "{{ redirect_anchor }}";
+            if (redirectAnchor) {
+                var element = document.querySelector(redirectAnchor);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    </script> 
 </body>

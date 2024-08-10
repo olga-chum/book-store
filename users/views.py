@@ -9,6 +9,10 @@ from datetime import datetime
 from carts.models import Cart, Like
 from orders.models import Order, OrderItem
 from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
+from main.forms import ContactForm
+from django.contrib import messages
+
+from django.core.mail import send_mail
 
 def login(request):
     if request.method == 'POST':
@@ -81,6 +85,7 @@ def registration(request):
 @login_required
 def profile(request):
     form = ProfileForm(instance=request.user)
+    modal_form, redirect_anchor = handle_contact_form(request)
     if request.user.is_authenticated:
         basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
         select = Like.objects.filter(user=request.user)[:5]
@@ -91,7 +96,7 @@ def profile(request):
         favourites = [item.product_id for item in Like.objects.filter(session_key = request.session.session_key)]
 
     orders = (
-        Order.objects.filter(user=request.user)
+        Order.objects.filter(user=request.user).exclude(status__in=['Выполнен', 'Отменен'])
             .prefetch_related(
                 Prefetch(
                     "orderitem_set",
@@ -107,27 +112,48 @@ def profile(request):
         'select': select,
         'favourites': favourites,
         'basket': basket,
-        "orders": orders
+        "orders": orders,
+        'modal_form': modal_form,
+        'redirect_anchor': redirect_anchor
+        
     }
     return render(request, 'users/profile.html', context)  # Шаблон, который содержит модальное окно
 
 @login_required
 def personality(request):
+    form = ProfileForm(instance=request.user)
+    modal_form = ContactForm()
+    redirect_anchor = None
+
     if request.method == 'POST':
-        form = ProfileForm(data=request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('users:personality'))
-        else:
-            context = {
-                'form': form
-            }
-    else:
-        form = ProfileForm(instance=request.user)
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'profile_form':
+            form = ProfileForm(data=request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('users:personality'))
+                   
+        elif form_type == 'contact_form':
+            modal_form = ContactForm(request.POST)
+            redirect_anchor = '#contacts'
+            
+            if modal_form.is_valid():
+                fisrt_name = modal_form.cleaned_data['first_name']
+                username = modal_form.cleaned_data['username']
+                message = modal_form.cleaned_data['message']
+                send_contact_email(fisrt_name, username, message)
+                messages.success(request, "Сообщение успешно отправлено!")
+            else:
+                errors = {field: error for field, error in modal_form.errors.items()}
+                messages.error(request, "Ошибка при отправке сообщения")
 
     context = {
         'title': 'Chapter & Verse - Личные данные',
         'form': form,
+        'modal_form': modal_form,
+        'redirect_anchor': redirect_anchor
+        
     }
     return render(request, 'users/personality.html', context)
 
@@ -136,42 +162,32 @@ def logout(request):
     auth.logout(request)
     return redirect(reverse('main:index'))
 
-# def my_orders(request):
+@login_required
+def my_orders(request):
+    form = ProfileForm(instance=request.user)
+    modal_form, redirect_anchor = handle_contact_form(request)
 
-#     if request.method == 'POST':
-#         form = ProfileForm(data=request.POST, instance=request.user)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, f" Профиль успешно обновлен ")
-#             return HttpResponseRedirect(reverse('user:profile'))
-#         else:
-#             # Возвращаем страницу, которая содержит модальное окно, с контекстом, чтобы показать ошибки
-#             context = {
-#                 'form': form
-#             }
-#     else:
-#         form = ProfileForm(instance=request.user)
+    orders = (
+            Order.objects.filter(user=request.user).prefetch_related(
+                Prefetch(
+                    'orderitem_set',
+                    queryset=OrderItem.objects.select_related('product')
+                )
+            ).order_by('-id')
+        )
 
-#     orders = (
-#             Order.objects.filter(user=request.user).prefetch_related(
-#                 Prefetch(
-#                     'orderitem_set',
-#                     queryset=OrderItem.objects.select_related('product')
-#                 )
-#             ).order_by('-id')
-#         )
-    
-#     for order in orders:
-#         order.total_price = order.orderitem_set.aggregate(total=Sum(F('price') * F('quantity')))['total']
-
-#     context = {
-#         "title": "Chapter & Verse - Мои заказы", 
-#         'form': form,
-#         'orders': orders,
-#         }
-#     return render(request, "users/my_orders.html", context)
+    context = {
+        "title": "Chapter & Verse - Мои заказы", 
+        'form': form,
+        'orders': orders,
+        'modal_form': modal_form,
+        'redirect_anchor': redirect_anchor
+        
+        }
+    return render(request, "users/my_orders.html", context)
 
 def users_cart(request):
+    modal_form, redirect_anchor = handle_contact_form(request)
     if request.user.is_authenticated:
         favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
     else:
@@ -179,11 +195,14 @@ def users_cart(request):
     
     context = {
         "title": "Chapter & Verse - Корзина", 
-        'favourites': favourites
+        'favourites': favourites,
+        'modal_form': modal_form,
+        'redirect_anchor': redirect_anchor
         }
     return render(request, "users/users_cart.html", context)
 
 def like(request):
+    modal_form, redirect_anchor = handle_contact_form(request)
     if request.user.is_authenticated:
         basket = [item.product_id for item in Cart.objects.filter(user=request.user)]
         favourites = [item.product_id for item in Like.objects.filter(user=request.user)]
@@ -195,5 +214,41 @@ def like(request):
         "title": "Chapter & Verse - Избранное",
         'basket': basket, 
         'favourites': favourites,
+        'modal_form': modal_form,
+        'redirect_anchor': redirect_anchor
+        
         }
     return render(request, "users/like.html", context)
+
+def send_contact_email(first_name, username, message):
+    subject = "Сообщение с вашего сайта"
+    body = f"Сообщение от {first_name} ({username}):\n\n{message}"
+    from_email = 'olechka.chumakovachumakova@yandex.ru'  # Адрес электронной почты отправителя
+    to_email = 'olechka.chumakovachumakova@yandex.ru'  # Адрес электронной почты, куда придет письмо
+    
+    send_mail(
+        subject,
+        body,
+        from_email, 
+        [to_email], 
+        fail_silently=False
+    )
+
+def handle_contact_form(request):
+    if request.method == 'POST':
+        modal_form = ContactForm(request.POST)
+        redirect_anchor = '#contacts'
+        if modal_form.is_valid():
+            fisrt_name = modal_form.cleaned_data['first_name']
+            username = modal_form.cleaned_data['username']
+            message = modal_form.cleaned_data['message']
+            send_contact_email(fisrt_name, username, message)
+            messages.success(request, "Сообщение успешно отправлено!")
+        else:
+            errors = {field: error for field, error in modal_form.errors.items()}
+            messages.error(request, "Ошибка при отправке сообщения")
+    else:
+        modal_form = ContactForm()  # Создаем новую форму для GET-запроса
+        redirect_anchor = None
+    return modal_form, redirect_anchor
+    

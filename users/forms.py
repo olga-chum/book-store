@@ -14,9 +14,6 @@ class UserLoginForm(AuthenticationForm):
 
 class UserRegistrationForm(UserCreationForm):
 
-    # confirmation = forms.BooleanField(widget=forms.RadioSelect(attrs={"class": "inputContainer__txt"}))
-    # email= forms.EmailField(required=True, widget=forms.EmailInput(attrs={"class":"inputContainer__txt"}))
-
     class Meta:
         model = User
         fields = (
